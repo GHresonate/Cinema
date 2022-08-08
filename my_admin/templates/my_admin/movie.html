@@ -1,0 +1,242 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <title>Movie</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'my_admin/style.css' %}">
+</head>
+<body>
+
+  <main>
+        <nav class="navbar navbar-expand-xl navbar-light bg-light" style="border-radius: 4px; font-size: 14px; text-align: center">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <div style="">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Статистика</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Баннера</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Фильмы</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Кинотеатры</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Новости</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Акции</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Страницы</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Пользователи</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Рассылка</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div style="text-align: center"><h1>Кино</h1></div>
+
+    <form action="movie" class="big_form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="field">
+            {{ movie.name.errors }}
+            <label for="{{ movie.name.id_for_label }}">Название:</label>
+            {{ movie.name }}
+        </div>
+        <div class="field">
+            {{ movie.description.errors }}
+            <label for="{{ movie.description.id_for_label }}">Описание:</label>
+            {{ movie.description }}
+        </div>
+        <div class="photo-field">
+             <div class="field" style="float: left">
+                {{ movie.main_photo.errors }}
+                <label for="{{ movie.main_photo.id_for_label }}">Главный баннер:</label>
+                 <div id = "box">
+                     <button class="btn btn-light bt-for-img">Добавить</button>
+                     <div id="main-ph" class="hidden-form">{{ movie.main_photo }}</div>
+                 </div>
+                 <div id="rem-main" style="cursor:default; position: relative; left: -28px; top: -20px; margin: 0; width: 150px; height: 30px; font-size: 15px;" class="btn btn-light">Удалить</div>
+             </div>
+
+            <div id = 'image-grid' style="background-image: url('{% static "my_admin/img/camera.jpg" %}');  background-position: center; background-repeat: no-repeat; background-size: cover;float: left; background-color: white; border: solid grey 3px; height: 150px; width: 200px;">
+            </div>
+        </div>
+
+        <br><br><br><br><br><br><br><br>
+        <div style="margin: 7px;">Галерея картинок:</div>
+        <div class="container">
+          {{ photos.management_form }}
+            <div class="row">
+                {% for photo in photos %}
+                <div class="col">
+                    <div class="small_ph" style="background-image: url('{% static "my_admin/img/camera.jpg" %}');  background-position: center; background-repeat: no-repeat; background-size: cover; background-color: white; border: solid grey 3px; height: 130px; width: 180px;"></div>
+                    <div class= "small_box" style="margin: 14px">
+                        <button class="small_down_butt small-bt-for-img btn btn-light">Загрузить</button>
+                        <div class="small_hidden_form small-photo-form" style="">{{ photo.photo }}</div>
+                    </div>
+                    <div class="rem_small" style="position: relative;transform: rotate(45deg); top:-240px; right: -150px; background-color: bisque; cursor: default; font-size: 50px; padding: 0px; margin: 0px; width: 50px; height: 50px; border-radius: 30px; border: 1px solid grey;text-align: center"><p style="position: relative; top:-17px;">+</p></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="field">
+            {{ movie.trailer_url.errors }}
+            <label for="{{ movie.trailer_url.id_for_label }}">Ссылка на трейлер:</label>
+            {{ movie.trailer_url }}
+        </div>
+        <div class="field">
+            {{ movie.is_2D.errors }}
+            <label for="{{ movie.is_2D.id_for_label }}">2D:</label>
+            {{ movie.is_2D }}
+        </div>
+            <div class="field">
+            {{ movie.is_3D.errors }}
+            <label for="{{ movie.is_3D.id_for_label }}">3D:</label>
+            {{ movie.is_3D }}
+        </div>
+            <div class="field">
+            {{ movie.is_IMAX.errors }}
+            <label for="{{ movie.is_IMAX.id_for_label }}">IMAX:</label>
+            {{ movie.is_IMAX }}
+        </div>
+        <h3>SEO:</h3>
+        <div class="field">
+            {{ seo.title.errors }}
+            <label for="{{ seo.title.id_for_label }}">Title</label>
+            {{ seo.title}}
+        </div>
+        <div class="field">
+            {{ seo.url.errors }}
+            <label for="{{ seo.url.id_for_label }}">URL:</label>
+            {{ seo.url }}
+        </div>
+        <div class="field">
+            {{ seo.keywords.errors }}
+            <label for="{{ seo.keywords.id_for_label }}">Keywords:</label>
+            {{ seo.keywords }}
+        </div>
+        <div class="field">
+            {{ seo.description.errors }}
+            <label for="{{ seo.description.id_for_label }}">Description:</label>
+            {{ seo.description }}
+        </div>
+      <div style="text-align: center">
+      <input type="reset" id="main_res" class="btn btn-light" style="width: 200px;" value="Сбросить форму">
+      <input type="submit" class="btn btn-light" style="width: 200px;" value="Сохранить">
+      </div>
+    </form>
+  </main>
+
+</body>
+<script>
+const fileUploader = document.getElementById('id_main_photo');
+const remMain = document.getElementById('rem-main');
+const reader = new FileReader();
+let bigFile = '';
+const readers = [new FileReader(),new FileReader(),new FileReader(),new FileReader(),new FileReader()];
+let smallFiles = ['','','','',''];
+let imageGrid = document.getElementById('image-grid');
+let resButt = document.getElementById('main_res')
+const mainImgForm = document.getElementById('main-ph');
+let box = document.getElementById('box');
+let boxContent = box;
+let smallBatt = document.getElementsByClassName('small_hidden_form');
+let smallRem = document.getElementsByClassName('rem_small')
+
+fileUploader.addEventListener('change', (event) => {
+  const files = event.target.files;
+  bigFile = files[0];
+  reader.readAsDataURL(bigFile);
+  reader.addEventListener('load', (event) => {
+    let img = document.createElement('img');
+    img.height=144;
+    img.width = 194;
+    if (imageGrid.firstChild){
+        imageGrid.removeChild(imageGrid.firstChild);
+    };
+    imageGrid.appendChild(img);
+    img.src = event.target.result;
+    img.alt = bigFile.name;
+  });
+
+});
+
+
+for (let x=0; x<5; x++) {
+    smallBatt[x].firstChild.addEventListener('change', (event) => {
+        const files = event.target.files;
+        smallFiles[x] = files[0];
+        readers[x].readAsDataURL(smallFiles[x]);
+        let parent = smallBatt[x].parentNode.parentNode;
+        let place = parent.firstElementChild;
+        readers[x].addEventListener('load',(event)=>{
+            let img = document.createElement('img');
+            img.height = 124;
+            img.width = 174;
+            if (place.firstChild){
+                place.removeChild(place.firstChild);
+            };
+            place.appendChild(img);
+            img.src = event.target.result;
+            img.alt = smallFiles[x].name;
+        });
+    });
+
+    smallRem[x].addEventListener('click', (event)=>{
+        let parent = smallBatt[x].parentNode.parentNode;
+        let place = parent.firstElementChild;
+        smallBatt[x].firstChild.value = '';
+        if (place.firstChild){
+          place.removeChild(place.firstChild);
+        };
+    });
+};
+
+resButt.addEventListener('click', (event)=>{
+    if (imageGrid.firstChild){
+        imageGrid.removeChild(imageGrid.firstChild);
+        for (let x=1;x<5;x++){
+            let parent = smallBatt[x].parentNode.parentNode;
+            let place = parent.firstElementChild;
+            if (place.firstChild){
+                place.removeChild(place.firstChild);
+            };
+        };
+};
+});
+
+remMain.addEventListener('click', (event)=>{
+    fileUploader.value = '';
+  if (imageGrid.firstChild) {
+      imageGrid.removeChild(imageGrid.firstChild);
+  };
+});
+
+
+</script>
+</html>
+
+
