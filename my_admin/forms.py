@@ -6,13 +6,10 @@ from django.forms import modelformset_factory
 
 class PhotoForm(forms.ModelForm):
     photo = forms.ImageField()
-    #gallery = forms.ModelChoiceField(queryset=Gallery.objects)
 
     class Meta:
         model = Photo
         fields = ['photo']
-
-
 
 
 PhotosForm = modelformset_factory(Photo, form=PhotoForm, extra=5)

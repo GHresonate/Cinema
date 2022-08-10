@@ -1,9 +1,16 @@
-{% load static %}
 body {
     text-align: center;
     background-color: bisque;
 }
 
+h1{
+    text-align: center;
+}
+
+h3{
+    margin-top: 21px;
+    text-align: center;
+}
 
 main {
     max-width: 1100px;
@@ -20,16 +27,6 @@ nav{
     border-radius: 0px;
 }
 
-.big_form{
-    margin: 21px;
-
-}
-
-.field{
-    margin: 7px;
-    clear:both;
-    text-align:right;
-}
 label {
     float:left;
 }
@@ -43,15 +40,27 @@ textarea{
     width: 75%;
 }
 
-.photo-field{
+.photo_field{
         margin: 7px;
 }
 
-#image-grid{
+.big_form{
+    margin: 21px;
+
+}
+
+.field{
+    margin: 7px;
+    clear:both;
+    text-align:right;
+
+}
+
+#image_grid{
     margin: 14px;
 }
 
-.hidden-form{
+.hidden_form{
     width: 200px;
     height: 30px;
     position: relative;
@@ -61,7 +70,7 @@ textarea{
     z-index: 99999;
 }
 
-.bt-for-img{
+.bt_for_img{
     position: relative;
     width: 150px;
     height: 30px;
@@ -74,11 +83,11 @@ textarea{
     height: 30px;
 }
 
-.rem-main{
-
+.small_box{
+    margin: 14px
 }
 
-.small-bt-for-img{
+.small_bt_for_img{
     position: relative;
     width: 150px;
     height: 30px;
@@ -86,6 +95,118 @@ textarea{
 
 }
 
-.small-photo-form{
+.small_photo_form{
     width: 200px; position: relative; top: -30px; z-index: 9999; opacity: 0;
+}
+
+.rem_small{
+    position: relative;
+    transform: rotate(45deg);
+    top:-240px;
+    right: -150px;
+    background-color: bisque;
+    cursor: default;
+    font-size: 50px;
+    padding: 0px;
+    margin: 0px;
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    border: 1px solid grey;
+    text-align: center
+}
+
+.rem_small_text{
+    position: relative;
+    top:-17px;
+}
+
+.small_ph{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: white;
+    border: solid grey 3px;
+    height: 130px;
+    width: 180px;
+}
+
+#image_grid{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    float: left;
+    background-color: white;
+    border: solid grey 3px;
+    height: 150px;
+    overflow:hidden;
+    width: 200px;
+}
+
+#rem_main{
+    cursor:default;
+    position: relative;
+    left: -28px;
+    top: -20px;
+    margin: 0;
+    width: 150px;
+    height: 30px;
+    font-size: 15px;
+}
+
+#main_res{
+    width: 200px;
+}
+
+.radio{
+    position: relative;
+    top: -9px;
+    float: left;
+    margin: 10px;
+    transform: scale(2);
+}
+
+.boxes{
+    float: left;
+    max-width: 200px;
+    margin-right: 7px;
+    margin-top: 14px;
+    height: 180px;
+}
+
+#big_gal_button_top{
+    font-size: 30px;
+    height: 74px;
+    border: 3px solid grey;
+    border-radius: 7px;
+    margin-bottom: 7px;
+    width: 100%;
+    cursor: default;
+}
+
+#big_gal_button_bottom{
+    font-size: 30px;
+    height: 74px;
+    border: 3px solid grey;
+    border-radius: 7px;
+    margin-bottom: 7px;
+    width: 100%;
+    cursor: default;
+}
+
+.big_gal_button{
+    margin-right: 14px;
+    margin-top: 14px;
+    float: left;
+    text-align: center;
+    height: 180px;
+    width: 186px;
+}
+
+.checkbox _title{
+    float: left;
+    margin-right: 14px;
+    font-size: 20px;
+    position: relative;
+    top: -5px;
 }

@@ -17,8 +17,6 @@ class SEO(models.Model):
     description = models.TextField()
 
 
-
-
 class Pages(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField()
@@ -41,7 +39,7 @@ class Banners(models.Model):
 class NewsAndDiscInBanner(models.Model):
     types = [
         ('News', 'News'),
-        ('Discont', 'Discont')
+        ('Discount', 'Discount')
     ]
     type = models.CharField(max_length=16, choices=types)
     main_photo = models.ImageField()
@@ -50,10 +48,10 @@ class NewsAndDiscInBanner(models.Model):
     page = models.ForeignKey(Banners, on_delete=models.CASCADE)
 
 
-class NewsAndDiscont(models.Model):
+class NewsAndDiscount(models.Model):
     types = [
         ('News', 'News'),
-        ('Discont', 'Discont')
+        ('Discount', 'Discount')
     ]
     type = models.CharField(max_length=16, choices=types)
     date_published = models.DateField()
