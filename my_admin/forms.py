@@ -1,6 +1,7 @@
+import re
 from django import forms
-from pages_app.models import SEO, Photo, Gallery
-from cinema_app.models import Movie
+from pages_app.models import SEO, Photo, NewsAndDiscount, Pages
+from cinema_app.models import Movie, Cinema
 from django.forms import modelformset_factory
 
 
@@ -25,6 +26,14 @@ class SEOForm(forms.ModelForm):
         model = SEO
         fields = ('title', 'url', 'keywords', 'description')
 
+    def clean(self):
+        cleaned_data = super().clean()
+        if not len(re.findall(r'^[^\W]*$', cleaned_data.get('url'))):
+            self.add_error("url", "Ссылка должна состоять из одного слова")
+        if SEO.objects.filter(url=cleaned_data.get('url')).exists():
+            self.add_error("url", "Эта ссылка уже зарегестрирована")
+        return cleaned_data
+
 
 class MovieForm(forms.ModelForm):
     name = forms.CharField(max_length=256)
@@ -38,3 +47,41 @@ class MovieForm(forms.ModelForm):
     class Meta:
         model = Movie
         fields = ('name', 'description', 'main_photo', 'trailer_url', 'is_2D', 'is_3D', 'is_IMAX')
+
+
+class CinemaForm(forms.ModelForm):
+    name = forms.CharField(max_length=256)
+    description = forms.CharField(widget=forms.Textarea)
+    main_photo = forms.ImageField()
+    banner_photo = forms.ImageField()
+
+    class Meta:
+        model = Cinema
+        fields = ('name', 'description', 'main_photo', 'banner_photo')
+
+
+class NewsAndDiscountForm(forms.ModelForm):
+    types = [
+        ('News', 'News'),
+        ('Discount', 'Discount')
+    ]
+    type = forms.ChoiceField(choices=types)
+    date_published = forms.DateField(input_formats=['%d/%m/%Y'])
+    description = forms.CharField(widget=forms.Textarea)
+    name = forms.CharField(max_length=256)
+    main_photo = forms.ImageField()
+    url = forms.URLField()
+
+    class Meta:
+        model = NewsAndDiscount
+        fields = ('date_published', 'description', 'name', 'main_photo', 'url')
+
+
+class PagesForm(forms.ModelForm):
+    name = forms.CharField(max_length=256)
+    description = forms.CharField(widget=forms.Textarea)
+    main_photo = forms.ImageField()
+
+    class Meta:
+        model = Pages
+        fields = ('name', 'description', 'main_photo')

@@ -2,10 +2,11 @@ const allPhotos = 5;
 const inputs = document.getElementsByClassName("field");
 const radioHome = document.getElementsByClassName("radio_home")[0];
 const radios = document.getElementsByClassName("radio");
-let fileUploader = document.getElementById('id_main_photo');
 const bigForm =document.getElementById("big_form");
 const remMain = document.getElementById('rem_main');
+const remBanner = document.getElementById('rem_banner');
 const reader = new FileReader();
+const bannerReader = new FileReader();
 const resButt = document.getElementById('main_res')
 const smallBatt = document.getElementsByClassName('small_hidden_form');
 const smallRem = document.getElementsByClassName('rem_small')
@@ -21,7 +22,10 @@ const messageTextOneWord = document.createElement('p');
 messageTextOneWord.innerText ="Это поле должно содержать одно слово на английском";
 const messageUrl= document.createElement('p');
 messageUrl.innerText ="Введите корректный url.";
+let fileUploader = document.getElementById('id_main_photo');
+let bannerUploader = document.getElementById('id_banner_photo')
 let imageGrid = document.getElementById('image_grid');
+let bannerImageGrid = document.getElementById('image_banner');
 let lastForm = -1;
 let form_state = [];
 let forms = [];
@@ -82,7 +86,15 @@ function validate(){
     else {
         fileUploader.parentElement.parentElement.parentElement.classList.remove("error");
     };
-
+    if (bannerUploader) {
+        if (bannerUploader.value == '') {
+            bannerUploader.parentElement.parentElement.parentElement.classList.add("error");
+            is_good = 0;
+        } else {
+            bannerUploader.parentElement.parentElement.parentElement.classList.remove("error");
+        }
+        ;
+    }
 
     let radio_value = 0;
     for (let x=0;x<radios.length;x++){
@@ -91,27 +103,31 @@ function validate(){
             break;
         };
     };
-    if (radio_value==0){
-        is_good=0;
-        radioHome.classList.add("error");
-        radioHome.style.paddingBottom = "30px";
-    } else {
-        radioHome.classList.remove("error");
-        radioHome.style.paddingBottom = "0";
-    };
+    if (radioHome) {
+        if (radio_value == 0) {
+            is_good = 0;
+            radioHome.classList.add("error");
+            radioHome.style.paddingBottom = "30px";
+        } else {
+            radioHome.classList.remove("error");
+            radioHome.style.paddingBottom = "0";
+        }
+        ;
 
 
-    if (!(regexpForUrl.test(bigForm.trailer_url.value)) && !(inputs[3].classList.contains("error"))){
-        inputs[3].classList.add("url_error");
-        inputs[3].appendChild(messageUrl);
-        is_good=0;
-    } else {
-      inputs[3].classList.remove("url_error");
-      if (inputs[3].contains(messageUrl)){
-          inputs[3].removeChild(messageUrl);
-      };
-    };
-
+        if (!(regexpForUrl.test(bigForm.trailer_url.value)) && !(inputs[3].classList.contains("error"))) {
+            inputs[3].classList.add("url_error");
+            inputs[3].appendChild(messageUrl);
+            is_good = 0;
+        } else {
+            inputs[3].classList.remove("url_error");
+            if (inputs[3].contains(messageUrl)) {
+                inputs[3].removeChild(messageUrl);
+            }
+            ;
+        }
+        ;
+    }
     if ((inputs[0].children[1].value.length>256)){
         inputs[0].classList.add("length_error");
         is_good=0;
@@ -185,6 +201,26 @@ fileUploader.addEventListener('change', (event) => {
   });
 
 });
+if (bannerUploader) {
+    bannerUploader.addEventListener('change', (event) => {
+        const files = event.target.files;
+        let file = files[0];
+        bannerReader.readAsDataURL(file);
+        bannerReader.addEventListener('load', (event) => {
+            let img = document.createElement('img');
+            img.height = 144;
+            img.width = 194;
+            if (bannerImageGrid.firstChild) {
+                bannerImageGrid.removeChild(bannerImageGrid.firstChild);
+            }
+            ;
+            bannerImageGrid.appendChild(img);
+            img.src = event.target.result;
+            img.alt = file.name;
+        });
+
+    });
+}
 
 remMain.addEventListener('click', (event)=>{
     fileUploader.value = '';
@@ -192,6 +228,15 @@ remMain.addEventListener('click', (event)=>{
       imageGrid.removeChild(imageGrid.firstChild);
   };
 });
+
+if (remBanner){
+    remBanner.addEventListener('click', (event)=>{
+        bannerUploader.value = '';
+        if (bannerImageGrid.firstChild) {
+            bannerImageGrid.removeChild(bannerImageGrid.firstChild);
+        };
+});
+}
 
 for (let x=0; x<allPhotos; x++) {
     smallBatt[x].firstChild.addEventListener('change', (event) => {
@@ -294,6 +339,10 @@ resButt.addEventListener('click', (event)=>{
         imageGrid.removeChild(imageGrid.firstChild);
     };
     fileUploader.value = '';
+    bannerUploader.value=''
+    if (bannerImageGrid.firstChild){
+        bannerImageGrid.removeChild(bannerImageGrid.firstChild);
+    };
     let first = getFirstClear();
     if (first==-2){
         first=allPhotos;

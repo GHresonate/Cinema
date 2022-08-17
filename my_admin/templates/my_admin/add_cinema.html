@@ -1,10 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+{% extends 'my_admin/base.html' %}
+{% load static %}
+{% block title %}
+Add cinema
+{% endblock %}
+{% block main %}
+        <div><h1>Кинотеатр</h1></div><hr>
 
-</body>
-</html>
+    <form id="big_form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="field">
+            <label for="{{ cinema.name.id_for_label }}">Название:</label>
+            {{ cinema.name }}
+            {{ cinema.name.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ cinema.description.id_for_label }}">Описание:</label>
+            {{ cinema.description }}
+            {{ cinema.description.errors }}
+        </div>
+        <div class="photo_field">
+             <div class="field" style="float: left">
+                <label for="{{ cinema.main_photo.id_for_label }}">Логотип:</label>
+                 <div id = "box">
+                     <button class="btn btn-light bt_for_img">Добавить</button>
+                     <div id="main-ph" class="hidden_form">{{ cinema.main_photo }}</div>
+                 </div>
+                 <div id="rem_main" class="btn btn-light">Удалить</div>
+                 {{ cinema.main_photo.errors }}
+             </div>
+
+            <div id = 'image_grid' style="background-image: url('{% static "my_admin/img/camera.jpg" %}');">
+            </div>
+        </div>
+
+        <div class="photo_field">
+             <div class="field" style="float: left">
+                <label for="{{ cinema.banner_photo.id_for_label }}">Главный баннер:</label>
+                 <div id = "box_for_banner">
+                     <button class="btn btn-light bt_for_img">Добавить</button>
+                     <div id="main-banner" class="hidden_form">{{ cinema.banner_photo }}</div>
+                 </div>
+                 <div id="rem_banner" class="btn btn-light">Удалить</div>
+                 {{ cinema.banner_photo.errors }}
+             </div>
+
+            <div id = 'image_banner' style="background-image: url('{% static "my_admin/img/camera.jpg" %}');">
+            </div>
+        </div>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <div style="margin: 7px;float: left">Галерея картинок:</div>
+    <br><br>
+        <div id="photo_parent">
+            <div class="big_gal_button">
+                <div id="big_gal_button_top" class="btn btn-light"><img src="{%  static "my_admin/img/pngwing.png" %}" style="width: 50px;"></div>
+                <div id="big_gal_button_bottom" class="btn btn-light"><img src="{%  static "my_admin/img/min.png" %}" style="width: 50px;"></div>
+            </div>
+          {{ photos.management_form }}
+                {% for photo in photos %}
+                <div class="boxes">
+                    <div class="small_ph" style="background-image: url('{% static "my_admin/img/camera.jpg" %}');"></div>
+                    <div class= "small_box">
+                        <button class="small_down_butt small_bt_for_img btn btn-light">Загрузить</button>
+                        <div class="small_hidden_form small_photo_form">{{ photo.photo }}</div>
+                    </div>
+                    <div class="rem_small"><p class="rem_small_text">+</p></div>
+                </div>
+                {% endfor %}
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Название</th>
+              <th scope="col">Дата создания</th>
+              <th scope="col">Баннер</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+              <th scope="col">Lorem</th>
+              <th scope="col">00.00.0001</th>
+              <th scope="col"><img class="small_photo" src="http://127.0.0.1:8000/media/Jammy-Jellyfish_WP_4096x2304_Grey.png"></th>
+              <th scope="col">
+                  <button class="btn_change_hall btn btn-light">Изменить</button>
+                  <button class="btn_rem_hall btn btn-light">Удалить</button>
+              </th>
+          </tbody>
+        </table>
+       <div style="text-align: center"><button class="btn_add_hall btn btn-light btn-lg">Добавить зал</button></div>
+       <br>
+        <h3>SEO</h3>
+        <hr>
+        <div class="field">
+            <label for="{{ seo.title.id_for_label }}">Title</label>
+            {{ seo.title}}
+            {{ seo.title.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ seo.url.id_for_label }}">URL:</label>
+            {{ seo.url }}
+            {{ seo.url.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ seo.keywords.id_for_label }}">Keywords:</label>
+            {{ seo.keywords }}
+            {{ seo.keywords.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ seo.description.id_for_label }}">Description:</label>
+            {{ seo.description }}
+            {{ seo.description.errors }}
+        </div>
+      <div style="text-align: center">
+          <input type="reset" id="main_res" class="btn btn-light" value="Сбросить форму">
+          <div id="my_submit" class="btn btn-light" style="width: 200px;">Сохранить</div>
+      </div>
+    </form>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'my_admin/js_for_cinema_app.js' %}"></script>
+{% endblock %}

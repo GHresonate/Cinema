@@ -11,7 +11,7 @@ class Photo(models.Model):
 
 
 class SEO(models.Model):
-    url = models.CharField(unique=True, max_length=128)
+    url = models.CharField(unique=True, max_length=128, null=True)
     title = models.CharField(max_length=128)
     keywords = models.TextField()
     description = models.TextField()

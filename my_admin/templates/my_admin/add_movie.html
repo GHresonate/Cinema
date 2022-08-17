@@ -1,9 +1,12 @@
 {% extends 'my_admin/base.html' %}
 {% load static %}
+{% block title %}
+Add movie
+{% endblock %}
 {% block main %}
         <div><h1>Кино</h1></div><hr>
 
-    <form action="movie" id="big_form" method="post" enctype="multipart/form-data">
+    <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
         {{ form.non_field_errors }}
         <div class="field">
@@ -107,3 +110,6 @@
     </form>
 {% endblock %}
 
+{% block js %}
+<script src="{% static 'my_admin/js_for_cinema_app.js' %}"></script>
+{% endblock %}

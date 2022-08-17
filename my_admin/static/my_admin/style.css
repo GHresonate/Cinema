@@ -40,11 +40,19 @@ textarea{
     width: 75%;
 }
 
+a{
+    color: #505050;
+}
+
+a:hover{
+    color: black;
+}
+
 .photo_field{
         margin: 7px;
 }
 
-.big_form{
+#big_form{
     margin: 21px;
 
 }
@@ -54,10 +62,6 @@ textarea{
     clear:both;
     text-align:right;
 
-}
-
-#image_grid{
-    margin: 14px;
 }
 
 .hidden_form{
@@ -78,6 +82,12 @@ textarea{
 }
 
 #box{
+    margin: 28px;
+    width: 150px;
+    height: 30px;
+}
+
+#box_for_banner{
     margin: 28px;
     width: 150px;
     height: 30px;
@@ -127,6 +137,7 @@ textarea{
     background-size: cover;
     background-color: white;
     border: solid grey 3px;
+    margin-bottom: -7px;
     height: 130px;
     width: 180px;
 }
@@ -141,9 +152,34 @@ textarea{
     height: 150px;
     overflow:hidden;
     width: 200px;
+    margin: 14px;
+}
+
+#image_banner{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    float: left;
+    background-color: white;
+    border: solid grey 3px;
+    height: 150px;
+    overflow:hidden;
+    width: 200px;
+    margin: 14px;
 }
 
 #rem_main{
+    cursor:default;
+    position: relative;
+    left: -28px;
+    top: -20px;
+    margin: 0;
+    width: 150px;
+    height: 30px;
+    font-size: 15px;
+}
+
+#rem_banner{
     cursor:default;
     position: relative;
     left: -28px;
@@ -189,7 +225,7 @@ textarea{
     height: 74px;
     border: 3px solid grey;
     border-radius: 7px;
-    margin-bottom: 7px;
+    margin-bottom: 0px;
     width: 100%;
     cursor: default;
 }
@@ -201,6 +237,7 @@ textarea{
     text-align: center;
     height: 180px;
     width: 186px;
+    margin-bottom: 7px;
 }
 
 .checkbox _title{
@@ -209,4 +246,65 @@ textarea{
     font-size: 20px;
     position: relative;
     top: -5px;
+}
+
+.error{
+    border: solid 3px red;
+    border-radius: 7px;
+    padding: 3px;
+}
+
+.url_error{
+    border: solid 3px yellow;
+    border-radius: 7px;
+    padding: 3px;
+}
+
+.length_error{
+    border: solid 3px blue;
+    border-radius: 7px;
+    padding: 3px;
+}
+
+.radio_home{
+    margin: 7px;
+}
+
+.errorlist{
+    color: red;
+    list-style-type: "";
+}
+
+.main_linc{
+    font-size: 20px;
+    border-radius: 7px;
+    width: 100%;
+    margin: 14px;
+    padding: 7px;
+    text-align: left;
+}
+
+.nav-link:hover{
+    color: black;
+}
+
+.pagin_menu{
+    text-align: center;
+    font-size: 17px;
+}
+
+.pagin_menu a{
+    color: black;
+}
+
+.pagin_menu_minor{
+    font-size: 20px;
+}
+
+.pagin_menu_major{
+    font-size: 25px;
+}
+
+.small_photo{
+    width: 100px;
 }

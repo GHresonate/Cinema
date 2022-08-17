@@ -4,17 +4,24 @@
 Movie
 {% endblock %}
 {% block main %}
+    {% if type == "movies" %}
     <h1>Список фильмов</h1>
     <div style="float: left"><a class="main_linc" href="{% url "add_movie" %}">Добавить фильм</a></div>
+    {% endif %}
+
+    {% if type == "cinemas" %}
+    <h1>Список кинотеатров</h1>
+    <div style="float: left"><a class="main_linc" href="{% url "add_cinema" %}">Добавить кинотеатр</a></div>
+    {% endif %}
     <div style="float: right">
         <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
           Сортировка
         </button>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="{% url "movies" %}?type=1">По времени добавления</a></li>
-          <li><a class="dropdown-item" href="{% url "movies" %}?type=-1">По времени добавления (реверс)</a></li>
-          <li><a class="dropdown-item" href="{% url "movies" %}?type=2">По названию</a></li>
-          <li><a class="dropdown-item" href="{% url "movies" %}?type=-2">По названию (реверс)</a></li>
+          <li><a class="dropdown-item" href="{% url type %}?type=1">По времени добавления</a></li>
+          <li><a class="dropdown-item" href="{% url type %}?type=-1">По времени добавления (реверс)</a></li>
+          <li><a class="dropdown-item" href="{% url type %}?type=2">По названию</a></li>
+          <li><a class="dropdown-item" href="{% url type %}?type=-2">По названию (реверс)</a></li>
       </ul>
     </div>
     <table class="table">
@@ -26,14 +33,14 @@ Movie
     </tr>
   </thead>
     <tbody>
-      {% for movie in page %}
+      {% for model in page %}
         <tr>
-          <td><strong><a href="/my_admin/movies/{{ movie.seo.url }}">{{ movie.name }}</a></strong></td>
-          <td>{% if movie.is_2D %}2-D {% endif %}
-              {% if movie.is_3D %}3-D {% endif %}
-              {% if movie.is_IMAX %}IMAX {% endif %}
+          <td><strong><a href="/my_admin/{{ type }}/{{ model.seo.url }}">{{ model.name }}</a></strong></td>
+          <td>{% if model.is_2D %}2-D {% endif %}
+              {% if model.is_3D %}3-D {% endif %}
+              {% if model.is_IMAX %}IMAX {% endif %}
           </td>
-        <td><img class="small_photo" src="{{ movie.main_photo.url }}"></td>
+        <td><img class="small_photo" src="{{ model.main_photo.url }}"></td>
         </tr>
       {% endfor %}
     </tbody>

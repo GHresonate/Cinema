@@ -5,6 +5,7 @@ class Cinema(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField()
     main_photo = models.ImageField()
+    banner_photo = models.ImageField(null=True)
     photo_list = models.OneToOneField('pages_app.Gallery', null=True, on_delete=models.SET_NULL)
     seo = models.OneToOneField('pages_app.SEO', null=True, on_delete=models.SET_NULL)
 
