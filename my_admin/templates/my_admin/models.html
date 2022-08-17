@@ -1,0 +1,53 @@
+{% extends 'my_admin/base.html' %}
+{% load static %}
+{% block title %}
+Movie
+{% endblock %}
+{% block main %}
+    <h1>Список фильмов</h1>
+    <div style="float: left"><a class="main_linc" href="{% url "add_movie" %}">Добавить фильм</a></div>
+    <div style="float: right">
+        <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Сортировка
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url "movies" %}?type=1">По времени добавления</a></li>
+          <li><a class="dropdown-item" href="{% url "movies" %}?type=-1">По времени добавления (реверс)</a></li>
+          <li><a class="dropdown-item" href="{% url "movies" %}?type=2">По названию</a></li>
+          <li><a class="dropdown-item" href="{% url "movies" %}?type=-2">По названию (реверс)</a></li>
+      </ul>
+    </div>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Название</th>
+      <th scope="col">Форматы</th>
+      <th scope="col">Постер</th>
+    </tr>
+  </thead>
+    <tbody>
+      {% for movie in page %}
+        <tr>
+          <td><strong><a href="/my_admin/movies/{{ movie.seo.url }}">{{ movie.name }}</a></strong></td>
+          <td>{% if movie.is_2D %}2-D {% endif %}
+              {% if movie.is_3D %}3-D {% endif %}
+              {% if movie.is_IMAX %}IMAX {% endif %}
+          </td>
+        <td><img class="small_photo" src="{{ movie.main_photo.url }}"></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>
+  <div class="pagin_menu">
+    {% if page.has_previous %}
+      <a class="pagin_menu_minor" href="?page=1&type={{ sort_type }}">1</a>
+      <a href="?page={{ page.previous_page_number }}&type={{ sort_type }}"><<</a>
+    {% endif %}
+      <span class="pagin_menu_major">{{ page.number }}</span>
+    {% if page.has_next %}
+      <a href="?page={{ page.next_page_number }}&type={{ sort_type }}">>></a>
+      <a class="pagin_menu_minor" href="?page={{ page.paginator.num_pages }}&type={{ sort_type }}">{{ page.paginator.num_pages }}</a>
+    {% endif %}
+  </div>
+{% endblock %}
+
