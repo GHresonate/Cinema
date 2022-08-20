@@ -24,13 +24,16 @@ Add movie
                 <label for="{{ movie.main_photo.id_for_label }}">Главный баннер:</label>
                  <div id = "box">
                      <button class="btn btn-light bt_for_img">Добавить</button>
-                     <div id="main-ph" class="hidden_form">{{ movie.main_photo }}</div>
+                     <div id="main-ph" class="hidden_form"><input type="file" name="main_photo" accept="image/*" required="" id="{{ movie.main_photo.id_for_label }}"></div>
                  </div>
                  <div id="rem_main" class="btn btn-light">Удалить</div>
                  {{ movie.main_photo.errors }}
              </div>
 
             <div id = 'image_grid' style="background-image: url('{% static "my_admin/img/camera.jpg" %}');">
+                {% if the_movie %}
+                    <img src="{{ the_movie.main_photo.url }}" style="width: 194px; height: 144px;">
+                {% endif %}
             </div>
         </div>
 
@@ -44,11 +47,11 @@ Add movie
             </div>
           {{ photos.management_form }}
                 {% for photo in photos %}
-                <div class="boxes">
+               <div class="boxes">
                     <div class="small_ph" style="background-image: url('{% static "my_admin/img/camera.jpg" %}');"></div>
                     <div class= "small_box">
                         <button class="small_down_butt small_bt_for_img btn btn-light">Загрузить</button>
-                        <div class="small_hidden_form small_photo_form">{{ photo.photo }}</div>
+                        <div class="small_hidden_form small_photo_form">{{ photo }}</div>
                     </div>
                     <div class="rem_small"><p class="rem_small_text">+</p></div>
                 </div>

@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
+
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ photos }}
+          {{ photos.management_form }}
+                {% for photo in photos %}
+                <div class="boxes">
+                    <div class="small_ph" style="background-image: url('{% static "my_admin/img/camera.jpg" %}');"></div>
+                    <div class= "small_box">
+                        <button class="small_down_butt small_bt_for_img btn btn-light">Загрузить</button>
+                        <div class="small_hidden_form small_photo_form">{{ photo }}</div>
+                    </div>
+                    <div class="rem_small"><p class="rem_small_text">+</p></div>
+                </div>
+                {% endfor %}
 <input type="submit" class="btn btn-light" style="width: 200px;" value="Сохранить">
 </form>
 </body>

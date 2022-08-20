@@ -1,33 +1,33 @@
 {% extends 'my_admin/base.html' %}
 {% load static %}
 {% block title %}
-Add movie
+Add page
 {% endblock %}
 {% block main %}
-        <div><h1>Lj,f</h1></div><hr>
+        <div><h1>Добавить страницу</h1></div><hr>
 
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
         {{ form.non_field_errors }}
         <div class="field">
-            <label for="{{ movie.name.id_for_label }}">Название:</label>
-            {{ movie.name }}
-            {{ movie.name.errors }}
+            <label for="{{ page.name.id_for_label }}">Название:</label>
+            {{ page.name }}
+            {{ page.name.errors }}
         </div>
         <div class="field">
-            <label for="{{ movie.description.id_for_label }}">Описание:</label>
-            {{ movie.description }}
-            {{ movie.description.errors }}
+            <label for="{{ page.description.id_for_label }}">Описание:</label>
+            {{ page.description }}
+            {{ page.description.errors }}
         </div>
         <div class="photo_field">
              <div class="field" style="float: left">
-                <label for="{{ movie.main_photo.id_for_label }}">Главный баннер:</label>
+                <label for="{{ page.main_photo.id_for_label }}">Главный баннер:</label>
                  <div id = "box">
                      <button class="btn btn-light bt_for_img">Добавить</button>
-                     <div id="main-ph" class="hidden_form">{{ movie.main_photo }}</div>
+                     <div id="main-ph" class="hidden_form">{{ page.main_photo }}</div>
                  </div>
                  <div id="rem_main" class="btn btn-light">Удалить</div>
-                 {{ movie.main_photo.errors }}
+                 {{ page.main_photo.errors }}
              </div>
 
             <div id = 'image_grid' style="background-image: url('{% static "my_admin/img/camera.jpg" %}');">
@@ -44,6 +44,7 @@ Add movie
             </div>
           {{ photos.management_form }}
                 {% for photo in photos %}
+
                 <div class="boxes">
                     <div class="small_ph" style="background-image: url('{% static "my_admin/img/camera.jpg" %}');"></div>
                     <div class= "small_box">
@@ -54,32 +55,7 @@ Add movie
                 </div>
                 {% endfor %}
         </div>
-
-        <div class="field">
-            <label for="{{ movie.trailer_url.id_for_label }}">Ссылка на трейлер:</label>
-            {{ movie.trailer_url }}
-            {{ movie.trailer_url.errors }}
-        </div>
-        <div class="radio_home">
-            <p class="checkbox_title">
-                Тип:
-            </p>
-            <div>
-                <label for="{{ movie.is_2D.id_for_label }}">2D:</label>
-                <div class="radio">{{ movie.is_2D }}</div>
-                {{ movie.is_2D.errors }}
-            </div>
-            <div>
-                <label for="{{ movie.is_3D.id_for_label }}">3D:</label>
-                <div class="radio">{{ movie.is_3D }}</div>
-                {{ movie.is_3D.errors }}
-            </div>
-            <div>
-                <label for="{{ movie.is_IMAX.id_for_label }}">IMAX:</label>
-                <div class="radio">{{ movie.is_IMAX }}</div>
-                {{ movie.is_IMAX.errors }}
-            </div>
-        </div>
+       <br><br><br><br><br><br><br><br>
        <br>
         <h3>SEO</h3>
         <hr>

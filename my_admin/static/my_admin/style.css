@@ -112,7 +112,7 @@ a:hover{
 .rem_small{
     position: relative;
     transform: rotate(45deg);
-    top:-240px;
+    top:-235px;
     right: -150px;
     background-color: bisque;
     cursor: default;

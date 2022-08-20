@@ -13,6 +13,12 @@ Movie
     <h1>Список кинотеатров</h1>
     <div style="float: left"><a class="main_linc" href="{% url "add_cinema" %}">Добавить кинотеатр</a></div>
     {% endif %}
+
+    {% if type == "pages" %}
+    <h1>Страницы</h1>
+    <div style="float: left"><a class="main_linc" href="{% url "add_page" %}">Добавить страницу</a></div>
+    {% endif %}
+
     <div style="float: right">
         <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
           Сортировка
@@ -28,7 +34,9 @@ Movie
   <thead>
     <tr>
       <th scope="col">Название</th>
+        {% if type == "movies" %}
       <th scope="col">Форматы</th>
+        {% endif %}
       <th scope="col">Постер</th>
     </tr>
   </thead>
@@ -36,10 +44,12 @@ Movie
       {% for model in page %}
         <tr>
           <td><strong><a href="/my_admin/{{ type }}/{{ model.seo.url }}">{{ model.name }}</a></strong></td>
+        {% if type == "movies" %}
           <td>{% if model.is_2D %}2-D {% endif %}
               {% if model.is_3D %}3-D {% endif %}
               {% if model.is_IMAX %}IMAX {% endif %}
           </td>
+        {% endif %}
         <td><img class="small_photo" src="{{ model.main_photo.url }}"></td>
         </tr>
       {% endfor %}

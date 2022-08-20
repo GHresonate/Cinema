@@ -13,7 +13,7 @@ class PhotoForm(forms.ModelForm):
         fields = ['photo']
 
 
-PhotosForm = modelformset_factory(Photo, form=PhotoForm, extra=5)
+PhotosForm = modelformset_factory(Photo, form=PhotoForm, extra=5, max_num=5, can_delete=True)
 
 
 class SEOForm(forms.ModelForm):

@@ -30,14 +30,11 @@ let lastForm = -1;
 let form_state = [];
 let forms = [];
 let order = [];
-/*
-if (bigHiddenForm.firstElementChild.tagName=='A'){
-    bigHiddenForm.removeChild(bigHiddenForm.firstElementChild);
-    bigHiddenForm.removeChild(bigHiddenForm.firstElementChild);
-    bigHiddenForm.innerHTML=fileUploader.outerHTML
-    fileUploader = document.getElementById('id_main_photo');
-}
-*/
+
+if (imageGrid.childNodes.length>1){
+        imageGrid.removeChild(imageGrid.firstChild);
+        imageGrid.removeChild(imageGrid.childNodes[1])
+    };
 
 function validate(){
     let is_good = 1;
@@ -47,12 +44,12 @@ function validate(){
         is_good=0;
     } else{
         buttAddForm.parentNode.classList.remove("error");
-        for (let y=5; y<firstForm+5;y++){
-          if (photo_parent.children[y].children[1].children[1].children[0].value ==''){
-              photo_parent.children[y].classList.add("error");
+        for (let y=0; y<firstForm;y++){
+          if (boxes[y].childNodes[1].childNodes.length==0){
+              boxes[y].classList.add("error");
               is_good = 0;
           } else {
-              photo_parent.children[y].classList.remove("error");
+              boxes[y].classList.remove("error");
           };
         };
     }
@@ -76,10 +73,7 @@ function validate(){
           inputs[5].removeChild(messageTextOneWord);
       };
     };
-/*fxzd
-    fxzd*/
-
-    if (fileUploader.value == ''){
+    if (!imageGrid.firstChild){
         fileUploader.parentElement.parentElement.parentElement.classList.add("error");
         is_good = 0;
     }
@@ -135,11 +129,19 @@ function validate(){
       inputs[0].classList.remove("length_error");
     };
     if (is_good){
+        for (let x=0; x<allPhotos; x++){
+            let first = getFirstClear();
+            if (first!=-2){
+                photo_parent.appendChild(forms[first]);
+                boxes[first].parentNode.style.display = "none"
+                lastForm++;
+                form_state[first]=1;
+            };
+        }
         bigForm.submit();
     }
 
 };
-
 function getFirstClear(){
   let first;
   for (let x=0; x<allPhotos; x++){
@@ -223,23 +225,23 @@ if (bannerUploader) {
 }
 
 remMain.addEventListener('click', (event)=>{
-    fileUploader.value = '';
-  if (imageGrid.firstChild) {
+    if (imageGrid.firstChild) {
       imageGrid.removeChild(imageGrid.firstChild);
-  };
+    };
+    fileUploader.value = '';
 });
 
 if (remBanner){
     remBanner.addEventListener('click', (event)=>{
-        bannerUploader.value = '';
         if (bannerImageGrid.firstChild) {
             bannerImageGrid.removeChild(bannerImageGrid.firstChild);
         };
+        bannerUploader.value = '';
 });
 }
 
 for (let x=0; x<allPhotos; x++) {
-    smallBatt[x].firstChild.addEventListener('change', (event) => {
+    smallBatt[x].children[1].addEventListener('change', (event) => {
         let realPos = getRealPosition(x);
         const files = event.target.files;
         let file = files[0];
@@ -271,10 +273,11 @@ for (let x=0; x<allPhotos; x++) {
                 buttAddForm.style.opacity="1";
             }
             else {
+                buttAddForm.style.opacity="1";
                 if (lastForm==0){
-                    buttAddForm.style.opacity="1";
                     buttRemForm.style.opacity="0.5";
                 }
+
             }
             photo_parent.removeChild(forms[realPlace]);
             changeOrder(realPlace);
@@ -335,14 +338,18 @@ buttAddForm.addEventListener('click', (event) =>{
 });
 
 resButt.addEventListener('click', (event)=>{
-    if (imageGrid.firstChild){
-        imageGrid.removeChild(imageGrid.firstChild);
-    };
-    fileUploader.value = '';
-    bannerUploader.value=''
-    if (bannerImageGrid.firstChild){
-        bannerImageGrid.removeChild(bannerImageGrid.firstChild);
-    };
+    if (fileUploader){
+        if (imageGrid.firstChild){
+            imageGrid.removeChild(imageGrid.firstChild);
+        }
+        fileUploader.value = '';
+      };
+    if (bannerUploader){
+        bannerUploader.value=''
+        if (bannerImageGrid.firstChild){
+            bannerImageGrid.removeChild(bannerImageGrid.firstChild);
+        };
+    }
     let first = getFirstClear();
     if (first==-2){
         first=allPhotos;
@@ -382,16 +389,85 @@ resButt.addEventListener('click', (event)=>{
     buttRemForm.style.opacity="0.5";
 });
 
+let preload_img = 0;
 
 for (let x=0; x<allPhotos; x++){
     order[x] = x;
     smallBatt[x].reader = new FileReader();
 };
 
+let deletedCheckboxes = []
+
 buttRemForm.style.opacity="0.5";
 for (let x=0; x<allPhotos; x++){
-    forms[x] = boxes[0];
-    form_state[x]=0;
-    $(boxes[0]).remove();
+    forms[x] = boxes[preload_img];
+    if (smallBatt[preload_img].childNodes.length<=11){
+        let position = 0
+        for (let y=0; y<=4; y++){
+            if (y==1){
+                position++;
+                continue;
+            };
+            boxes[preload_img].children[1].children[1].children[position].remove()
+        };
+        $(boxes[preload_img]).remove();
+        form_state[x]=0;
+
+    } else {
+        buttRemForm.style.opacity="1";
+        form_state[x]=1;
+        let href = smallBatt[preload_img].childNodes[3].href;
+        let img = document.createElement('img');
+        img.height = 124;
+        img.width = 174;
+        boxes[preload_img].children[0].appendChild(img);
+        img.src =href;
+        let position = 0
+        for (let y=0; y<=8; y++){
+            if (y==6){
+                position++;
+                continue
+            };
+            boxes[preload_img].children[1].children[1].childNodes[position].remove()
+        };
+        if (preload_img == allPhotos-1){
+            buttAddForm.style.opacity="0.5";
+        }
+
+        deletedCheckboxes[preload_img] = boxes[preload_img].children[1].children[1].children[1]
+        boxes[preload_img].children[1].children[1].children[1].style.display = "none"
+        preload_img++;
+    };
 };
 
+for (let x=0; x<deletedCheckboxes.length; x++){
+        smallBatt[x].children[0].addEventListener('change', (event) => {
+        let realPos = getRealPosition(x);
+        const files = event.target.files;
+        let file = files[0];
+        smallBatt[realPos].reader.readAsDataURL(file);
+        smallBatt[realPos].reader.addEventListener('load',(event)=>{
+            let place = getPlace(realPos);
+            let img = document.createElement('img');
+            img.height = 124;
+            img.width = 174;
+            if (place.firstChild){
+                place.removeChild(place.firstChild);
+            };
+            place.appendChild(img);
+            img.src = event.target.result;
+            img.alt = file.name;
+            smallBatt[realPos].reader = new FileReader();
+            deletedCheckboxes[x].checked = false
+
+        });
+    },);
+        smallRem[x].addEventListener('click', (event)=>{
+        let realPlace = getRealPosition(x);
+        let place = getPlace(realPlace);
+        if (place){
+            deletedCheckboxes[x].checked = true
+        };
+
+    });
+}
