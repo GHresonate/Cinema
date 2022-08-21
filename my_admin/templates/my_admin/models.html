@@ -1,7 +1,7 @@
 {% extends 'my_admin/base.html' %}
 {% load static %}
 {% block title %}
-Movie
+{{ type }}
 {% endblock %}
 {% block main %}
     {% if type == "movies" %}
@@ -12,6 +12,16 @@ Movie
     {% if type == "cinemas" %}
     <h1>Список кинотеатров</h1>
     <div style="float: left"><a class="main_linc" href="{% url "add_cinema" %}">Добавить кинотеатр</a></div>
+    {% endif %}
+
+    {% if type == "news" %}
+    <h1>Новости</h1>
+    <div style="float: left"><a class="main_linc" href="{% url "add_news" %}">Добавить новость</a></div>
+    {% endif %}
+
+    {% if type == "discounts" %}
+    <h1>Акции</h1>
+    <div style="float: left"><a class="main_linc" href="{% url "add_discounts" %}">Добавить акцию</a></div>
     {% endif %}
 
     {% if type == "pages" %}
@@ -37,6 +47,9 @@ Movie
         {% if type == "movies" %}
       <th scope="col">Форматы</th>
         {% endif %}
+        {% if type == "news" or type == "discounts" %}
+      <th scope="col">Отображаеться:</th>
+        {% endif %}
       <th scope="col">Постер</th>
     </tr>
   </thead>
@@ -49,6 +62,13 @@ Movie
               {% if model.is_3D %}3-D {% endif %}
               {% if model.is_IMAX %}IMAX {% endif %}
           </td>
+        {% endif %}
+        {% if type == "news" or type == "discounts" %}
+            {% if  model.is_active %}
+                <td scope="col">Да</td>
+            {% else %}
+                <td scope="col">Нет</td>
+            {% endif %}
         {% endif %}
         <td><img class="small_photo" src="{{ model.main_photo.url }}"></td>
         </tr>

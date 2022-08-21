@@ -36,6 +36,13 @@ if (imageGrid.childNodes.length>1){
         imageGrid.removeChild(imageGrid.childNodes[1])
     };
 
+if (bannerImageGrid) {
+    if (bannerImageGrid.childNodes.length > 1) {
+        bannerImageGrid.removeChild(bannerImageGrid.firstChild);
+        bannerImageGrid.removeChild(bannerImageGrid.childNodes[1])
+    }
+    ;
+}
 function validate(){
     let is_good = 1;
     let firstForm = getFirstClear();
@@ -62,7 +69,7 @@ function validate(){
       }
     };
 
-
+/*
     if (!regexpForOneWord.test(inputs[5].children[1].value) && !(inputs[5].classList.contains("error"))){
         is_good = 0;
         inputs[5].classList.add("length_error");
@@ -72,22 +79,22 @@ function validate(){
       if (inputs[5].contains(messageTextOneWord)){
           inputs[5].removeChild(messageTextOneWord);
       };
-    };
-    if (!imageGrid.firstChild){
+    };*/
+    if (!imageGrid.children[0]){
         fileUploader.parentElement.parentElement.parentElement.classList.add("error");
         is_good = 0;
     }
     else {
         fileUploader.parentElement.parentElement.parentElement.classList.remove("error");
     };
-    if (bannerUploader) {
-        if (bannerUploader.value == '') {
-            bannerUploader.parentElement.parentElement.parentElement.classList.add("error");
-            is_good = 0;
-        } else {
-            bannerUploader.parentElement.parentElement.parentElement.classList.remove("error");
-        }
-        ;
+    if (bannerImageGrid){
+    if (!bannerImageGrid.children[0]){
+        bannerUploader.parentElement.parentElement.parentElement.classList.add("error");
+        is_good = 0;
+    }
+    else {
+        bannerUploader.parentElement.parentElement.parentElement.classList.remove("error");
+    };
     }
 
     let radio_value = 0;
@@ -128,7 +135,7 @@ function validate(){
     } else {
       inputs[0].classList.remove("length_error");
     };
-    if (is_good){
+    if (is_good==1){
         for (let x=0; x<allPhotos; x++){
             let first = getFirstClear();
             if (first!=-2){
@@ -471,3 +478,4 @@ for (let x=0; x<deletedCheckboxes.length; x++){
 
     });
 }
+

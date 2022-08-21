@@ -61,20 +61,16 @@ class CinemaForm(forms.ModelForm):
 
 
 class NewsAndDiscountForm(forms.ModelForm):
-    types = [
-        ('News', 'News'),
-        ('Discount', 'Discount')
-    ]
-    type = forms.ChoiceField(choices=types)
-    date_published = forms.DateField(input_formats=['%d/%m/%Y'])
     description = forms.CharField(widget=forms.Textarea)
     name = forms.CharField(max_length=256)
     main_photo = forms.ImageField()
-    url = forms.URLField()
+    is_active = forms.BooleanField(required=False)
+    trailer_url = forms.URLField()
+    date_published = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = NewsAndDiscount
-        fields = ('date_published', 'description', 'name', 'main_photo', 'url')
+        fields = ('description', 'date_published', 'name', 'main_photo', 'is_active', 'trailer_url')
 
 
 class PagesForm(forms.ModelForm):

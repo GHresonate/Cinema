@@ -24,13 +24,16 @@ Add cinema
                 <label for="{{ cinema.main_photo.id_for_label }}">Логотип:</label>
                  <div id = "box">
                      <button class="btn btn-light bt_for_img">Добавить</button>
-                     <div id="main-ph" class="hidden_form">{{ cinema.main_photo }}</div>
+                     <div id="main-ph" class="hidden_form"><input type="file" name="main_photo" accept="image/*" required="" id="{{ cinema.main_photo.id_for_label }}"></div>
                  </div>
                  <div id="rem_main" class="btn btn-light">Удалить</div>
                  {{ cinema.main_photo.errors }}
              </div>
 
             <div id = 'image_grid' style="background-image: url('{% static "my_admin/img/camera.jpg" %}');">
+                {% if the_cinema %}
+                    <img src="{{ the_cinema.main_photo.url }}" style="width: 194px; height: 144px;">
+                {% endif %}
             </div>
         </div>
 
@@ -39,13 +42,15 @@ Add cinema
                 <label for="{{ cinema.banner_photo.id_for_label }}">Главный баннер:</label>
                  <div id = "box_for_banner">
                      <button class="btn btn-light bt_for_img">Добавить</button>
-                     <div id="main-banner" class="hidden_form">{{ cinema.banner_photo }}</div>
+                     <div id="main-banner" class="hidden_form"><input type="file" name="banner_photo" accept="image/*" required="" id="{{ cinema.banner_photo.id_for_label }}"></div>
                  </div>
                  <div id="rem_banner" class="btn btn-light">Удалить</div>
                  {{ cinema.banner_photo.errors }}
              </div>
-
             <div id = 'image_banner' style="background-image: url('{% static "my_admin/img/camera.jpg" %}');">
+                {% if the_cinema %}
+                    <img src="{{ the_cinema.banner_photo.url }}" style="width: 194px; height: 144px;">
+                {% endif %}
             </div>
         </div>
 
@@ -63,7 +68,7 @@ Add cinema
                     <div class="small_ph" style="background-image: url('{% static "my_admin/img/camera.jpg" %}');"></div>
                     <div class= "small_box">
                         <button class="small_down_butt small_bt_for_img btn btn-light">Загрузить</button>
-                        <div class="small_hidden_form small_photo_form">{{ photo.photo }}</div>
+                        <div class="small_hidden_form small_photo_form">{{ photo }}</div>
                     </div>
                     <div class="rem_small"><p class="rem_small_text">+</p></div>
                 </div>

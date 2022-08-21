@@ -15,6 +15,16 @@ Add news
             {{ news.name.errors }}
         </div>
         <div class="field">
+            <label for="{{ news.is_active.id_for_label }}">Показывать:</label>
+            <div style="float: left; transform: scale(2); margin-left: 14px;">{{ news.is_active }}</div>
+            {{ news.is_active.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ news.date_published.id_for_label }}">Дата публикации:</label>
+            {{ news.date_published }}
+            {{ news.date_published.errors }}
+        </div>
+        <div class="field">
             <label for="{{ news.description.id_for_label }}">Описание:</label>
             {{ news.description }}
             {{ news.description.errors }}
@@ -24,13 +34,16 @@ Add news
                 <label for="{{ news.main_photo.id_for_label }}">Главный баннер:</label>
                  <div id = "box">
                      <button class="btn btn-light bt_for_img">Добавить</button>
-                     <div id="main-ph" class="hidden_form">{{ news.main_photo }}</div>
+                     <div id="main-ph" class="hidden_form"><input type="file" name="main_photo" accept="image/*" required="" id="{{ news.main_photo.id_for_label }}"></div>
                  </div>
                  <div id="rem_main" class="btn btn-light">Удалить</div>
                  {{ news.main_photo.errors }}
              </div>
 
             <div id = 'image_grid' style="background-image: url('{% static "my_admin/img/camera.jpg" %}');">
+                {% if the_news %}
+                    <img src="{{ the_news.main_photo.url }}" style="width: 194px; height: 144px;">
+                {% endif %}
             </div>
         </div>
 
@@ -42,13 +55,13 @@ Add news
                 <div id="big_gal_button_top" class="btn btn-light"><img src="{%  static "my_admin/img/pngwing.png" %}" style="width: 50px;"></div>
                 <div id="big_gal_button_bottom" class="btn btn-light"><img src="{%  static "my_admin/img/min.png" %}" style="width: 50px;"></div>
             </div>
-          {{ news.management_form }}
+          {{ photos.management_form }}
                 {% for photo in photos %}
-                <div class="boxes">
+               <div class="boxes">
                     <div class="small_ph" style="background-image: url('{% static "my_admin/img/camera.jpg" %}');"></div>
                     <div class= "small_box">
                         <button class="small_down_butt small_bt_for_img btn btn-light">Загрузить</button>
-                        <div class="small_hidden_form small_photo_form">{{ photo.photo }}</div>
+                        <div class="small_hidden_form small_photo_form">{{ photo }}</div>
                     </div>
                     <div class="rem_small"><p class="rem_small_text">+</p></div>
                 </div>
@@ -56,9 +69,9 @@ Add news
         </div>
 
         <div class="field">
-            <label for="{{ news.date_published.id_for_label }}">Дата публикации:</label>
-            {{ news.date_published }}
-            {{ news.date_published.errors }}
+            <label for="{{ news.trailer_url.id_for_label }}">Ссылка на видео:</label>
+            {{ news.trailer_url }}
+            {{ news.trailer_url.errors }}
         </div>
        <br>
         <h3>SEO</h3>

@@ -6,7 +6,6 @@ from .forms import PhotosForm, SEOForm, MovieForm, CinemaForm, NewsAndDiscountFo
 from django.core.paginator import Paginator
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
-from django.forms import modelformset_factory
 
 
 class SEOException(Exception):
@@ -16,42 +15,68 @@ class SEOException(Exception):
         self.value_dict = value_dict
 
 
-def change_movie(request, url):
-    the_movie = get_object_or_404(Movie, seo__url = url)
-    gall = the_movie.photo_list
+def change(request, url, model, model_form, model_name, plural_name):
+    the_object = get_object_or_404(model, seo__url=url)
+    gall = the_object.photo_list
     quer = Photo.objects.all().filter(gallery=gall)
     if request.method == 'POST':
         photos = PhotosForm(request.POST, request.FILES, queryset=quer)
-        movie = MovieForm(request.POST, request.FILES, instance=the_movie)
-        seo = SEOForm(request.POST, instance=the_movie.seo)
-        for photo in photos:
-            if photo.is_valid():
-                photo_final = photo.save(commit=False)
-                photo_final.gallery = gall
-                if photo_final.photo:
-                    photo_final.save()
-        photos.save()
-        url = the_movie.seo.url
-        the_movie.seo.url = None
-        the_movie.seo.save()
-        if not seo.is_valid():
-            the_movie.seo.url = url
-            the_movie.seo.save()
-            return render(request, 'my_admin/add_movie.html', {"photos": photos, "seo": seo, "movie": movie, "the_movie": the_movie})
-        new_seo = seo.save()
-        the_movie.seo.url = new_seo.url
-        the_movie.seo.save()
-        seo.save()
-        movie.save()
-        return HttpResponseRedirect(reverse("movies"))
+        object = model_form(request.POST, request.FILES, instance=the_object)
+        if object.is_valid():
+            seo = SEOForm(request.POST, instance=the_object.seo)
+            for photo in photos:
+                if photo.is_valid():
+                    photo_final = photo.save(commit=False)
+                    photo_final.gallery = gall
+                    if photo_final.photo:
+                        photo_final.save()
+            photos.save()
+            url = the_object.seo.url
+            the_object.seo.url = None
+            the_object.seo.save()
+            if not seo.is_valid():
+                the_object.seo.url = url
+                the_object.seo.save()
+                return render(request, 'my_admin/add_' + model_name + '.html',
+                          {"photos": photos, "seo": seo, model_name: object, "the_" + model_name: the_object})
+            new_seo = seo.save()
+            the_object.seo.url = new_seo.url
+            the_object.seo.save()
+            seo.save()
+            object.save()
+            return HttpResponseRedirect(reverse(plural_name))
+        else:
+            print(object.errors)
+            raise ValueError
     else:
-        movie = MovieForm(instance=the_movie)
-        seo = SEOForm(instance=the_movie.seo)
+        object = model_form(instance=the_object)
+        seo = SEOForm(instance=the_object.seo)
         photos = PhotosForm(queryset=quer)
-        return render(request, "my_admin/add_movie.html", {"photos": photos, "seo": seo, "movie": movie, "the_movie": the_movie})
+        return render(request, "my_admin/add_" + model_name + ".html",
+                      {"photos": photos, "seo": seo, model_name: object, "the_" + model_name: the_object})
 
 
-def get_right_page(request, model, page_type, model_in_page=4):
+def change_movie(request, url):
+    return change(request, url, Movie, MovieForm, "movie", "movies")
+
+
+def change_cinema(request, url):
+    return change(request, url, Cinema, CinemaForm, "cinema", "cinemas")
+
+
+def change_page(request, url):
+    return change(request, url, Pages, PagesForm, "page", "pages")
+
+
+def change_news(request, url):
+    return change(request, url, NewsAndDiscount, NewsAndDiscountForm, "news", "news")
+
+
+def change_discount(request, url):
+    return change(request, url, NewsAndDiscount, NewsAndDiscountForm, "discount", "discounts")
+
+
+def get_right_page(request, model, page_type, model_in_page=15):
     try:
         sort_type = int(request.GET.get('type'))
     except TypeError:
@@ -71,7 +96,41 @@ def get_right_page(request, model, page_type, model_in_page=4):
 
 
 def news(request):
-    pass
+    try:
+        sort_type = int(request.GET.get('type'))
+    except TypeError:
+        sort_type = -1
+    if sort_type == -1:
+        model_sum = NewsAndDiscount.objects.all().filter(type="News").order_by("-id")
+    elif sort_type == 1:
+        model_sum = NewsAndDiscount.objects.all().filter(type="News").order_by("id")
+    elif sort_type == 2:
+        model_sum = NewsAndDiscount.objects.all().filter(type="News").order_by("name")
+    elif sort_type == -2:
+        model_sum = NewsAndDiscount.objects.all().filter(type="News").order_by("-name")
+    paginator = Paginator(model_sum, 15)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    return render(request, 'my_admin/models.html', {"page": page, "sort_type": sort_type, "type": "news"})
+
+
+def discounts(request):
+    try:
+        sort_type = int(request.GET.get('type'))
+    except TypeError:
+        sort_type = -1
+    if sort_type == -1:
+        model_sum = NewsAndDiscount.objects.all().filter(type="Discount").order_by("-id")
+    elif sort_type == 1:
+        model_sum = NewsAndDiscount.objects.all().filter(type="Discount").order_by("id")
+    elif sort_type == 2:
+        model_sum = NewsAndDiscount.objects.all().filter(type="Discount").order_by("name")
+    elif sort_type == -2:
+        model_sum = NewsAndDiscount.objects.all().filter(type="Discount").order_by("-name")
+    paginator = Paginator(model_sum, 15)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    return render(request, 'my_admin/models.html', {"page": page, "sort_type": sort_type, "type": "discounts"})
 
 
 def cinemas(request):
@@ -105,9 +164,9 @@ def main_add(request, main_form, name_main_form, plural_name_main_form):
             final_form.photo_list = gallery
             saved_seo = seo.save()
             final_form.seo = saved_seo
-            final_form.save()
             return final_form
         else:
+            print(main_form.errors)
             raise ValueError
     else:
         photos = PhotosForm(queryset=Photo.objects.none())
@@ -129,6 +188,21 @@ def add_news(request):
     else:
         news = NewsAndDiscountForm()
         return main_add(request, news, "news", "news")
+
+
+def add_disc(request):
+    if request.method == 'POST':
+        a_disc = NewsAndDiscountForm(request.POST, request.FILES)
+        try:
+            final_disc = main_add(request, a_disc, "discount", "discounts")
+        except SEOException as e:
+            return render(e.request, e.way, e.value_dict)
+        final_disc.type = "Discount"
+        final_disc.save()
+        return HttpResponseRedirect(reverse('discounts'))
+    else:
+        disc = NewsAndDiscountForm()
+        return main_add(request, disc, "discount", "discounts")
 
 
 def add_movie(request):
