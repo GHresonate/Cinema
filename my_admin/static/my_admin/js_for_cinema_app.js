@@ -31,20 +31,26 @@ let form_state = [];
 let forms = [];
 let order = [];
 
-if (imageGrid.childNodes.length>1){
+if (imageGrid) {
+    if (imageGrid.childNodes.length > 1) {
         imageGrid.removeChild(imageGrid.firstChild);
         imageGrid.removeChild(imageGrid.childNodes[1])
-    };
+    }
+    ;
+}
 
+if (bannerImageGrid){
 if (bannerImageGrid) {
     if (bannerImageGrid.childNodes.length > 1) {
         bannerImageGrid.removeChild(bannerImageGrid.firstChild);
         bannerImageGrid.removeChild(bannerImageGrid.childNodes[1])
     }
     ;
-}
+}}
 function validate(){
+
     let is_good = 1;
+    if (buttAddForm){
     let firstForm = getFirstClear();
     if (firstForm==0){
         buttAddForm.parentNode.classList.add("error");
@@ -59,7 +65,7 @@ function validate(){
               boxes[y].classList.remove("error");
           };
         };
-    }
+    }}
     for (let x=0; x<inputs.length; x++){
       if (inputs[x].children[1].value==''){
           inputs[x].classList.add("error");
@@ -69,24 +75,24 @@ function validate(){
       }
     };
 
-/*
-    if (!regexpForOneWord.test(inputs[5].children[1].value) && !(inputs[5].classList.contains("error"))){
+    if (!regexpForOneWord.test(bigForm.url.value) && !(bigForm.url.classList.contains("error"))){
         is_good = 0;
-        inputs[5].classList.add("length_error");
-        inputs[5].appendChild(messageTextOneWord);
+        bigForm.url.parentNode.classList.add("length_error");
+        bigForm.url.parentNode.appendChild(messageTextOneWord);
     } else {
-      inputs[5].classList.remove("length_error");
-      if (inputs[5].contains(messageTextOneWord)){
-          inputs[5].removeChild(messageTextOneWord);
+      bigForm.url.classList.remove("length_error");
+      if (bigForm.url.parentNode.contains(messageTextOneWord)){
+          bigForm.url.parentNode.removeChild(messageTextOneWord);
       };
-    };*/
+    };
+    if (imageGrid){
     if (!imageGrid.children[0]){
         fileUploader.parentElement.parentElement.parentElement.classList.add("error");
         is_good = 0;
     }
     else {
         fileUploader.parentElement.parentElement.parentElement.classList.remove("error");
-    };
+    };}
     if (bannerImageGrid){
     if (!bannerImageGrid.children[0]){
         bannerUploader.parentElement.parentElement.parentElement.classList.add("error");
@@ -116,7 +122,7 @@ function validate(){
         ;
 
 
-        if (!(regexpForUrl.test(bigForm.trailer_url.value)) && !(inputs[3].classList.contains("error"))) {
+        /*if (!(regexpForUrl.test(bigForm.trailer_url.value)) && !(bigForm.trailer_url.contains("error"))) {
             inputs[3].classList.add("url_error");
             inputs[3].appendChild(messageUrl);
             is_good = 0;
@@ -126,8 +132,7 @@ function validate(){
                 inputs[3].removeChild(messageUrl);
             }
             ;
-        }
-        ;
+        };*/
     }
     if ((inputs[0].children[1].value.length>256)){
         inputs[0].classList.add("length_error");
@@ -136,6 +141,8 @@ function validate(){
       inputs[0].classList.remove("length_error");
     };
     if (is_good==1){
+
+        if (boxes[0]){
         for (let x=0; x<allPhotos; x++){
             let first = getFirstClear();
             if (first!=-2){
@@ -144,7 +151,7 @@ function validate(){
                 lastForm++;
                 form_state[first]=1;
             };
-        }
+        }}
         bigForm.submit();
     }
 
@@ -192,7 +199,7 @@ function changeOrder(position){
 };
 
 subButt.addEventListener('click', validate);
-
+if (fileUploader){
 fileUploader.addEventListener('change', (event) => {
   const files = event.target.files;
   let file = files[0];
@@ -209,7 +216,7 @@ fileUploader.addEventListener('change', (event) => {
     img.alt = file.name;
   });
 
-});
+});}
 if (bannerUploader) {
     bannerUploader.addEventListener('change', (event) => {
         const files = event.target.files;
@@ -231,13 +238,15 @@ if (bannerUploader) {
     });
 }
 
-remMain.addEventListener('click', (event)=>{
-    if (imageGrid.firstChild) {
-      imageGrid.removeChild(imageGrid.firstChild);
-    };
-    fileUploader.value = '';
-});
-
+if (remMain) {
+    remMain.addEventListener('click', (event) => {
+        if (imageGrid.firstChild) {
+            imageGrid.removeChild(imageGrid.firstChild);
+        }
+        ;
+        fileUploader.value = '';
+    });
+}
 if (remBanner){
     remBanner.addEventListener('click', (event)=>{
         if (bannerImageGrid.firstChild) {
@@ -246,104 +255,114 @@ if (remBanner){
         bannerUploader.value = '';
 });
 }
-
-for (let x=0; x<allPhotos; x++) {
-    smallBatt[x].children[1].addEventListener('change', (event) => {
-        let realPos = getRealPosition(x);
-        const files = event.target.files;
-        let file = files[0];
-        smallBatt[realPos].reader.readAsDataURL(file);
-        smallBatt[realPos].reader.addEventListener('load',(event)=>{
-            let place = getPlace(realPos);
-            let img = document.createElement('img');
-            img.height = 124;
-            img.width = 174;
-            if (place.firstChild){
-                place.removeChild(place.firstChild);
-            };
-            place.appendChild(img);
-            img.src = event.target.result;
-            img.alt = file.name;
-            smallBatt[realPos].reader = new FileReader();
-        });
-    },);
-
-    smallRem[x].addEventListener('click', (event)=>{
-        let realPlace = getRealPosition(x);
-        smallBatt[realPlace].firstChild.value = '';
-        let place = getPlace(realPlace);
-        if (place.firstChild){
-          place.removeChild(place.firstChild);
-        }
-        else {
-            if (lastForm==(allPhotos-1)){
-                buttAddForm.style.opacity="1";
-            }
-            else {
-                buttAddForm.style.opacity="1";
-                if (lastForm==0){
-                    buttRemForm.style.opacity="0.5";
+if (smallBatt[0]) {
+    for (let x = 0; x < allPhotos; x++) {
+        smallBatt[x].children[1].addEventListener('change', (event) => {
+            let realPos = getRealPosition(x);
+            const files = event.target.files;
+            let file = files[0];
+            smallBatt[realPos].reader.readAsDataURL(file);
+            smallBatt[realPos].reader.addEventListener('load', (event) => {
+                let place = getPlace(realPos);
+                let img = document.createElement('img');
+                img.height = 124;
+                img.width = 174;
+                if (place.firstChild) {
+                    place.removeChild(place.firstChild);
                 }
+                ;
+                place.appendChild(img);
+                img.src = event.target.result;
+                img.alt = file.name;
+                smallBatt[realPos].reader = new FileReader();
+            });
+        },);
 
+        smallRem[x].addEventListener('click', (event) => {
+            let realPlace = getRealPosition(x);
+            smallBatt[realPlace].firstChild.value = '';
+            let place = getPlace(realPlace);
+            if (place.firstChild) {
+                place.removeChild(place.firstChild);
+            } else {
+                if (lastForm == (allPhotos - 1)) {
+                    buttAddForm.style.opacity = "1";
+                } else {
+                    buttAddForm.style.opacity = "1";
+                    if (lastForm == 0) {
+                        buttRemForm.style.opacity = "0.5";
+                    }
+
+                }
+                photo_parent.removeChild(forms[realPlace]);
+                changeOrder(realPlace);
+                lastForm--;
             }
-            photo_parent.removeChild(forms[realPlace]);
-            changeOrder(realPlace);
-            lastForm--;
-        };
+            ;
+        });
+    }
+    ;
+}
+if (buttRemForm) {
+    buttRemForm.addEventListener('click', (event) => {
+        let first = getFirstClear();
+        let place = getPlace(first - 1);
+
+        if (place.firstChild) {
+            place.removeChild(place.firstChild);
+        }
+        ;
+
+        switch (first) {
+            case 1: {
+                smallBatt[first - 1].firstChild.value = '';
+                buttRemForm.style.opacity = "0.5";
+                photo_parent.removeChild(forms[first - 1]);
+                form_state[first - 1] = 0;
+                lastForm--;
+                break;
+            }
+                ;
+            case (-2): {
+                smallBatt[allPhotos - 1].firstChild.value = '';
+                buttAddForm.style.opacity = "1";
+                photo_parent.removeChild(forms[allPhotos - 1]);
+                form_state[allPhotos - 1] = 0;
+                lastForm--;
+                break;
+            }
+                ;
+            case (-1): {
+                break;
+            }
+                ;
+            default: {
+                smallBatt[first - 1].firstChild.value = '';
+                photo_parent.removeChild(forms[first - 1]);
+                form_state[first - 1] = 0;
+                lastForm--;
+            }
+                ;
+        }
+        ;
     });
-};
 
-buttRemForm.addEventListener('click', (event) =>{
-    let first = getFirstClear();
-    let place = getPlace(first-1);
-
-    if (place.firstChild){
-          place.removeChild(place.firstChild);
-        };
-
-    switch (first){
-        case 1:{
-            smallBatt[first-1].firstChild.value = '';
-            buttRemForm.style.opacity = "0.5";
-            photo_parent.removeChild(forms[first-1]);
-            form_state[first-1] = 0;
-            lastForm--;
-        break;
-    };
-        case (-2): {
-            smallBatt[allPhotos-1].firstChild.value = '';
-            buttAddForm.style.opacity = "1";
-            photo_parent.removeChild(forms[allPhotos - 1]);
-            form_state[allPhotos - 1] = 0;
-            lastForm--;
-            break;
-        };
-        case (-1): {
-            break;
-        };
-        default:{
-            smallBatt[first-1].firstChild.value = '';
-            photo_parent.removeChild(forms[first-1]);
-            form_state[first-1] = 0;
-            lastForm--;
-        };
-    };
-});
-
-buttAddForm.addEventListener('click', (event) =>{
-    let first = getFirstClear();
+    buttAddForm.addEventListener('click', (event) => {
+        let first = getFirstClear();
         buttRemForm.style.opacity = "1";
-    if (first!=-2){
-        photo_parent.appendChild(forms[first]);
-        lastForm++;
-        form_state[first]=1;
-        if (first==(allPhotos-1)){
-            buttAddForm.style.opacity = "0.5";
-        };
-    };
+        if (first != -2) {
+            photo_parent.appendChild(forms[first]);
+            lastForm++;
+            form_state[first] = 1;
+            if (first == (allPhotos - 1)) {
+                buttAddForm.style.opacity = "0.5";
+            }
+            ;
+        }
+        ;
 
-});
-
+    });
+}
 resButt.addEventListener('click', (event)=>{
     if (fileUploader){
         if (imageGrid.firstChild){
@@ -397,14 +416,14 @@ resButt.addEventListener('click', (event)=>{
 });
 
 let preload_img = 0;
-
+if (smallBatt[0]){
 for (let x=0; x<allPhotos; x++){
     order[x] = x;
     smallBatt[x].reader = new FileReader();
-};
+};}
 
 let deletedCheckboxes = []
-
+if (buttRemForm){
 buttRemForm.style.opacity="0.5";
 for (let x=0; x<allPhotos; x++){
     forms[x] = boxes[preload_img];
@@ -442,10 +461,10 @@ for (let x=0; x<allPhotos; x++){
         }
 
         deletedCheckboxes[preload_img] = boxes[preload_img].children[1].children[1].children[1]
-        boxes[preload_img].children[1].children[1].children[1].style.display = "none"
+       /* boxes[preload_img].children[1].children[1].children[1].style.display = "none"*/
         preload_img++;
     };
-};
+};}
 
 for (let x=0; x<deletedCheckboxes.length; x++){
         smallBatt[x].children[0].addEventListener('change', (event) => {

@@ -93,7 +93,9 @@ Add cinema
               </th>
           </tbody>
         </table>
-       <div style="text-align: center"><button class="btn_add_hall btn btn-light btn-lg">Добавить зал</button></div>
+      {% if the_cinema %}
+       <div style="text-align: center" ><a class="btn_add_hall btn btn-light btn-lg" href="http://127.0.0.1:8000/my_admin/add_hall/{{ the_cinema.id }}">Добавить зал</a></div>
+      {% endif %}
        <br>
         <h3>SEO</h3>
         <hr>

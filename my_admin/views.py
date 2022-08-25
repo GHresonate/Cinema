@@ -1,11 +1,28 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from pages_app.models import Gallery, Photo, SEO, NewsAndDiscount, Pages
+from pages_app.models import Gallery, Photo, SEO, NewsAndDiscount, Pages, BannersInTheTop, Background, MainPage
 from cinema_app.models import Movie, Cinema
-from .forms import PhotosForm, SEOForm, MovieForm, CinemaForm, NewsAndDiscountForm, PagesForm
+from .forms import PhotosForm, HallForm, SEOForm, MovieForm, CinemaForm, NewsAndDiscountForm, PagesForm, \
+    NewsAndDiscBannerForms, TopBannerForms, BackgroundForm, NewsAndDiscInBanner, MainPageForm,ContactForms
 from django.core.paginator import Paginator
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+
+
+def changeNewsAndDiskInBanner(request):
+    if request.method == 'POST':
+        top_banners = NewsAndDiscBannerForms(request.POST, request.FILES)
+        for banner in top_banners:
+            if banner.is_valid():
+                 banner = banner.save(commit=False)
+                 if banner.main_photo:
+                    banner.save()
+        top_banners.save()
+        return HttpResponseRedirect(reverse('news'))
+    else:
+        top_banners = NewsAndDiscBannerForms()
+        return render(request, 'my_admin/add_newsintop.html',
+                      {'top_banners': top_banners})
 
 
 class SEOException(Exception):
@@ -13,6 +30,22 @@ class SEOException(Exception):
         self.request = request
         self.way = way
         self.value_dict = value_dict
+
+
+def change_contacts(request):
+    if request.method == 'POST':
+        contacts = ContactForms(request.POST, request.FILES)
+        for contact in contacts:
+            if contact.is_valid():
+                 contact = contact.save(commit=False)
+                 if contact.main_photo:
+                    contact.save()
+        contacts.save()
+        return HttpResponseRedirect(reverse('news'))
+    else:
+        contacts = ContactForms()
+        return render(request, 'my_admin/add_contacts.html',
+                      {'contacts': contacts})
 
 
 def change(request, url, model, model_form, model_name, plural_name):
@@ -38,7 +71,7 @@ def change(request, url, model, model_form, model_name, plural_name):
                 the_object.seo.url = url
                 the_object.seo.save()
                 return render(request, 'my_admin/add_' + model_name + '.html',
-                          {"photos": photos, "seo": seo, model_name: object, "the_" + model_name: the_object})
+                              {"photos": photos, "seo": seo, model_name: object, "the_" + model_name: the_object})
             new_seo = seo.save()
             the_object.seo.url = new_seo.url
             the_object.seo.save()
@@ -54,6 +87,58 @@ def change(request, url, model, model_form, model_name, plural_name):
         photos = PhotosForm(queryset=quer)
         return render(request, "my_admin/add_" + model_name + ".html",
                       {"photos": photos, "seo": seo, model_name: object, "the_" + model_name: the_object})
+
+
+def change_main(request):
+    the_object = MainPage.objects.get(pk=1)
+    if request.method == 'POST':
+        object = MainPageForm(request.POST, request.FILES, instance=the_object)
+        if object.is_valid():
+            seo = SEOForm(request.POST, instance=the_object.seo)
+            url = the_object.seo.url
+            the_object.seo.url = None
+            the_object.seo.save()
+            if not seo.is_valid():
+                the_object.seo.url = url
+                the_object.seo.save()
+                return render(request, 'my_admin/change_main.html', {"seo": seo, "main": object})
+            new_seo = seo.save()
+            the_object.seo.url = new_seo.url
+            the_object.seo.save()
+            seo.save()
+            object.save()
+            return HttpResponseRedirect(reverse("news"))
+        else:
+            print(object.errors)
+            raise ValueError
+    else:
+        object = MainPageForm(instance=the_object)
+        seo = SEOForm(instance=the_object.seo)
+        return render(request, 'my_admin/change_main.html', {"seo": seo, "main": object})
+
+
+def change_banners(request):
+    the_background = Background.objects.get(pk=1)
+    if request.method == 'POST':
+        background = BackgroundForm(request.POST, request.FILES, instance=the_background)
+        top_banners = TopBannerForms(request.POST, request.FILES)
+        if background.is_valid():
+            for banner in top_banners:
+
+                if banner.is_valid():
+                    banner = banner.save(commit=False)
+                    if banner.main_photo:
+                        banner.save()
+            top_banners.save()
+            background.save()
+            return HttpResponseRedirect(reverse('news'))
+        else:
+            raise ValueError
+    else:
+        background = BackgroundForm(instance=the_background)
+        top_banners = TopBannerForms()
+        return render(request, 'my_admin/add_banners.html',
+                      {"background": background, 'top_banners': top_banners, 'the_background': the_background})
 
 
 def change_movie(request, url):
@@ -173,6 +258,21 @@ def main_add(request, main_form, name_main_form, plural_name_main_form):
         seo = SEOForm()
         return render(request, 'my_admin/add_' + name_main_form + '.html',
                       {name_main_form: main_form, 'photos': photos, 'seo': seo})
+
+
+def add_hall(request, number):
+    if request.method == 'POST':
+        hall = HallForm(request.POST, request.FILES)
+        try:
+            final_hall = main_add(request, hall, "hall", "halls")
+        except SEOException as e:
+            return render(e.request, e.way, e.value_dict)
+        final_hall.cinema = get_object_or_404(Cinema, id=number)
+        final_hall.save()
+        return HttpResponseRedirect(reverse('news'))
+    else:
+        hall = HallForm()
+        return main_add(request, hall, "hall", "halls")
 
 
 def add_news(request):

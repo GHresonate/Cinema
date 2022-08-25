@@ -1,7 +1,8 @@
 import re
 from django import forms
-from pages_app.models import SEO, Photo, NewsAndDiscount, Pages
-from cinema_app.models import Movie, Cinema
+from pages_app.models import SEO, Photo, NewsAndDiscount, Pages, BannersInTheTop, Background, NewsAndDiscInBanner, \
+    MainPage, Contact
+from cinema_app.models import Movie, Cinema, Hall
 from django.forms import modelformset_factory
 
 
@@ -81,3 +82,77 @@ class PagesForm(forms.ModelForm):
     class Meta:
         model = Pages
         fields = ('name', 'description', 'main_photo')
+
+
+class BannersInTheTopForm(forms.ModelForm):
+    main_photo = forms.ImageField(required=True)
+    text = forms.CharField(widget=forms.Textarea, required=True)
+    url = forms.CharField(max_length=256, required=True)
+
+    class Meta:
+        model = BannersInTheTop
+        fields = ('main_photo', 'text', 'url')
+
+
+TopBannerForms = modelformset_factory(BannersInTheTop, form=BannersInTheTopForm, extra=5, max_num=5, can_delete=True)
+
+
+class BackgroundForm(forms.ModelForm):
+    main_photo = forms.ImageField(required=False)
+    type = forms.BooleanField(required=False)
+    color = forms.CharField(max_length=32, required=False, widget=forms.TextInput(attrs={'type': 'color'}))
+
+    class Meta:
+        model = Background
+        fields = ('main_photo', 'color')
+
+
+class NewsAndDiscInBannerForm(forms.ModelForm):
+    main_photo = forms.ImageField()
+    trailer_url = forms.CharField(max_length=64)
+
+    class Meta:
+        model = NewsAndDiscInBanner
+        fields = ('main_photo', 'trailer_url')
+
+
+NewsAndDiscBannerForms = modelformset_factory(NewsAndDiscInBanner, form=NewsAndDiscInBannerForm, extra=5, max_num=5,
+                                              can_delete=True)
+
+
+class ContactForm(forms.ModelForm):
+    main_photo = forms.ImageField()
+    name = forms.CharField(max_length=256)
+    address = forms.CharField(widget=forms.Textarea)
+    coordinate = forms.CharField(max_length=256)
+
+
+    class Meta:
+        model = Contact
+        fields = ('main_photo','name', 'address', 'coordinate')
+
+
+ContactForms = modelformset_factory(Contact, form=ContactForm, can_delete=True, extra=5, max_num=5)
+
+
+class MainPageForm(forms.ModelForm):
+    phone_number = forms.NumberInput()
+    phone_number2 = forms.NumberInput()
+    seo_text = forms.CharField(widget=forms.Textarea)
+
+    class Meta:
+        model = MainPage
+        fields = ('phone_number', 'phone_number2', 'seo_text')
+
+
+class HallForm(forms.ModelForm):
+    number = forms.IntegerField()
+    name = forms.CharField(max_length=128)
+    created_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    description = forms.CharField(widget=forms.Textarea)
+    scheme = forms.JSONField()
+    main_photo = forms.ImageField()
+
+    class Meta:
+        model = Hall
+        fields = ('number', 'name', 'created_date', 'description', 'scheme', 'main_photo')

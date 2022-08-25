@@ -26,26 +26,31 @@ class Pages(models.Model):
 
 
 class MainPage(models.Model):
-    phone_number = models.IntegerField
+    phone_number = models.IntegerField(null=True)
+    phone_number2 = models.IntegerField(null=True)
     seo_text = models.TextField()
     seo = models.OneToOneField(SEO, null=True, on_delete=models.SET_NULL)
 
 
-class Banners(models.Model):
+class BannersInTheTop(models.Model):
     main_photo = models.ImageField()
-    top_in_main = models.OneToOneField(Gallery, null=True, on_delete=models.SET_NULL)
+    text = models.TextField()
+    url = models.CharField(max_length=256)
+
+
+class Background(models.Model):
+    main_photo = models.ImageField(null=True, blank=True)
+    types = [
+        ('Photo', 'Photo'),
+        ('Color', 'Color')
+    ]
+    type = models.CharField(max_length=16, choices=types, default='Color')
+    color = models.CharField(max_length=32, null=True, blank=True)
 
 
 class NewsAndDiscInBanner(models.Model):
-    types = [
-        ('News', 'News'),
-        ('Discount', 'Discount')
-    ]
-    type = models.CharField(max_length=16, choices=types)
     main_photo = models.ImageField()
-    trailer_url = models.URLField()
-    text = models.TextField()
-    page = models.ForeignKey(Banners, on_delete=models.CASCADE)
+    trailer_url = models.CharField(max_length=64)
 
 
 class NewsAndDiscount(models.Model):
@@ -62,3 +67,10 @@ class NewsAndDiscount(models.Model):
     trailer_url = models.URLField(null=True)
     seo = models.OneToOneField(SEO, null=True, on_delete=models.SET_NULL)
     is_active = models.BooleanField(default=False)
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=256)
+    address = models.TextField()
+    coordinate = models.CharField(max_length=256)
+    main_photo = models.ImageField()

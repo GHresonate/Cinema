@@ -1,0 +1,71 @@
+{% extends 'my_admin/base.html' %}
+{% load static %}
+{% block title %}
+Add banners
+{% endblock %}
+{% block main %}
+    <form id="big_form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+        {{ form.non_field_errors }}
+            <div class="field">
+            <label for="{{ background.type.id_for_label }}">Ставить фото на фон:</label>
+            <div style="float: left; transform: scale(2)">{{ background.type }}</div>
+            {{ background.type.errors }}
+        </div>
+    <br>
+        <div class="field">
+            <label for="{{ background.color.id_for_label }}">Цвет фона:</label>
+            <div style="float: left; width: 100px; border-radius: 7px;">{{ background.color }}</div>
+            {{ background.color.errors }}
+        </div>
+        <div class="photo_field">
+             <div class="field" style="float: left">
+                <label for="{{ background.main_photo.id_for_label }}">Главный баннер:</label>
+                 <div id = "box">
+                     <button class="btn btn-light bt_for_img">Добавить</button>
+                     <div id="main-ph" class="hidden_form"><input type="file" name="main_photo" accept="image/*" required="" id="{{ background.main_photo.id_for_label }}"></div>
+                 </div>
+                 <div id="rem_main" class="btn btn-light">Удалить</div>
+                 {{ background.main_photo.errors }}
+             </div>
+            <div id = 'image_grid' style="background-image: url('{% static "my_admin/img/camera.jpg" %}');">
+                {% if the_background %}
+                    <img src="{{ the_background.main_photo.url }}" style="width: 194px; height: 144px;">
+                {% endif %}
+            </div>
+        </div>
+
+        <br><br><br><br><br><br><br><br><br>
+        <div style="margin: 7px;float: left">Галерея картинок:</div>
+    <br><br>
+        <div id="photo_parent">
+            <div class="big_gal_button">
+                <div id="big_gal_button_top" class="btn btn-light"><img src="{%  static "my_admin/img/pngwing.png" %}" style="width: 50px;"></div>
+                <div id="big_gal_button_bottom" class="btn btn-light"><img src="{%  static "my_admin/img/min.png" %}" style="width: 50px;"></div>
+                <div style="font-size: 20px; margin-top: 30px">Текст:</div>
+                <div style="font-size: 20px; margin-top: 230px">URL:</div>
+            </div>
+          {{ top_banners.management_form }}
+               {% for banner in top_banners %}
+               <div class="boxes" style="margin-bottom: 340px;">
+                    <div class="small_ph" style="background-image: url('{% static "my_admin/img/camera.jpg" %}');"></div>
+                    <div class= "small_box">
+                        <button class="small_down_butt small_bt_for_img btn btn-light">Загрузить</button>
+                        <div class="small_hidden_form" style="margin-bottom: -110px;">{{ banner}}</div>
+                    </div>
+                    <div class="rem_small" style="position: relative; top: -150px"><p class="rem_small_text" >+</p></div>
+               </div>
+                {% endfor %}
+
+               </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+          <div style="text-align: center;float: left; margin-left: 25%">
+          <input type="reset" id="main_res" class="btn btn-light" value="Сбросить форму">
+          <div id="my_submit" class="btn btn-light" style="width: 200px;">Сохранить</div>
+      </div>
+    </form>
+{% endblock %}
+{% block js %}
+<script src="{% static 'my_admin/js_for_banners.js' %}"></script>
+{% endblock %}

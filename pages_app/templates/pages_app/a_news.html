@@ -1,0 +1,14 @@
+{% extends 'pages_app/base.html' %}
+{% load static %}
+{% block title %}
+{{ a_news.seo.title }}
+{% endblock %}
+{% block main %}
+<main>
+  <div class="promotion_main">
+    <img src="{{ a_news.main_photo.url }}" class="promotion_image_main">
+    <h1>{{ a_news.name }}</h1>
+    <p class="prom_text">{{ a_news.description }}</p><div class="prom-place">{{ a_news.date_published }}</div>
+  </div>
+</main>
+{% endblock %}

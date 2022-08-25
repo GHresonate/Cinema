@@ -1,0 +1,101 @@
+{% extends 'pages_app/base.html' %}
+{% load static %}
+{% block title %}
+{{ movie.seo.title }}
+{% endblock %}
+{% block main %}
+<main>
+  <h1><b>{{ movie.name }}</b></h1>
+  <iframe style="border-radius: 7px;" width="853" height="480" src="{{ movie.trailer_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <table class="table table-dark table-striped" style="max-width: 49%; float:left; vertical-align: middle;">
+    <tbody>
+    <tr>
+      <th scope="row">Год</th>
+      <td>2021</td>
+    </tr>
+    <tr>
+      <th scope="row">Страна</th>
+      <td>США, Канада, Венгрия</td>
+    </tr>
+    <tr>
+      <th scope="row">Жанр</th>
+      <td>Фантастика, боевик, драмма, приключения</td>
+    </tr>
+    <tr>
+      <th scope="row">Слоган</th>
+      <td>"Час настал"</td>
+    </tr>
+    <tr>
+      <th scope="row">Режисёр</th>
+      <td>Дени Вильнёв</td>
+    </tr>
+    <tr>
+      <th scope="row">Сценарий</th>
+      <td>Джон Спэйтс, Мэри Пэрент</td>
+    </tr>
+    <tr>
+      <th scope="row">Оператор</th>
+      <td>Грег Фрейзер</td>
+    </tr>
+    <tr>
+      <th scope="row">Композитор</th>
+      <td>Ханс Циммер</td>
+    </tr>
+    <tr>
+      <th scope="row">Художник</th>
+      <td>Патрис Верметт, Том Браун</td>
+    </tr>
+    <tr>
+      <th scope="row">Монтаж</th>
+      <td>Джо Уокер</td>
+    </tr>
+    </tbody>
+  </table>
+    {% for photo in photos %}
+  <img src="{{ photo.url }}" style="max-width: 49%; margin-bottom: 7px; float: right">
+  <img src="{{ photo.url }}" style="max-width: 49%; margin-bottom: 7px; float: right">
+    {% endfor %}
+  <p style="text-align: center; vertical-align: center; float: left; max-width: 49%;">
+{{ movie.description }}
+  </p>
+  <div style="max-width: 49%; float: right">
+    <button type="button" style="margin: 3px;" class="btn btn-dark"> 18:00, 1 августа</button>
+    <button type="button" style="margin: 3px;" class="btn btn-dark">11:30, 2 августа</button>
+    <button type="button" style="margin: 3px;" class="btn btn-dark">15:30, 2 августа</button>
+    <button type="button" style="margin: 3px;" class="btn btn-dark">18:45, 2 августа</button>
+    <button type="button" style="margin: 3px;" class="btn btn-dark">22:00, 2 августа</button>
+    <button type="button" style="margin: 3px;" class="btn btn-dark">15:30, 3 августа</button>
+    <button type="button" style="margin: 3px;" class="btn btn-dark">18:45, 3 августа</button>
+    <button type="button" style="margin: 3px;" class="btn btn-dark">22:00, 3 августа</button>
+  </div>
+  <button type="button" style="margin: 7px;" class="btn btn-dark btn-lg">К списку сеансов</button>
+
+
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="img/kar_film_0_0.img" style="max-height: 720px;" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="img/kar_film_0_0.img" style="max-height: 720px;" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="img/kar_film_0_0.img" style="max-height: 720px;" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Следующий</span>
+    </button>
+  </div>
+
+  <div style="text-align: center; padding: 7px" >
+    <img style="max-height: 200px;" src="img/promotion_gorizontal.img">
+  </div>
+</main>
+
+{% endblock %}

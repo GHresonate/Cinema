@@ -1,0 +1,14 @@
+{% extends 'pages_app/base.html' %}
+{% load static %}
+{% block title %}
+{{ prom.seo.title }}
+{% endblock %}
+{% block main %}
+<main>
+  <div class="promotion_main">
+    <img src="{{ prom.main_photo.url }}" class="promotion_image_main">
+    <h1>{{ prom.name }}</h1>
+    <p class="prom_text">{{ prom.description }}</p>
+  </div>
+</main>
+{% endblock %}

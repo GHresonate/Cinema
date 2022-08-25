@@ -1,0 +1,58 @@
+{% extends 'my_admin/base.html' %}
+{% load static %}
+{% block title %}
+Change main
+{% endblock %}
+{% block main %}
+        <div><h1>Главная страница</h1></div><hr>
+
+    <form id="big_form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="field">
+            <label for="{{ main.phone_number.id_for_label }}">Телефон первый:</label>
+            {{ main.phone_number }}
+            {{ main.phone_number.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ main.phone_number2.id_for_label }}">Телефон первый:</label>
+            {{ main.phone_number2 }}
+            {{ main.phone_number2.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ main.seo_text.id_for_label }}">SEO текст</label>
+            {{ main.seo_text }}
+            {{ main.seo_text.errors }}
+        </div>
+        <h3>SEO</h3>
+        <hr>
+        <div class="field">
+            <label for="{{ seo.title.id_for_label }}">Title</label>
+            {{ seo.title}}
+            {{ seo.title.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ seo.url.id_for_label }}">URL:</label>
+            {{ seo.url }}
+            {{ seo.url.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ seo.keywords.id_for_label }}">Keywords:</label>
+            {{ seo.keywords }}
+            {{ seo.keywords.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ seo.description.id_for_label }}">Description:</label>
+            {{ seo.description }}
+            {{ seo.description.errors }}
+        </div>
+      <div style="text-align: center">
+          <input type="reset" id="main_res" class="btn btn-light" value="Сбросить форму">
+          <div id="my_submit" class="btn btn-light" style="width: 200px;">Сохранить</div>
+      </div>
+    </form>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'my_admin/js_for_cinema_app.js' %}"></script>
+{% endblock %}
