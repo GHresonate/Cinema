@@ -26,8 +26,8 @@ class Pages(models.Model):
 
 
 class MainPage(models.Model):
-    phone_number = models.IntegerField(null=True)
-    phone_number2 = models.IntegerField(null=True)
+    phone_number = models.CharField(max_length=64)
+    phone_number2 = models.CharField(max_length=64)
     seo_text = models.TextField()
     seo = models.OneToOneField(SEO, null=True, on_delete=models.SET_NULL)
 

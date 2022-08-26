@@ -1,10 +1,6 @@
 const allPhotos = 5;
 const inputs = document.getElementsByClassName("field");
 const bigForm =document.getElementById("big_form");
-const remMain = document.getElementById('rem_main');
-const remBanner = document.getElementById('rem_banner');
-const reader = new FileReader();
-const bannerReader = new FileReader();
 const resButt = document.getElementById('main_res')
 const smallBatt = document.getElementsByClassName('small_hidden_form');
 const smallRem = document.getElementsByClassName('rem_small')

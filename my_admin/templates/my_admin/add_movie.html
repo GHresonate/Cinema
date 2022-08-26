@@ -83,6 +83,11 @@ Add movie
                 {{ movie.is_IMAX.errors }}
             </div>
         </div>
+        <div class="field">
+            <label for="{{ movie.realise_date.id_for_label }}">Дата выхода:</label>
+            {{ movie.realise_date }}
+            {{ movie.realise_date.errors }}
+        </div>
        <br>
         <h3>SEO</h3>
         <hr>

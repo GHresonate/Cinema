@@ -1,10 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'pages_app/base.html' %}
+{% load static %}
+{% block title %}
+    Кафе
+{% endblock %}
+{% block main %}
+<main>
+  <h1>Кафе-Бар</h1>
+  <img src="{{ food.main_photo.url }}" style="margin-bottom: 17px; max-width: 93%">
+  <div>
+      {% for photo in photos %}
+    <img src="{{ photo.photo.url }}" style="margin: 17px; max-width: 250px;">
+      {% endfor %}
+  </div>
+  <div style="max-width: 800px; float: right">
+    <div>{{ food.description }}
 
-</body>
-</html>
+      <h3>Меню</h3>
+      <div class="accordion bg-dark text-light" id="accordionExample" style="margin: 7px;">
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header bg-dark text-light" id="headingOne">
+            <button class="accordion-button text-light bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Напитки
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show bg-dark text-light" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body bg-dark text-light">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus, ante et ultrices maximus, nulla tellus efficitur ex, a cursus nulla purus a mauris. In vel accumsan libero. Phasellus dapibus tincidunt justo, consequat imperdiet tellus viverra non. Donec at consequat ex. Suspendisse arcu massa, congue eu lorem vitae, auctor tempus eros. Donec fermentum venenatis dolor vel bibendum. Donec viverra neque pulvinar tincidunt pharetra. Nullam congue sodales odio, sit amet laoreet magna ultrices id.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header bg-dark text-light" id="headingTwo bg-dark text-light">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Десерты
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse bg-dark text-light" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body bg-dark text-light">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus, ante et ultrices maximus, nulla tellus efficitur ex, a cursus nulla purus a mauris. In vel accumsan libero. Phasellus dapibus tincidunt justo, consequat imperdiet tellus viverra non. Donec at consequat ex. Suspendisse arcu massa, congue eu lorem vitae, auctor tempus eros. Donec fermentum venenatis dolor vel bibendum. Donec viverra neque pulvinar tincidunt pharetra. Nullam congue sodales odio, sit amet laoreet magna ultrices id.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header bg-dark text-light" id="headingThree">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Горячие блюда
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse bg-dark text-light" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body bg-dark text-light">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus, ante et ultrices maximus, nulla tellus efficitur ex, a cursus nulla purus a mauris. In vel accumsan libero. Phasellus dapibus tincidunt justo, consequat imperdiet tellus viverra non. Donec at consequat ex. Suspendisse arcu massa, congue eu lorem vitae, auctor tempus eros. Donec fermentum venenatis dolor vel bibendum. Donec viverra neque pulvinar tincidunt pharetra. Nullam congue sodales odio, sit amet laoreet magna ultrices id.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header bg-dark text-light" id="headingFour bg-dark text-light">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+              Холодные блюда
+            </button>
+          </h2>
+          <div id="collapseFour" class="accordion-collapse collapse bg-dark text-light" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+            <div class="accordion-body bg-dark text-light">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus, ante et ultrices maximus, nulla tellus efficitur ex, a cursus nulla purus a mauris. In vel accumsan libero. Phasellus dapibus tincidunt justo, consequat imperdiet tellus viverra non. Donec at consequat ex. Suspendisse arcu massa, congue eu lorem vitae, auctor tempus eros. Donec fermentum venenatis dolor vel bibendum. Donec viverra neque pulvinar tincidunt pharetra. Nullam congue sodales odio, sit amet laoreet magna ultrices id.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item bg-dark text-light" >
+          <h2 class="accordion-header bg-dark text-light" id="headingFive bg-dark text-light">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+              Алкоголь
+            </button>
+          </h2>
+          <div id="collapseFive" class="accordion-collapse collapse bg-dark text-light" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+            <div class="accordion-body bg-dark text-light">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus, ante et ultrices maximus, nulla tellus efficitur ex, a cursus nulla purus a mauris. In vel accumsan libero. Phasellus dapibus tincidunt justo, consequat imperdiet tellus viverra non. Donec at consequat ex. Suspendisse arcu massa, congue eu lorem vitae, auctor tempus eros. Donec fermentum venenatis dolor vel bibendum. Donec viverra neque pulvinar tincidunt pharetra. Nullam congue sodales odio, sit amet laoreet magna ultrices id.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item bg-dark text-light">
+          <h2 class="accordion-header bg-dark text-light" id="headingSix bg-dark text-light">
+            <button class="accordion-button collapsed bg-dark text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+              Подарочные сертификаты
+            </button>
+          </h2>
+          <div id="collapseSix" class="accordion-collapse collapse bg-dark text-light" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+            <div class="accordion-body bg-dark text-light">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse luctus, ante et ultrices maximus, nulla tellus efficitur ex, a cursus nulla purus a mauris. In vel accumsan libero. Phasellus dapibus tincidunt justo, consequat imperdiet tellus viverra non. Donec at consequat ex. Suspendisse arcu massa, congue eu lorem vitae, auctor tempus eros. Donec fermentum venenatis dolor vel bibendum. Donec viverra neque pulvinar tincidunt pharetra. Nullam congue sodales odio, sit amet laoreet magna ultrices id.
+            </div>
+          </div>
+        </div>
+      </div>    </div>
+
+
+
+  </div>
+
+  <aside style="max-width: 400px; height: 100%; float: left; position: sticky; top: 7px;">
+    <img style="max-width: 200px; position: relative; display: block; margin-left: 7px; margin-top: 7px;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
+    <img style="max-width: 200px; bottom: 10%; position: relative; display: block; margin-left: 7px; margin-top: 7px; float: bottom;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
+  </aside>
+
+</main>
+{% endblock %}

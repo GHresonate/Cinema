@@ -55,6 +55,7 @@ def change(request, url, model, model_form, model_name, plural_name):
     if request.method == 'POST':
         photos = PhotosForm(request.POST, request.FILES, queryset=quer)
         object = model_form(request.POST, request.FILES, instance=the_object)
+
         if object.is_valid():
             seo = SEOForm(request.POST, instance=the_object.seo)
             for photo in photos:

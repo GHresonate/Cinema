@@ -3,7 +3,40 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .models import NewsAndDiscount, MainPage, Pages
+from .models import NewsAndDiscount, MainPage, Pages, Photo
+
+def children(request):
+    child = Pages.objects.get(name="Children room")
+    photos = Photo.objects.all().filter(gallery=child.photo_list)
+    about_cinema = MainPage.objects.get(pk=1)
+    return render(request, 'pages_app/children.html', {'children': child, "photos": photos, "about_cinema": about_cinema})
+
+def vip_hall(request):
+    viphall = Pages.objects.get(name="Vip hall")
+    photos = Photo.objects.all().filter(gallery=viphall.photo_list)
+    about_cinema = MainPage.objects.get(pk=1)
+    return render(request, 'pages_app/vip_hall.html', {'vip_hall': viphall, "photos": photos, "about_cinema": about_cinema})
+
+
+def for_partners(request):
+    for_par = Pages.objects.get(name="For partners")
+    photos = Photo.objects.all().filter(gallery=for_par.photo_list)
+    about_cinema = MainPage.objects.get(pk=1)
+    return render(request, 'pages_app/for_partnes.html', {'for_par': for_par, "photos": photos, "about_cinema": about_cinema})
+
+
+def the_cinema(request):
+    the_cinema = Pages.objects.get(name="Main page")
+    photos = Photo.objects.all().filter(gallery=the_cinema.photo_list)
+    about_cinema = MainPage.objects.get(pk=1)
+    return render(request, 'pages_app/the_cinema.html', {'the_cinema': the_cinema, "photos": photos, "about_cinema": about_cinema})
+
+
+def food_court(request):
+    food = Pages.objects.get(name="Food court")
+    photos = Photo.objects.all().filter(gallery=food.photo_list)
+    about_cinema = MainPage.objects.get(pk=1)
+    return render(request, 'pages_app/food_court.html', {'food': food, "photos": photos, "about_cinema": about_cinema})
 
 
 def promotions(request):

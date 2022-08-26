@@ -7,11 +7,11 @@ Films
 <main>
   <aside style="max-width: 400px; height: 100%; float: left; position: sticky; top: 7px;">
     <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-      <button type="button" class="btn btn-dark" >Афиша</button>
-      <button type="button" class="btn btn-dark">Скоро выйдет</button>
+        <a href="{% url "front_movies" %}"><button type="button" class="btn btn-dark" style="width: 141px;">Афиша</button></a>
+        <a href="{% url "front_next_movies" %}"><button type="button" class="btn btn-dark">Скоро выйдет</button></a>
     </div>
     <img style="max-width: 200px; position: relative; display: block; margin-left: 7px; margin-top: 7px;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
-    <img style="max-width: 200px; bottom: 10%; position: relative; display: block; margin-left: 7px; margin-top: 7px; float: bottom;" <img style="max-width: 200px; bottom: 10%; position: relative; display: block; margin-left: 7px; margin-top: 7px; float: bottom;" src="{% static 'pages_app/img/vertical-promotion.png' %}">>
+    <img style="max-width: 200px; bottom: 10%; position: relative; display: block; margin-left: 7px; margin-top: 7px; float: bottom;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
   </aside>
   <h2 style="margin-bottom: 14px">Афиша фильмов</h2>
   <div class="container" >

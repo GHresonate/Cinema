@@ -28,7 +28,8 @@ class Movie(models.Model):
     main_photo = models.ImageField()
     photo_list = models.OneToOneField('pages_app.Gallery', null=True, on_delete=models.SET_NULL)
     seo = models.OneToOneField('pages_app.SEO', null=True, on_delete=models.SET_NULL)
-    trailer_url = models.URLField()
+    trailer_url = models.CharField(max_length=256)
+    realise_date = models.DateField()
     types = [
         ('2D', '2D'),
         ('3D', '3D'),

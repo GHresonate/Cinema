@@ -17,7 +17,7 @@
   <div class="container" style="max-width: 1100px;">
     <div class="row align-items-center">
       <div class="col-3" style="text-align: center; display: block">
-        <img src="{{ cinema.main_photo.url }}" style="max-height: 110px">
+        <img src="{% static 'pages_app/img/cinema-logo-design-template_92405-24.webp' %}" style="max-height: 110px">
       </div>
       <div class="col-6" style="text-align: center">
         <nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="border-radius: 4px; font-size: 14px;">
@@ -35,10 +35,10 @@
                     <a class="nav-link" href="#">Расписание</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Скоро</a>
+                    <a class="nav-link" href="{% url "front_next_movies" %}">Скоро</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Кинотеатры</a>
+                    <a class="nav-link" href="{% url "front_cinemas" %}">Кинотеатры</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{% url "promotions" %}">Акции</a>
@@ -49,10 +49,11 @@
                     </a>
                     <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown" style="color: aliceblue">
                       <li><a class="dropdown-item" style="color: gray" href="{% url "front_news" %}">Новости</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="#">Реклама</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="#">VIP-зал</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="#">Детская комната</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="#">Кафе</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_the_cinema" %}">Кинотеатр</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_for_partners" %}">Реклама</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_vip_hall" %}">VIP-зал</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_children" %}">Детская комната</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_food_court" %}">Кафе</a></li>
                       <li><a class="dropdown-item" style="color: gray" href="#">Мобильные приложения</a></li>
                       <li><a class="dropdown-item" style="color: gray" href="#">Контакты</a></li>
                     </ul>

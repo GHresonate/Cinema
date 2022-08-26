@@ -40,14 +40,15 @@ class MovieForm(forms.ModelForm):
     name = forms.CharField(max_length=256)
     description = forms.CharField(widget=forms.Textarea)
     main_photo = forms.ImageField()
-    trailer_url = forms.URLField()
+    trailer_url = forms.CharField(max_length=256)
     is_2D = forms.BooleanField(required=False)
     is_3D = forms.BooleanField(required=False)
     is_IMAX = forms.BooleanField(required=False)
+    realise_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = Movie
-        fields = ('name', 'description', 'main_photo', 'trailer_url', 'is_2D', 'is_3D', 'is_IMAX')
+        fields = ('name', 'description', 'main_photo', 'trailer_url', 'is_2D', 'is_3D', 'is_IMAX', 'realise_date')
 
 
 class CinemaForm(forms.ModelForm):
@@ -136,8 +137,8 @@ ContactForms = modelformset_factory(Contact, form=ContactForm, can_delete=True, 
 
 
 class MainPageForm(forms.ModelForm):
-    phone_number = forms.NumberInput()
-    phone_number2 = forms.NumberInput()
+    phone_number = forms.CharField(max_length=64)
+    phone_number2 = forms.CharField(max_length=64)
     seo_text = forms.CharField(widget=forms.Textarea)
 
     class Meta:
