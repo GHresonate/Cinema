@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .models import NewsAndDiscount, MainPage, Pages, Photo
+from .models import NewsAndDiscount, MainPage, Pages, Photo, Contact
 
 def children(request):
     child = Pages.objects.get(name="Children room")
@@ -32,11 +32,20 @@ def the_cinema(request):
     return render(request, 'pages_app/the_cinema.html', {'the_cinema': the_cinema, "photos": photos, "about_cinema": about_cinema})
 
 
+def contacts(request):
+    conts = Contact.objects.all()
+    about_cinema = MainPage.objects.get(pk=1)
+    return render(request, 'pages_app/contacts.html', {'contacts': conts, 'about_cinema': about_cinema})
+
 def food_court(request):
     food = Pages.objects.get(name="Food court")
     photos = Photo.objects.all().filter(gallery=food.photo_list)
     about_cinema = MainPage.objects.get(pk=1)
     return render(request, 'pages_app/food_court.html', {'food': food, "photos": photos, "about_cinema": about_cinema})
+
+
+def app_prom(request):
+    return render(request, 'pages_app/app_prom.html')
 
 
 def promotions(request):
@@ -64,6 +73,6 @@ def news(request):
 
 
 def a_news(request, url):
-    prom = get_object_or_404(NewsAndDiscount, seo__url=url)
+    anews = get_object_or_404(NewsAndDiscount, seo__url=url)
     about_cinema = MainPage.objects.get(pk=1)
-    return render(request, 'pages_app/promotion.html', {'a_news': a_news, "about_cinema": about_cinema})
+    return render(request, 'pages_app/promotion.html', {'a_news': anews, "about_cinema": about_cinema})
