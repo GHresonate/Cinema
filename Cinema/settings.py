@@ -1,18 +1,18 @@
 import os.path
 from pathlib import Path
+import environ
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3u8&sdk7+(-qeblzf6aku39@sf+1-1gg06uj*5!gf1gbdpnild'
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+DEBUG = env('DEBUG')
+SECRET_KEY = env('KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = []
 
@@ -70,10 +70,10 @@ WSGI_APPLICATION = 'Cinema.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'cinema',
-        'USER': 'django',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
+        'NAME': env('name'),
+        'USER': env('user'),
+        'PASSWORD': env('db_password'),
+        'HOST': env('host'),
         'PORT': '',
     }
 }
