@@ -1,0 +1,67 @@
+{% extends 'pages_app/base.html' %}
+{% load static %}
+{% block title %}
+Регистрация
+{% endblock %}
+{% block main %}
+<h1>Профиль {{ user.name }}</h1>
+    <main>
+        <form method="post">
+    {% csrf_token %}
+        {{ form.errors }}
+  <div style="float: left; width: 49%; padding: 7px; min-width: 400px;">
+    <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <label for="id_name" class="form-label">Имя</label>
+      <input class="form-control" name="name" value="{{ form.name.value }}" id="id_name">
+    </div>
+
+    <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <label for="id_surname" class="form-label">Фамилия</label>
+      <input class="form-control" value="{{ form.surname.value }}" name="surname" id="id_surname">
+    </div>
+
+    <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <label for="id_username" class="form-label">Псевдоним</label>
+      <input class="form-control" name="username" value="{{ form.username.value }}" id="id_username">
+    </div>
+
+    <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <label for="id_address" class="form-label">Адрес</label>
+      <input class="form-control" name="address" id="id_address" value="{{ form.address.value }}" placeholder="Киев, улица Борщаговская 146, 309">
+    </div>
+  </div>
+
+
+
+  <div style="float: right; width: 49%; padding: 7px;  min-width: 400px;">
+
+    <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <label for="id_card_number" class="form-label">Номер карты</label>
+      <input class="form-control" value="{{ form.card_number.value }}" name="card_number" id="id_card_number">
+    </div>
+
+    <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <p>Пол</p>
+        <select class="form-select" name="gender" id="id_gender" value="{{ form.gender.value }}" aria-label="Default select example">
+             <option selected>Пол</option>
+             <option value="Male">Мужской</option>
+             <option value="Female">Женский</option>
+             <option value="Different">Другой</option>
+            <option value="Don`t say">Не скажу</option>
+        </select>
+    </div>
+
+    <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <p>Язык</p>
+        <select class="form-select" name="language" value="{{ form.language.value }}" id="id_language" aria-label="Default select example">
+             <option selected>Язык</option>
+             <option value="UA">Українська</option>
+             <option value="EN">English</option>
+             <option value="RU">русский</option>
+        </select>
+    </div>
+  </div>{{ form }}
+<button type="submit" class="btn btn-lg btn-outline-dark">Сохранить</button>
+        </form>
+</main>
+{% endblock %}

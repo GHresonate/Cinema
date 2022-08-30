@@ -13,7 +13,7 @@
 
 
 <header>
-
+{{ user }}
   <div class="container" style="max-width: 1100px;">
     <div class="row align-items-center">
       <div class="col-3" style="text-align: center; display: block">
@@ -66,23 +66,39 @@
       </div>
       <div class="col-3" style="text-align: right; font-size: 23px; color: black;">
         <div class="col">
-            {{about_cinema.phone_number}}
+            {{about_cinema.phone_number.as_e164}}
         </div>
         <div class="col">
-          {{about_cinema.phone_number2}}
+          {{about_cinema.phone_number2.as_e164}}
         </div>
       </div>
     </div>
     <div class="row align-items-center">
+
+
+        {% if user.is_authenticated %}
+
+        <div class="col-3" style="text-align: center">
+        <div style="display: inline-block;">
+          <a href="{% url "logout" %}"><button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">Выйти</button></a>
+        </div>
+        <div style="display: inline-block;">
+            <a href="/user/profile/{{ user.username }}"><div class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">{{ user.username }}</div></a>
+        </div>
+      </div>
+
+        {% else %}
       <div class="col-3" style="text-align: center">
         <div style="display: inline-block;">
-          <button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">Логин</button></a>
+          <a href="{% url "login" %}"><button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">Логин</button></a>
         </div>
         <div style="display: inline-block;">
-          <button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">Регистрация</button></a>
+          <a href = "{% url "django_registration_register" %}"><button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">Регистрация</button></a>
         </div>
-
       </div>
+        {% endif %}
+
+
       <div class="col-3" style="float: left; text-align: left">
         <div class="container-fluid" style="float: left; width: 100%; text-align: left">
           <form class="d-flex" style="float: left; width: 100%; text-align: left">
@@ -117,7 +133,7 @@
 </header>
 
 {% block main %}
-    jjhbjhb
+
 {% endblock %}
 
 <footer style="text-align: center; vertical-align: center; background-color: #c4d0d9;">

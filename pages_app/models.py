@@ -1,5 +1,5 @@
 from django.db import models
-
+from phonenumber_field.modelfields import PhoneNumberField
 
 class Gallery(models.Model):
     pass
@@ -26,8 +26,8 @@ class Pages(models.Model):
 
 
 class MainPage(models.Model):
-    phone_number = models.CharField(max_length=64)
-    phone_number2 = models.CharField(max_length=64)
+    phone_number = PhoneNumberField()
+    phone_number2 = PhoneNumberField()
     seo_text = models.TextField()
     seo = models.OneToOneField(SEO, null=True, on_delete=models.SET_NULL)
 

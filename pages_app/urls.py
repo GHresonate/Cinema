@@ -14,4 +14,3 @@ urlpatterns = [
     path('the_cinema', views.the_cinema, name='front_the_cinema'),
     path('a_news/<slug:url>', views.a_news, name='front_a_news'),
 ]
-

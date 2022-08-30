@@ -1,0 +1,28 @@
+{% extends 'pages_app/base.html' %}
+{% load static %}
+{% block title %}
+Логин
+{% endblock %}
+{% block main %}
+<h1>Login</h1>
+    <main style="width: 100%; text-align: center; min-height: 50vh">
+    <form action="{% url "login" %}" method="post" style="text-align: center">
+    {% csrf_token %}
+        {{ form.errors }}
+  <div style="width: 49%; padding: 7px; min-width: 400px; text-align: center">
+    <div class="mb-3" style="margin: 7px; border: gray solid 3px;text-align: center; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <label for="FormControlInput4" class="form-label">Email address</label>
+      <input type="email" name="username" class="form-control" id="FormControlInput4" placeholder="name@example.com">
+    </div>
+
+    <div class="mb-3" style="margin: 7px;text-align: center; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <label for="FormControlInput6" class="form-label">Пароль</label>
+      <input type="password" name="password" class="form-control" id="FormControlInput6">
+    </div>
+      <button type="submit" class="btn btn-lg btn-outline-dark">Залогиниться</button>
+  </div>
+
+
+    </form>
+    </main>
+{% endblock %}

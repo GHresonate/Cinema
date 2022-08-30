@@ -9,6 +9,13 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 
 
+class SEOException(Exception):
+    def __init__(self, request, way, value_dict):
+        self.request = request
+        self.way = way
+        self.value_dict = value_dict
+
+
 def changeNewsAndDiskInBanner(request):
     if request.method == 'POST':
         top_banners = NewsAndDiscBannerForms(request.POST, request.FILES)
@@ -23,13 +30,6 @@ def changeNewsAndDiskInBanner(request):
         top_banners = NewsAndDiscBannerForms()
         return render(request, 'my_admin/add_newsintop.html',
                       {'top_banners': top_banners})
-
-
-class SEOException(Exception):
-    def __init__(self, request, way, value_dict):
-        self.request = request
-        self.way = way
-        self.value_dict = value_dict
 
 
 def change_contacts(request):
