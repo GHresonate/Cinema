@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('promotions', views.promotions, name='promotions'),

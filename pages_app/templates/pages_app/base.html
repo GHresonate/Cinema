@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="ru">
 <head>
@@ -29,33 +30,33 @@
               <div style="">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url "front_movies" %}">Афиша</a>
+                    <a class="nav-link" href="{% url "front_movies" %}">{% trans "Афиша" %}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Расписание</a>
+                    <a class="nav-link" href="#">{% trans "Расписание" %}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url "front_next_movies" %}">Скоро</a>
+                    <a class="nav-link" href="{% url "front_next_movies" %}">{% trans "Скоро" %}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url "front_cinemas" %}">Кинотеатры</a>
+                    <a class="nav-link" href="{% url "front_cinemas" %}">{% trans "Кинотеатры" %}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url "promotions" %}">Акции</a>
+                    <a class="nav-link" href="{% url "promotions" %}">{% trans "Акции" %}</a>
                   </li>
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      О кинотеатре
+                      {% trans "О кинотеатре" %}
                     </a>
                     <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown" style="color: aliceblue">
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_news" %}">Новости</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_the_cinema" %}">Кинотеатр</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_for_partners" %}">Реклама</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_vip_hall" %}">VIP-зал</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_children" %}">Детская комната</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_food_court" %}">Кафе</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_app_prom" %}">Мобильные приложения</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_contacts" %}">Контакты</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_news" %}">{% trans "Новости" %}</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_the_cinema" %}">{% trans "О кинотеатре" %}</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_for_partners" %}">{% trans "Реклама" %}</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_vip_hall" %}">{% trans "VIP-зал" %}</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_children" %}">{% trans "Детская комната" %}</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_food_court" %}">{% trans "Кафе" %}</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_app_prom" %}">{% trans "Мобильные приложения" %}</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_contacts" %}">{% trans "Афиша" %}</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -80,7 +81,7 @@
 
         <div class="col-3" style="text-align: center">
         <div style="display: inline-block;">
-          <a href="{% url "logout" %}"><button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">Выйти</button></a>
+          <a href="{% url "logout" %}"><button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">{% trans "Выйти" %}</button></a>
         </div>
         <div style="display: inline-block;">
             <a href="/user/profile/{{ user.username }}"><div class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">{{ user.username }}</div></a>
@@ -90,10 +91,10 @@
         {% else %}
       <div class="col-3" style="text-align: center">
         <div style="display: inline-block;">
-          <a href="{% url "login" %}"><button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">Логин</button></a>
+          <a href="{% url "login" %}"><button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">{% trans "Логин" %}</button></a>
         </div>
         <div style="display: inline-block;">
-          <a href = "{% url "django_registration_register" %}"><button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">Регистрация</button></a>
+          <a href = "{% url "django_registration_register" %}"><button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">{% trans "Регистрация" %}</button></a>
         </div>
       </div>
         {% endif %}
@@ -103,7 +104,7 @@
         <div class="container-fluid" style="float: left; width: 100%; text-align: left">
           <form class="d-flex" style="float: left; width: 100%; text-align: left">
             <input class="form-control me-2" type="search"placeholder="Поиск" aria-label="Search" style="float: left">
-            <button class="btn btn-dark" type="submit" style="color: #A9A9A9">Искать</button>
+            <button class="btn btn-dark" type="submit" style="color: #A9A9A9">{% trans "Искать" %}</button>
           </form>
         </div>
       </div>
@@ -140,7 +141,7 @@
   <div class="container" style="max-width: 1100px;">
     <div class="row">
       <div class="col-6">
-        <p style="font-size: 20px">Мобильные приложения</p>
+        <p style="font-size: 20px">{% trans "Мобильные приложения" %}</p>
         <a href="..." style="float: right; margin: 7px;">
           <img src="{% static 'pages_app/img/android.png' %}" style="width: 230px">
         </a>
@@ -149,20 +150,20 @@
         </a>
       </div>
       <div class="col-2">
-        <p style="font-size: 20px">Афиша</p>
-        <p style="font-size: 14px">Расписание</p>
-        <p style="font-size: 14px">Скоро в прокате</p>
-        <p style="font-size: 14px">Кинотеатры</p>
-        <p style="font-size: 14px">Акции</p>
+        <p style="font-size: 20px">{% trans "Афиша" %}</p>
+        <p style="font-size: 14px">{% trans "Расписание" %}</p>
+        <p style="font-size: 14px">{% trans "Скоро в прокате" %}</p>
+        <p style="font-size: 14px">{% trans "Кинотеатры" %}</p>
+        <p style="font-size: 14px">{% trans "Акции" %}</p>
       </div>
       <div class="col-2">
-        <p style="font-size: 20px">О кинотеатре</p>
-        <p style="font-size: 14px">Кафе</p>
-        <p style="font-size: 14px">Новости</p>
-        <p style="font-size: 14px">Контакты</p>
-        <p style="font-size: 14px">Детская комната</p>
-        <p style="font-size: 14px">Реклама</p>
-        <p style="font-size: 14px">VIP-зал</p>
+        <p style="font-size: 20px">{% trans "О кинотеатре" %}</p>
+        <p style="font-size: 14px">{% trans "Кафе" %}</p>
+        <p style="font-size: 14px">{% trans "Новости" %}</p>
+        <p style="font-size: 14px">{% trans "Контакты" %}</p>
+        <p style="font-size: 14px">{% trans "Детская комната" %}</p>
+        <p style="font-size: 14px">{% trans "Реклама" %}</p>
+        <p style="font-size: 14px">{% trans "VIP-зал" %}</p>
       </div>
       <div class="col-2">
           <img src="{% static 'pages_app/img/facebook.png' %}" style="width: 30px">
