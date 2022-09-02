@@ -42,26 +42,18 @@
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <p>Пол</p>
-        <select class="form-select" name="gender" id="id_gender" value="{{ form.gender.value }}" aria-label="Default select example">
-             <option selected>Пол</option>
-             <option value="Male">Мужской</option>
-             <option value="Female">Женский</option>
-             <option value="Different">Другой</option>
-            <option value="Don`t say">Не скажу</option>
+             {{ form.gender }}
         </select>
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <p>Язык</p>
-        <select class="form-select" name="language" value="{{ form.language.value }}" id="id_language" aria-label="Default select example">
-             <option selected>Язык</option>
-             <option value="UA">Українська</option>
-             <option value="EN">English</option>
-             <option value="RU">русский</option>
-        </select>
+        {{ form.language }}
     </div>
-  </div>{{ form }}
+      <a href="{% url "password_change" %}" type="submit" class="btn btn-lg btn-outline-dark">Сменить пароль</a>
+  </div>
 <button type="submit" class="btn btn-lg btn-outline-dark">Сохранить</button>
+
         </form>
 </main>
 {% endblock %}

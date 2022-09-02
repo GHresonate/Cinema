@@ -1,0 +1,77 @@
+{% extends 'my_admin/base.html' %}
+{% load static %}
+{% block title %}
+Change user
+{% endblock %}
+{% block main %}
+        <div><h1>Пользователь</h1></div><hr>
+
+    <form id="big_form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="field">
+            <label for="{{ another_user.name.id_for_label }}">Имя:</label>
+            {{ another_user.name }}
+            {{ another_user.name.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ another_user.surname.id_for_label }}">Фамилия:</label>
+            {{ another_user.surname }}
+            {{ another_user.surname.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ another_user.username.id_for_label }}">Username:</label>
+            {{ another_user.username }}
+            {{ another_user.username.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ another_user.email.id_for_label }}">Email:</label>
+            {{ another_user.email }}
+            {{ another_user.email.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ another_user.address.id_for_label }}">Адресс:</label>
+            {{ another_user.address }}
+            {{ another_user.address.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ another_user.card_number.id_for_label }}">Номер карты:</label>
+            {{ another_user.card_number }}
+            {{ another_user.card_number.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ another_user.language.id_for_label }}">Язык:</label>
+            {{ another_user.language }}
+            {{ another_user.language.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ another_user.gender.id_for_label }}">Пол:</label>
+            {{ another_user.gender }}
+            {{ another_user.gender.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ another_user.is_active.id_for_label }}">Активный:</label>
+            <div style="float: left; transform: scale(2); margin-left: 14px;">{{ another_user.is_active }}</div>
+            {{ another_user.is_active.errors }}
+        </div>
+        {% if 'can_add_admin' in perms %}
+        <div class="field">
+            <label for="{{ another_user.is_superuser.id_for_label }}">Админ:</label>
+            <div style="float: left; transform: scale(2); margin-left: 14px;">{{ another_user.is_superuser }}</div>
+            {{ another_user.is_superuser.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ another_user.is_staff.id_for_label }}">Персонал:</label>
+            <div style="float: left; transform: scale(2); margin-left: 14px;">{{ another_user.is_staff }}</div>
+            {{ another_user.is_staff.errors }}
+        </div>
+        {% endif %}
+        <br>
+          <input type="submit" id="main_res" class="btn btn-light" value="Сохранить">
+
+    </form>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'my_admin/js_for_cinema_app.js' %}"></script>
+{% endblock %}

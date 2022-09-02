@@ -23,7 +23,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ('Male', 'Male'),
         ('Female', 'Female'),
         ('Different', 'Different'),
-        ('Don`t say', 'Don`t say'),
     ]
     gender = models.CharField(max_length=32, choices=genders)
 

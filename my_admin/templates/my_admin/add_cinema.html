@@ -15,7 +15,7 @@ Add cinema
             {{ cinema.name.errors }}
         </div>
         <div class="field">
-            <label for="{{ cinema.description.id_for_label }}">Описание:</label>
+            <label for="{{ cinema.description.id_for_label }}">Название:</label>
             {{ cinema.description }}
             {{ cinema.description.errors }}
         </div>
@@ -115,9 +115,9 @@ Add cinema
             {{ seo.keywords.errors }}
         </div>
         <div class="field">
-            <label for="{{ seo.description.id_for_label }}">Description:</label>
-            {{ seo.description }}
-            {{ seo.description.errors }}
+            <label for="{{ seo.definition.id_for_label }}">Description:</label>
+            {{ seo.definition }}
+            {{ seo.definition.errors }}
         </div>
       <div style="text-align: center">
           <input type="reset" id="main_res" class="btn btn-light" value="Сбросить форму">

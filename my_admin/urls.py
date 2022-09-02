@@ -13,6 +13,7 @@ urlpatterns = [
     path('change_changeNewsAndDiskInBanner', views.changeNewsAndDiskInBanner, name='change_changeNewsAndDiskInBanner'),
     path('change_main', views.change_main, name='change_main'),
     path('movies', views.movies, name='movies'),
+    path('users', views.users, name='users'),
     path('pages', views.pages, name='pages'),
     path('cinemas', views.cinemas, name='cinemas'),
     path('news', views.news, name='news'),
@@ -20,6 +21,7 @@ urlpatterns = [
     path('movies/<slug:url>', views.change_movie, name='change_movie'),
     path('cinemas/<slug:url>', views.change_cinema, name='change_cinema'),
     path('pages/<slug:url>', views.change_page, name='change_page'),
+    path('users/<slug:username>', views.change_user, name='change_user'),
     path('news/<slug:url>', views.change_news, name='change_news'),
     path('discounts/<slug:url>', views.change_discount, name='change_discount'),
 ]

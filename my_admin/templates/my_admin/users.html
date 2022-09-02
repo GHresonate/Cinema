@@ -1,0 +1,63 @@
+{% extends 'my_admin/base.html' %}
+{% load static %}
+{% block title %}
+{{ type }}
+{% endblock %}
+{% block main %}
+    <h1>Пользователи</h1>
+    <div style="float: right">
+        <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Сортировка
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url "users" %}?type=1">По времени добавления</a></li>
+          <li><a class="dropdown-item" href="{% url "users" %}?type=-1">По времени добавления (реверс)</a></li>
+          <li><a class="dropdown-item" href="{% url "users" %}?type=2">По username</a></li>
+          <li><a class="dropdown-item" href="{% url "users" %}?type=-2">По username (реверс)</a></li>
+      </ul>
+    </div>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Персонал</th>
+      <th scope="col">Админ</th>
+    </tr>
+  </thead>
+    <tbody>
+      {% for model in page %}
+        <tr>
+          <td><strong><a href="/my_admin/users/{{ model.username }}">{{ model.username }}</a></strong></td>
+        <td>{{ model.email }}</td>
+        <td>
+            {% if model.is_staff %}
+                Да
+            {% else %}
+                Нет
+            {% endif %}
+        </td>
+        <td>
+            {% if model.is_superuser %}
+                Да
+            {% else %}
+                Нет
+            {% endif %}
+        </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>
+  <div class="pagin_menu">
+    {% if page.has_previous %}
+      <a class="pagin_menu_minor" href="?page=1&type={{ sort_type }}">1</a>
+      <a href="?page={{ page.previous_page_number }}&type={{ sort_type }}"><<</a>
+    {% endif %}
+      <span class="pagin_menu_major">{{ page.number }}</span>
+    {% if page.has_next %}
+      <a href="?page={{ page.next_page_number }}&type={{ sort_type }}">>></a>
+      <a class="pagin_menu_minor" href="?page={{ page.paginator.num_pages }}&type={{ sort_type }}">{{ page.paginator.num_pages }}</a>
+    {% endif %}
+  </div>
+{% endblock %}
+

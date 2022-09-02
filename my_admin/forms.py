@@ -2,8 +2,39 @@ import re
 from django import forms
 from pages_app.models import SEO, Photo, NewsAndDiscount, Pages, BannersInTheTop, Background, NewsAndDiscInBanner, \
     MainPage, Contact
+from user_app.models import CustomUser
 from cinema_app.models import Movie, Cinema, Hall
 from django.forms import modelformset_factory
+
+
+class UserChangeForm(forms.ModelForm):
+    name = forms.CharField(max_length=256)
+    surname = forms.CharField(max_length=256)
+    username = forms.CharField(max_length=256)
+    email = forms.EmailField()
+    address = forms.CharField(max_length=256)
+    card_number = forms.IntegerField()
+    languishes = [
+        ('UA', 'Ukrainian'),
+        ('EN', 'English'),
+        ('RU', 'Russian')
+    ]
+    language = forms.ChoiceField(choices=languishes)
+    genders = [
+        ('Male', 'Male'),
+        ('Female', 'Female'),
+        ('Different', 'Different'),
+        ('Don`t say', 'Don`t say'),
+    ]
+    gender = forms.ChoiceField(choices=genders)
+    is_active = forms.BooleanField(required=False)
+    is_superuser = forms.BooleanField(required=False)
+    is_staff = forms.BooleanField(required=False)
+
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email', 'name', 'surname', 'address', 'card_number', 'language', 'gender', 'is_active',
+                  'is_superuser', 'is_staff')
 
 
 class PhotoForm(forms.ModelForm):
@@ -21,11 +52,11 @@ class SEOForm(forms.ModelForm):
     title = forms.CharField(max_length=128)
     url = forms.CharField(max_length=128)
     keywords = forms.CharField(max_length=128)
-    description = forms.CharField(widget=forms.Textarea)
+    definition = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = SEO
-        fields = ('title', 'url', 'keywords', 'description')
+        fields = ('title', 'url', 'keywords', 'definition')
 
     def clean(self):
         cleaned_data = super().clean()
@@ -44,7 +75,7 @@ class MovieForm(forms.ModelForm):
     is_2D = forms.BooleanField(required=False)
     is_3D = forms.BooleanField(required=False)
     is_IMAX = forms.BooleanField(required=False)
-    realise_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    realise_date = forms.DateField(localize=True, widget=forms.widgets.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = Movie
@@ -125,12 +156,11 @@ class ContactForm(forms.ModelForm):
     main_photo = forms.ImageField()
     name = forms.CharField(max_length=256)
     address = forms.CharField(widget=forms.Textarea)
-    coordinate = forms.CharField(max_length=256)
-
+    coordinate = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = Contact
-        fields = ('main_photo','name', 'address', 'coordinate')
+        fields = ('main_photo', 'name', 'address', 'coordinate')
 
 
 ContactForms = modelformset_factory(Contact, form=ContactForm, can_delete=True, extra=5, max_num=5)
@@ -149,7 +179,7 @@ class MainPageForm(forms.ModelForm):
 class HallForm(forms.ModelForm):
     number = forms.IntegerField()
     name = forms.CharField(max_length=128)
-    created_date = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    created_date = forms.DateField(input_formats=['%d/%m/%Y'],localize=True, widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     description = forms.CharField(widget=forms.Textarea)
     scheme = forms.JSONField()
     main_photo = forms.ImageField()

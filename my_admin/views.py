@@ -2,11 +2,16 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from pages_app.models import Gallery, Photo, SEO, NewsAndDiscount, Pages, BannersInTheTop, Background, MainPage
 from cinema_app.models import Movie, Cinema
+from user_app.models import CustomUser
 from .forms import PhotosForm, HallForm, SEOForm, MovieForm, CinemaForm, NewsAndDiscountForm, PagesForm, \
-    NewsAndDiscBannerForms, TopBannerForms, BackgroundForm, NewsAndDiscInBanner, MainPageForm,ContactForms
+    NewsAndDiscBannerForms, TopBannerForms, BackgroundForm, NewsAndDiscInBanner, MainPageForm, ContactForms, \
+    UserChangeForm
 from django.core.paginator import Paginator
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import permission_required
+from django.core.mail import send_mail
 
 
 class SEOException(Exception):
@@ -16,13 +21,14 @@ class SEOException(Exception):
         self.value_dict = value_dict
 
 
+@permission_required('hav_access_to_admin')
 def changeNewsAndDiskInBanner(request):
     if request.method == 'POST':
         top_banners = NewsAndDiscBannerForms(request.POST, request.FILES)
         for banner in top_banners:
             if banner.is_valid():
-                 banner = banner.save(commit=False)
-                 if banner.main_photo:
+                banner = banner.save(commit=False)
+                if banner.main_photo:
                     banner.save()
         top_banners.save()
         return HttpResponseRedirect(reverse('news'))
@@ -32,13 +38,14 @@ def changeNewsAndDiskInBanner(request):
                       {'top_banners': top_banners})
 
 
+@permission_required('hav_access_to_admin')
 def change_contacts(request):
     if request.method == 'POST':
         contacts = ContactForms(request.POST, request.FILES)
         for contact in contacts:
             if contact.is_valid():
-                 contact = contact.save(commit=False)
-                 if contact.main_photo:
+                contact = contact.save(commit=False)
+                if contact.main_photo:
                     contact.save()
         contacts.save()
         return HttpResponseRedirect(reverse('news'))
@@ -55,7 +62,6 @@ def change(request, url, model, model_form, model_name, plural_name):
     if request.method == 'POST':
         photos = PhotosForm(request.POST, request.FILES, queryset=quer)
         object = model_form(request.POST, request.FILES, instance=the_object)
-
         if object.is_valid():
             seo = SEOForm(request.POST, instance=the_object.seo)
             for photo in photos:
@@ -80,7 +86,6 @@ def change(request, url, model, model_form, model_name, plural_name):
             object.save()
             return HttpResponseRedirect(reverse(plural_name))
         else:
-            print(object.errors)
             raise ValueError
     else:
         object = model_form(instance=the_object)
@@ -90,6 +95,23 @@ def change(request, url, model, model_form, model_name, plural_name):
                       {"photos": photos, "seo": seo, model_name: object, "the_" + model_name: the_object})
 
 
+@permission_required('hav_access_to_admin')
+def change_user(request, username):
+    old_user = CustomUser.objects.get(username=username)
+    if request.method == 'POST':
+        user = UserChangeForm(request.POST, request.FILES, instance=old_user)
+        if user.is_valid():
+            user.save()
+            return HttpResponseRedirect(reverse("users"))
+        else:
+            print(user.errors)
+            raise ValueError
+    else:
+        user = UserChangeForm(instance=old_user)
+        return render(request, 'my_admin/change_user.html', {"another_user": user})
+
+
+@permission_required('hav_access_to_admin')
 def change_main(request):
     the_object = MainPage.objects.get(pk=1)
     if request.method == 'POST':
@@ -118,6 +140,7 @@ def change_main(request):
         return render(request, 'my_admin/change_main.html', {"seo": seo, "main": object})
 
 
+@permission_required('hav_access_to_admin')
 def change_banners(request):
     the_background = Background.objects.get(pk=1)
     if request.method == 'POST':
@@ -142,22 +165,28 @@ def change_banners(request):
                       {"background": background, 'top_banners': top_banners, 'the_background': the_background})
 
 
+@permission_required('hav_access_to_admin')
 def change_movie(request, url):
     return change(request, url, Movie, MovieForm, "movie", "movies")
 
 
+@permission_required('hav_access_to_admin')
 def change_cinema(request, url):
     return change(request, url, Cinema, CinemaForm, "cinema", "cinemas")
 
 
+@permission_required('hav_access_to_admin')
+@permission_required('can_change_big_pages')
 def change_page(request, url):
     return change(request, url, Pages, PagesForm, "page", "pages")
 
 
+@permission_required('hav_access_to_admin')
 def change_news(request, url):
     return change(request, url, NewsAndDiscount, NewsAndDiscountForm, "news", "news")
 
 
+@permission_required('hav_access_to_admin')
 def change_discount(request, url):
     return change(request, url, NewsAndDiscount, NewsAndDiscountForm, "discount", "discounts")
 
@@ -181,6 +210,37 @@ def get_right_page(request, model, page_type, model_in_page=15):
     return render(request, 'my_admin/models.html', {"page": page, "sort_type": sort_type, "type": page_type})
 
 
+@permission_required('hav_access_to_admin')
+def users(request):
+    try:
+        sort_type = int(request.GET.get('type'))
+    except TypeError:
+        sort_type = -1
+    if request.user.is_superuser:
+        if sort_type == -1:
+            model_sum = CustomUser.objects.all().order_by("-id")
+        elif sort_type == 1:
+            model_sum = CustomUser.objects.all().order_by("id")
+        elif sort_type == 2:
+            model_sum = CustomUser.objects.all().order_by("email")
+        elif sort_type == -2:
+            model_sum = CustomUser.objects.all().order_by("-email")
+    else:
+        if sort_type == -1:
+            model_sum = CustomUser.objects.all().filter(is_staff=False).filter(is_superuser=False).order_by("-id")
+        elif sort_type == 1:
+            model_sum = CustomUser.objects.all().filter(is_staff=False).filter(is_superuser=False).order_by("id")
+        elif sort_type == 2:
+            model_sum = CustomUser.objects.all().filter(is_staff=False).filter(is_superuser=False).order_by("email")
+        elif sort_type == -2:
+            model_sum = CustomUser.objects.all().filter(is_staff=False).filter(is_superuser=False).order_by("-email")
+    paginator = Paginator(model_sum, 15)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    return render(request, 'my_admin/users.html', {"page": page, "sort_type": sort_type})
+
+
+@permission_required('hav_access_to_admin')
 def news(request):
     try:
         sort_type = int(request.GET.get('type'))
@@ -200,6 +260,7 @@ def news(request):
     return render(request, 'my_admin/models.html', {"page": page, "sort_type": sort_type, "type": "news"})
 
 
+@permission_required('hav_access_to_admin')
 def discounts(request):
     try:
         sort_type = int(request.GET.get('type'))
@@ -219,14 +280,17 @@ def discounts(request):
     return render(request, 'my_admin/models.html', {"page": page, "sort_type": sort_type, "type": "discounts"})
 
 
+@permission_required('hav_access_to_admin')
 def cinemas(request):
     return get_right_page(request, Cinema, "cinemas")
 
 
+@permission_required('hav_access_to_admin')
 def pages(request):
     return get_right_page(request, Pages, "pages")
 
 
+@permission_required('hav_access_to_admin')
 def movies(request):
     return get_right_page(request, Movie, "movies")
 
@@ -261,6 +325,7 @@ def main_add(request, main_form, name_main_form, plural_name_main_form):
                       {name_main_form: main_form, 'photos': photos, 'seo': seo})
 
 
+@permission_required('hav_access_to_admin')
 def add_hall(request, number):
     if request.method == 'POST':
         hall = HallForm(request.POST, request.FILES)
@@ -276,6 +341,7 @@ def add_hall(request, number):
         return main_add(request, hall, "hall", "halls")
 
 
+@permission_required('hav_access_to_admin')
 def add_news(request):
     if request.method == 'POST':
         a_news = NewsAndDiscountForm(request.POST, request.FILES)
@@ -291,6 +357,7 @@ def add_news(request):
         return main_add(request, news, "news", "news")
 
 
+@permission_required('hav_access_to_admin')
 def add_disc(request):
     if request.method == 'POST':
         a_disc = NewsAndDiscountForm(request.POST, request.FILES)
@@ -306,6 +373,7 @@ def add_disc(request):
         return main_add(request, disc, "discount", "discounts")
 
 
+@permission_required('hav_access_to_admin')
 def add_movie(request):
     if request.method == 'POST':
         movie = MovieForm(request.POST, request.FILES)
@@ -320,6 +388,7 @@ def add_movie(request):
         return main_add(request, movie, "movie", "movies")
 
 
+@permission_required('hav_access_to_admin')
 def add_cinema(request):
     if request.method == 'POST':
         cinema = CinemaForm(request.POST, request.FILES)
@@ -334,6 +403,8 @@ def add_cinema(request):
         return main_add(request, cinema, "cinema", "cinemas")
 
 
+@permission_required('hav_access_to_admin')
+@permission_required('can_change_big_pages')
 def add_page(request):
     if request.method == 'POST':
         page = PagesForm(request.POST, request.FILES)

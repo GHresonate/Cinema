@@ -37,19 +37,20 @@ class CustomUserChangeForm(forms.ModelForm):
     address = forms.CharField(max_length=256)
     card_number = forms.IntegerField()
     languishes = [
-        ('UA', 'Ukrainian'),
+        ('UA', 'Українська'),
         ('EN', 'English'),
-        ('RU', 'Russian')
+        ('RU', 'Руский')
     ]
-    language = forms.ChoiceField(choices=languishes)
+    """attrs={"class":"form-select"})"""
+    language = forms.ChoiceField(choices=languishes, widget=forms.Select(attrs={"class":"form-select"}))
     genders = [
-        ('Male', 'Male'),
-        ('Female', 'Female'),
-        ('Different', 'Different'),
-        ('Don`t say', 'Don`t say'),
+        ('Male', 'Мужской'),
+        ('Female', 'Женский'),
+        ('Different', 'Другой'),
     ]
-    gender = forms.ChoiceField(choices=genders)
+    gender = forms.ChoiceField(choices=genders, widget=forms.Select(attrs={"class":"form-select"}))
 
     class Meta:
         model = CustomUser
         fields = ('username', 'name', 'surname', 'address', 'card_number', 'language', 'gender')
+

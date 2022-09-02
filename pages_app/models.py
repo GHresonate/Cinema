@@ -14,7 +14,7 @@ class SEO(models.Model):
     url = models.CharField(unique=True, max_length=128, null=True)
     title = models.CharField(max_length=128)
     keywords = models.TextField()
-    description = models.TextField()
+    definition = models.TextField()
 
 
 class Pages(models.Model):
@@ -72,5 +72,5 @@ class NewsAndDiscount(models.Model):
 class Contact(models.Model):
     name = models.CharField(max_length=256)
     address = models.TextField()
-    coordinate = models.CharField(max_length=256)
+    coordinate = models.TextField()
     main_photo = models.ImageField()
