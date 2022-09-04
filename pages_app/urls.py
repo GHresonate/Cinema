@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from django.conf.urls.i18n import i18n_patterns
+
 
 urlpatterns = [
     path('promotions', views.promotions, name='promotions'),
@@ -14,4 +15,5 @@ urlpatterns = [
     path('children', views.children, name='front_children'),
     path('the_cinema', views.the_cinema, name='front_the_cinema'),
     path('a_news/<slug:url>', views.a_news, name='front_a_news'),
+ #   path('change_lang/<slug:code>', views.select_lang, name='front_change_lang'),
 ]

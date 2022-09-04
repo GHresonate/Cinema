@@ -15,6 +15,7 @@
 
 <header>
 {{ user }}
+
   <div class="container" style="max-width: 1100px;">
     <div class="row align-items-center">
       <div class="col-3" style="text-align: center; display: block">
@@ -116,18 +117,34 @@
           <img src="{% static 'pages_app/img/tiktok.png' %}" style="width: 30px">
       </div>
       <div class="col-3" style="text-align: right; ">
-        <form method="post" >
           <div style="max-width: 210px; float: right; ">
-            <select class="form-select bg-dark" style="color: aliceblue; border: black; color: #A9A9A9">
-              <option value="ru">
-                Русский
+
+    <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}" />
+
+        <select class="selectpicker form-select bg-dark" name="language" style="width: auto; color: aliceblue; border: black; color: #A9A9A9;" onchange="this.form.submit()">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as LANGUAGES %}
+          {% get_language_info_list for LANGUAGES as languages %}
+          {% for language in languages %}
+
+              <option
+                value="{{ language.code }}"
+                {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}
+                data-content='<img src="/static/images/flags/{{ language.code }}.gif"></span>
+                <span style="display:inline-block; width:100px; padding-left: 10px; text-shadow:none">
+                  {{ language.name_local }}
+                </span>'>
+                {{ language.name_local }}
               </option>
-              <option value="ua">
-                Українська
-              </option>
-            </select>
+
+          {% endfor %}
+        </select>
+    </form>
+
+
           </div>
-        </form>
       </div>
     </div>
   </div>
