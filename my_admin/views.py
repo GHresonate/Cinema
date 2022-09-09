@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from pages_app.models import Gallery, Photo, SEO, NewsAndDiscount, Pages, BannersInTheTop, Background, MainPage
-from cinema_app.models import Movie, Cinema
+from cinema_app.models import Movie, Cinema, Hall
 from user_app.models import CustomUser
 from .forms import PhotosForm, HallForm, SEOForm, MovieForm, CinemaForm, NewsAndDiscountForm, PagesForm, \
     NewsAndDiscBannerForms, TopBannerForms, BackgroundForm, NewsAndDiscInBanner, MainPageForm, ContactForms, \
@@ -12,6 +12,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import permission_required
 from django.core.mail import send_mail
+from Cinema import create_sessions as cr
 
 
 class SEOException(Exception):
@@ -169,10 +170,51 @@ def change_banners(request):
 def change_movie(request, url):
     return change(request, url, Movie, MovieForm, "movie", "movies")
 
+@permission_required('hav_access_to_admin')
+def change_hall(request, url):
+    return change(request, url, Hall, HallForm, "hall", "cinemas")
+
 
 @permission_required('hav_access_to_admin')
 def change_cinema(request, url):
-    return change(request, url, Cinema, CinemaForm, "cinema", "cinemas")
+    the_cinema = get_object_or_404(Cinema, seo__url=url)
+    gall = the_cinema.photo_list
+    quer = Photo.objects.all().filter(gallery=gall)
+    if request.method == 'POST':
+        photos = PhotosForm(request.POST, request.FILES, queryset=quer)
+        cinema = CinemaForm(request.POST, request.FILES, instance=the_cinema)
+        if cinema.is_valid():
+            seo = SEOForm(request.POST, instance=the_cinema.seo)
+            for photo in photos:
+                if photo.is_valid():
+                    photo_final = photo.save(commit=False)
+                    photo_final.gallery = gall
+                    if photo_final.photo:
+                        photo_final.save()
+            photos.save()
+            url = the_cinema.seo.url
+            the_cinema.seo.url = None
+            the_cinema.seo.save()
+            if not seo.is_valid():
+                the_cinema.seo.url = url
+                the_cinema.seo.save()
+                return render(request, 'my_admin/add_cinema.html',
+                              {"photos": photos, "seo": seo, "cinema": cinema, "the_cinema": the_cinema})
+            new_seo = seo.save()
+            the_cinema.seo.url = new_seo.url
+            the_cinema.seo.save()
+            seo.save()
+            cinema.save()
+            return HttpResponseRedirect(reverse("cinemas"))
+        else:
+            raise ValueError
+    else:
+        cinema = CinemaForm(instance=the_cinema)
+        seo = SEOForm(instance=the_cinema.seo)
+        photos = PhotosForm(queryset=quer)
+        halls = Hall.objects.all().filter(cinema=the_cinema)
+        return render(request, "my_admin/add_cinema.html",
+                      {"photos": photos, "seo": seo, "cinema": cinema, "the_cinema": the_cinema, "halls":halls})
 
 
 @permission_required('hav_access_to_admin')
@@ -326,14 +368,15 @@ def main_add(request, main_form, name_main_form, plural_name_main_form):
 
 
 @permission_required('hav_access_to_admin')
-def add_hall(request, number):
+def add_hall(request, cinema_number):
     if request.method == 'POST':
+        cinema = get_object_or_404(Cinema, id=cinema_number)
         hall = HallForm(request.POST, request.FILES)
         try:
             final_hall = main_add(request, hall, "hall", "halls")
         except SEOException as e:
             return render(e.request, e.way, e.value_dict)
-        final_hall.cinema = get_object_or_404(Cinema, id=number)
+        final_hall.cinema = cinema
         final_hall.save()
         return HttpResponseRedirect(reverse('news'))
     else:
@@ -417,3 +460,11 @@ def add_page(request):
     else:
         page = CinemaForm()
         return main_add(request, page, "page", "pages")
+
+
+def create_sessions(request):
+    cr.main()
+
+
+def send_email(request):
+    send_mail('test','<h1>testtt</h1>',from_email=None, recipient_list=["test.for.site.dja@gmail.com",])

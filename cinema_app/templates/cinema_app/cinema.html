@@ -1,0 +1,65 @@
+{% extends 'pages_app/base.html' %}
+{% load static %}
+{% block title %}
+{{ cinema.seo.title }}
+{% endblock %}
+{% block main %}
+
+    <main>
+  <h1>Кинотеатр "{{ cinema.name }}"</h1>
+  <img src="{{ cinema.main_photo.url }}" style="margin-bottom: 17px; max-width: 50vw;">
+  <div style="max-width: 800px; float: right">
+    <div>
+{{ cinema.description }}
+    </div>
+  <h3>Залы</h3>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Номер</th>
+        <th scope="col">Назване</th>
+      <th scope="col">Лого</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for hall in halls %}
+    <tr>
+      <th scope="row">{{ hall.number }}</th>
+        <td><a href="{% url 'front_hall' hall.seo.url %}">{{ hall.name }}</a></td>
+      <td><img style="width: 100px" src="{{ hall.main_photo.url }}"></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img  src="{{ first_photo.photo.url }}" style="max-height: 720px;" class="d-block w-100">
+      </div>
+        {% for photo in all_photos %}
+      <div class="carousel-item">
+        <img  src="{{ photo.photo.url }}" style="max-height: 720px;" class="d-block w-100">
+      </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Следующий</span>
+    </button>
+  </div>
+
+  </div>
+
+  <aside style="max-width: 400px; height: 100%; float: left; position: sticky; top: 7px;">
+    <img style="max-width: 200px; position: relative; display: block; margin-left: 7px; margin-top: 7px;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
+    <img style="max-width: 200px; bottom: 10%; position: relative; display: block; margin-left: 7px; margin-top: 7px; float: bottom;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
+  </aside>
+
+</main>
+
+{% endblock %}

@@ -12,7 +12,7 @@
     <div style="margin: 14px; display: inline-block;">
       <img src="{{ cinema.main_photo.url }}" style="max-width: 300px; margin: 7px;">
       <p style="font-size: 25px"><b>
-        {{ cinema.name }}
+          <a href="{% url "front_cinema" cinema.seo.url %}">{{ cinema.name }}</a>
       </b></p>
     </div>
     {% endfor %}

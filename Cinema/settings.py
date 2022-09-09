@@ -15,6 +15,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'phonenumber_field',
+    'modeltranslation',
     'pages_app.apps.PagesAppConfig',
     'cinema_app.apps.CinemaAppConfig',
     'user_app.apps.UserAppConfig',
@@ -94,7 +95,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'uk'
-
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 LANGUAGES = (
     ('uk', 'Ukrainian'),
     ('ru', 'Russian'),
@@ -120,7 +121,9 @@ MEDIA_URL = 'media/'
 AUTH_USER_MODEL = 'user_app.CustomUser'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/user/login'
-DATE_FORMAT = ( ( 'd-m-Y' ))
-DATE_INPUT_FORMATS = ( ('%d-%m-%Y'),)
-DATETIME_FORMAT = (( 'd-m-Y H:i' ))
-DATETIME_INPUT_FORMATS = (('%d-%m-%Y %H:%i'),)
+
+
+
+USE_L10N = True
+
+DATE_INPUT_FORMATS = ('%d/%m/%Y','%d-%m-%Y','%Y-%m-%d')

@@ -13,7 +13,6 @@ class Cinema(models.Model):
 class Hall(models.Model):
     number = models.IntegerField()
     name = models.CharField(max_length=128)
-    created_date = models.DateField()
     description = models.TextField()
     scheme = models.JSONField()
     main_photo = models.ImageField()
@@ -50,12 +49,9 @@ class Kontact(models.Model):
 class Session(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE)
-    time = models.TimeField()
     hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    date = models.DateTimeField()
     price = models.IntegerField()
-    day = models.DateField()
 
 
 

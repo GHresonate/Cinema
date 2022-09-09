@@ -1,0 +1,91 @@
+{% extends 'pages_app/base.html' %}
+{% load static %}
+{% block title %}
+    Кинотеатры
+{% endblock %}
+{% block main %}
+<main>
+  <div class="container">
+    <div class="row">
+      <select class="col form-select" aria-label="Cinema" style="margin: 7px">
+        <option selected>Кинотеатр</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <select class="col form-select" aria-label="Date" style="margin: 7px">
+        <option selected>Дата</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <select class="col form-select" aria-label="Film" style="margin: 7px">
+        <option selected>Фильм</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <select class="col form-select" aria-label="Hall" style="margin: 7px">
+        <option selected>Зал</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="display: table; margin: 7px; text-align: left; font-size: 16px; font-weight: bolder;">
+    <div style="display: table-cell; padding: 7px; ">Показывать только: </div>
+    <div class="form-check form-check-inline" style="display: table-cell; padding-right: 20px">
+      <input class="form-check-input bg-dark" type="checkbox" id="inlineCheckbox1" value="2D">
+      <label class="form-check-label" for="inlineCheckbox1">2D</label>
+    </div>
+    <div class="form-check form-check-inline" style="display: table-cell; padding-right: 20px">
+      <input class="form-check-input bg-dark" id="inlineCheckbox2" type="checkbox" value="VIP">
+      <label class="form-check-label" for="inlineCheckbox2">VIP</label>
+    </div>
+    <div class="form-check form-check-inline" style="display: table-cell; padding-right: 20px">
+      <input class="form-check-input bg-dark" id="inlineCheckbox3" type="checkbox" value="DBOX">
+      <label class="form-check-label" for="inlineCheckbox3">DBOX</label>
+    </div>
+  </div>
+  <aside style="max-width: 400px; height: 100%; float: left; position: sticky; top: 7px; margin-right: 14px;">
+    <img style="max-width: 200px; position: relative; display: block; margin-left: 7px; margin-top: 7px;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
+    <img style="max-width: 200px; bottom: 10%; position: relative; display: block; margin-left: 7px; margin-top: 7px; float: bottom;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
+  </aside>
+
+  <div class="container" style="text-align: center; width: 870px;">
+    <div class="row" style="font-size: 18px; font-weight: bolder;border: 2px solid black; border-radius: 3px;background-color: #c4d0d9; vertical-align: center">
+      <div class="col-2" style="border-right: 2px solid black;">Время</div>
+      <div class="col-4" style="border-right: 2px solid black;">Фильм</div>
+      <div class="col-1" style="border-right: 2px solid black;">Зал</div>
+      <div class="col-2" style="border-right: 2px solid black;">Цена</div>
+      <div class="col-3">Бронировать</div>
+    </div>
+    <div class="row" style="font-size: 15px; padding: 4px; border-bottom: 2px dashed black;">
+      <div class="col-2" >11:30</div>
+      <div class="col-4">Довод</div>
+      <div class="col-1">2</div>
+      <div class="col-2">120 ₴</div>
+      <div class="col-3">
+        <button type="button" class="btn btn-sm btn-outline-dark">Бронировать</button>
+      </div>
+    </div>
+
+
+  <div class="pagin_menu" style="float: right; margin-right: 45%">
+    {% if page.has_previous %}
+      <a class="pagin_menu_minor" href="?page=1">1</a>
+      <a href="?page={{ page.previous_page_number }}"><<</a>
+    {% endif %}
+      <span class="pagin_menu_major">{{ page.number }}</span>
+    {% if page.has_next %}
+      <a href="?page={{ page.next_page_number }}">>></a>
+      <a class="pagin_menu_minor" href="?page={{ page.paginator.num_pages }}">{{ page.paginator.num_pages }}</a>
+    {% endif %}
+  </div>
+
+
+  </div>
+</main>
+{% endblock %}

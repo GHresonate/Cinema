@@ -5,6 +5,7 @@ from pages_app.models import SEO, Photo, NewsAndDiscount, Pages, BannersInTheTop
 from user_app.models import CustomUser
 from cinema_app.models import Movie, Cinema, Hall
 from django.forms import modelformset_factory
+from Cinema import settings
 
 
 class UserChangeForm(forms.ModelForm):
@@ -54,6 +55,8 @@ class SEOForm(forms.ModelForm):
     keywords = forms.CharField(max_length=128)
     definition = forms.CharField(widget=forms.Textarea)
 
+    prefix = 'seo'
+
     class Meta:
         model = SEO
         fields = ('title', 'url', 'keywords', 'definition')
@@ -75,7 +78,7 @@ class MovieForm(forms.ModelForm):
     is_2D = forms.BooleanField(required=False)
     is_3D = forms.BooleanField(required=False)
     is_IMAX = forms.BooleanField(required=False)
-    realise_date = forms.DateField(localize=True, widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    realise_date =  forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),)
 
     class Meta:
         model = Movie
@@ -179,11 +182,10 @@ class MainPageForm(forms.ModelForm):
 class HallForm(forms.ModelForm):
     number = forms.IntegerField()
     name = forms.CharField(max_length=128)
-    created_date = forms.DateField(input_formats=['%d/%m/%Y'],localize=True, widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     description = forms.CharField(widget=forms.Textarea)
     scheme = forms.JSONField()
     main_photo = forms.ImageField()
 
     class Meta:
         model = Hall
-        fields = ('number', 'name', 'created_date', 'description', 'scheme', 'main_photo')
+        fields = ('number', 'name', 'description', 'scheme', 'main_photo')

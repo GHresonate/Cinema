@@ -74,26 +74,28 @@ Add cinema
                 </div>
                 {% endfor %}
         </div>
-        <table class="table">
+      {% if the_cinema %}
+          <table class="table">
           <thead>
             <tr>
               <th scope="col">Название</th>
-              <th scope="col">Дата создания</th>
+              <th scope="col">Номер</th>
               <th scope="col">Баннер</th>
               <th scope="col"></th>
             </tr>
           </thead>
+          {% for hall in halls %}
           <tbody>
-              <th scope="col">Lorem</th>
-              <th scope="col">00.00.0001</th>
-              <th scope="col"><img class="small_photo" src="http://127.0.0.1:8000/media/Jammy-Jellyfish_WP_4096x2304_Grey.png"></th>
+              <th scope="col">{{ hall.name }}</th>
+              <th scope="col">{{ hall.number }}</th>
+              <th scope="col"><img class="small_photo" src="{{ hall.main_photo.url }}"></th>
               <th scope="col">
-                  <button class="btn_change_hall btn btn-light">Изменить</button>
-                  <button class="btn_rem_hall btn btn-light">Удалить</button>
+                  <a href="{% url "change_hall" hall.seo.url %}" class="btn_change_hall btn btn-light">Изменить</a>
+                  <a><button class="btn_rem_hall btn btn-light">Удалить</button></a>
               </th>
           </tbody>
-        </table>
-      {% if the_cinema %}
+          {% endfor %}
+          </table>
        <div style="text-align: center" ><a class="btn_add_hall btn btn-light btn-lg" href="http://127.0.0.1:8000/my_admin/add_hall/{{ the_cinema.id }}">Добавить зал</a></div>
       {% endif %}
        <br>

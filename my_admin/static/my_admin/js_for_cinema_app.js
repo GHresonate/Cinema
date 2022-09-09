@@ -16,6 +16,7 @@ const buttAddForm = document.getElementById('big_gal_button_top');
 const buttRemForm = document.getElementById('big_gal_button_bottom');
 const photo_parent = document.getElementById('photo_parent');
 const subButt = document.getElementById('my_submit');
+const seoUrl = document.getElementById("id_seo-url")
 const regexpForUrl = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
 const regexpForOneWord =/^[^\W]*$/
 const messageTextOneWord = document.createElement('p');
@@ -75,14 +76,14 @@ function validate(){
       }
     };
 
-    if (!regexpForOneWord.test(bigForm.url.value) && !(bigForm.url.classList.contains("error"))){
+    if (!regexpForOneWord.test(seoUrl.value) && !(seoUrl.classList.contains("error"))){
         is_good = 0;
         bigForm.url.parentNode.classList.add("length_error");
         bigForm.url.parentNode.appendChild(messageTextOneWord);
     } else {
-      bigForm.url.classList.remove("length_error");
-      if (bigForm.url.parentNode.contains(messageTextOneWord)){
-          bigForm.url.parentNode.removeChild(messageTextOneWord);
+      seoUrl.classList.remove("length_error");
+      if (seoUrl.parentNode.contains(messageTextOneWord)){
+          seoUrl.parentNode.removeChild(messageTextOneWord);
       };
     };
     if (imageGrid){
