@@ -1,0 +1,37 @@
+{% extends 'pages_app/base.html' %}
+{% load static %}
+{% block title %}
+    Аренда билетов
+{% endblock %}
+{% block main %}
+
+<main>
+  <aside style="max-width: 200px; height: 100%; float: left; top: 7px; text-align: center">
+    <img src="{{ movie.main_photo.url }}" style="max-width: 190px;">
+  </aside>
+
+  <div style="max-width: 800px; float: right; text-align: center;">
+    <h1>{{ movie.name }}</h1>
+    <h2>{{ session.date }}</h2>
+
+      <div class="info">
+        <span class="bg-dark sum_info" id="indicator">Выбрано: 0</span>
+        <span class="bg-dark sum_info" id="sum">Сумма: 0</span>
+    </div>
+   <div class="container" id="Background" style="width: 779px;  background-color: bisque; padding-right: 21px; margin: 14px; border-radius: 14px; padding-top:1px; padding-bottom: 21px; margin-bottom: 14px;">
+
+     <div class="row" style="height: 25px; background-color: black; margin: 33px 20px 14px 25px;">
+       <pre><p style="color: #A9A9A9; font-family: 'Andale Mono', monospace; font-size: 17px;">э к р а н</p></pre>
+     </div>
+       <br>
+   </div>
+                          <button id="ready" type="button" class="btn btn-lg btn-outline-dark">Бронировать</button>
+  </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{% static 'cinema_app/js_for_booking.js' %}"></script>
+
+
+</main>
+
+{% endblock %}

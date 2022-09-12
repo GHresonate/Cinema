@@ -35,6 +35,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Ticket(models.Model):
+    row = models.CharField(max_length=8)
     place = models.IntegerField()
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, unique=False)
     session = models.ForeignKey('cinema_app.session', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('session', 'place', 'row')

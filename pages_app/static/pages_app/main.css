@@ -94,6 +94,25 @@ main {
   margin: 2px;
 }
 
+.empty-place{
+  width: 40px;
+  cursor: default;
+  height: 40px;
+  border-radius: 7px;
+  font-size: 25px;
+  margin: 2px;
+}
+
+.ordered-place{
+  width: 40px;
+  cursor: default;
+  background-color: gray;
+  height: 40px;
+  border-radius: 7px;
+  font-size: 25px;
+  margin: 2px;
+}
+
 
 .vip-place:hover{
   cursor: pointer;
