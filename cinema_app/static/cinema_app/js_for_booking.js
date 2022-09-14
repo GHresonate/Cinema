@@ -6,6 +6,8 @@ const readyButt = document.getElementById('ready')
 let price = -1;
 let ordered = {}
 ordered[0]=[]
+let sum_places = 0
+let sum = 0
 const csrftoken = get_cookie('csrftoken');
 
 $.ajax({
@@ -18,17 +20,41 @@ $.ajax({
             url: document.location+"/price",
             success: setPrice
         });
+let place = ''+window.location.href
+let cut_href = place.split('/')
+let sc_id = cut_href[cut_href.length-1]
 
-$.ajax({
-    url: document.location+"/get_reserved",
-    success: paintReserved
-});
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + sc_id
+            + '/'
+        );
+
+chatSocket.onmessage = function (result){
+    let ordered = JSON.parse(result.data)
+    ordered = ordered['message']
+    for (let row in ordered){
+       for (let place in ordered[row]){
+           setPlaceAsBusy(row+'__'+ordered[row][place])
+       }
+    }
+    clearOrder()
+}
 
 function getRow(){
     let row = document.createElement('div')
     row.classList.add('row');
     return row;
 };
+
+function clearOrder(){
+    for (let row in ordered){
+        ordered[row]=[]
+    }
+}
 
 function getEmptyPlace(place_for_one){
     place_for_one=place_for_one+"px";
@@ -57,6 +83,10 @@ function getBasePlace(place_for_one, number){
     col.style.margin="2px;"
     return col;
 };
+
+function get_ordered(){
+    return ordered
+}
 
 function get_cookie ( cookie_name )
 {
@@ -121,7 +151,7 @@ function setPrice(result, status, xhr){
     price=Number(result['price'])
 }
 
-function paintReserved(result, status, xhr){
+function paintReserved(result, status=200, xhr=undefined){
     let ordered = JSON.parse(result)
     for (let row in ordered){
         for (let place in ordered[row]){
@@ -187,8 +217,13 @@ function SchemePaint(result, status, xhr){
 
         Background.append(row);
     };
-              $(".base-place").click(chose_base);
-      $(".vip-place").click(chose_vip);
+    $(".base-place").click(chose_base);
+    $(".vip-place").click(chose_vip);
+
+    $.ajax({
+        url: document.location+"/get_reserved",
+        success: paintReserved
+});
 };
 
 
@@ -213,9 +248,6 @@ function rem_sum(price) {
       sum-=price;
       document.getElementById("sum").innerHTML = `Сумма: ${sum}`;
     }
-
-    let sum = 0;
-    let sum_places = 0;
 
     function chose_base(){
         let row = this.parentNode.parentNode.children[0].children[0].innerText
@@ -252,9 +284,16 @@ function rem_sum(price) {
     }
 
 function GoodOrder(result, status, xhr){
+    let ready_ordered = get_ordered()
         paintReserved(result,status,xhr);
-        let ordered = {}
-        ordered[0]=[]
+        chatSocket.send(JSON.stringify({
+                'message': ready_ordered
+            }));
+    sum=0;
+    sum_places=0;
+    document.getElementById("sum").innerHTML = `Сумма: ${sum}`;
+          document.getElementById("indicator").innerHTML = `Выбрано: ${sum_places}`;
+        clearOrder();
 }
 
 function sendPlaces(){

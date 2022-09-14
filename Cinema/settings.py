@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -121,9 +122,16 @@ MEDIA_URL = 'media/'
 AUTH_USER_MODEL = 'user_app.CustomUser'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/user/login'
-
-
-
+ASGI_APPLICATION = "Cinema.asgi.application"
 USE_L10N = True
-
 DATE_INPUT_FORMATS = ('%d/%m/%Y','%d-%m-%Y','%Y-%m-%d')
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [(env('redis_host'), env('redis_channel'))],
+
+        },
+    },
+}
