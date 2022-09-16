@@ -5,7 +5,7 @@
 {% endblock %}
 {% block main %}
     <h1>Пользователи</h1>
-    <div style="float: right">
+    <div style="float: right; margin: 14px">
         <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
           Сортировка
         </button>
@@ -16,33 +16,28 @@
           <li><a class="dropdown-item" href="{% url "users" %}?type=-2">По username (реверс)</a></li>
       </ul>
     </div>
-    <table class="table">
+    <table class="table table-bordered">
   <thead>
     <tr>
+      <th scope="col">Id</th>
       <th scope="col">Username</th>
       <th scope="col">Email</th>
-      <th scope="col">Персонал</th>
-      <th scope="col">Админ</th>
+      <th scope="col">Телефон</th>
+      <th scope="col">Имя</th>
+      <th scope="col"></th>
     </tr>
   </thead>
     <tbody>
       {% for model in page %}
         <tr>
-          <td><strong><a href="/my_admin/users/{{ model.username }}">{{ model.username }}</a></strong></td>
+        <td>{{ model.id }}</td>
+          <td><strong>{{ model.username }}</strong></td>
         <td>{{ model.email }}</td>
+        <td>{{ model.phone_number }}</td>
+        <td>{{ model.name }} {{ model.surname }}</td>
         <td>
-            {% if model.is_staff %}
-                Да
-            {% else %}
-                Нет
-            {% endif %}
-        </td>
-        <td>
-            {% if model.is_superuser %}
-                Да
-            {% else %}
-                Нет
-            {% endif %}
+                  <a href="/my_admin/users/{{ model.username }}" class="btn_change_hall btn btn-light">Изменить</a>
+                  <a href="{% url 'delete_user' model.id %}" class="btn_rem_hall btn btn-light">Удалить</a>
         </td>
         </tr>
       {% endfor %}

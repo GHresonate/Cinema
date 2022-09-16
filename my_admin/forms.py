@@ -25,16 +25,16 @@ class UserChangeForm(forms.ModelForm):
         ('Male', 'Male'),
         ('Female', 'Female'),
         ('Different', 'Different'),
-        ('Don`t say', 'Don`t say'),
     ]
     gender = forms.ChoiceField(choices=genders)
+    birthday = forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),)
+    phone_number = forms.CharField(max_length=64)
     is_active = forms.BooleanField(required=False)
     is_superuser = forms.BooleanField(required=False)
     is_staff = forms.BooleanField(required=False)
-
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'name', 'surname', 'address', 'card_number', 'language', 'gender', 'is_active',
+        fields = ('username', 'email', 'name','birthday','phone_number', 'surname', 'address', 'card_number', 'language', 'gender', 'is_active',
                   'is_superuser', 'is_staff')
 
 
@@ -102,7 +102,7 @@ class NewsAndDiscountForm(forms.ModelForm):
     main_photo = forms.ImageField()
     is_active = forms.BooleanField(required=False)
     trailer_url = forms.URLField()
-    date_published = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}))
+    date_published = forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),)
 
     class Meta:
         model = NewsAndDiscount

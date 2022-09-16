@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -12,7 +13,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     address = models.CharField(max_length=256)
     password = models.CharField(max_length=256)
-    card_number = models.IntegerField(null=True)
+    card_number = models.CharField(null=True, max_length=256)
     languishes = [
         ('UA', 'Ukrainian'),
         ('EN', 'English'),
@@ -24,8 +25,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         ('Female', 'Female'),
         ('Different', 'Different'),
     ]
-    gender = models.CharField(max_length=32, choices=genders)
-
+    gender = models.CharField(max_length=32, choices=genders, null=True)
+    birthday = models.DateField(null=True)
+    phone_number = PhoneNumberField(null=True)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

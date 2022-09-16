@@ -4,6 +4,7 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('movies', views.movies, name='front_movies'),
+    path('', views.main, name='front_main'),
     path('booking/<slug:sc_id>', views.booking, name='front_booking'),
     path('booking/<slug:sc_id>/price', views.get_price, name='front_get_price'),
     path('booking/<slug:sc_id>/ready', views.ready, name='front_ready'),

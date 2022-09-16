@@ -1,14 +1,19 @@
 from django.urls import path
 from . import views
 from django.conf.urls.i18n import i18n_patterns
-
 urlpatterns = [
+    path('', views.statistic, name='statistic'),
     path('add_movie', views.add_movie, name='add_movie'),
+    path('get_movies', views.get_movies, name='get_movies'),
+    path('get_sessions', views.get_sessions, name='get_sessions'),
+    path('get_users_gender', views.get_users_gender, name='get_users_gender'),
     path('add_cinema', views.add_cinema, name='add_cinema'),
     path('add_page', views.add_page, name='add_page'),
     path('add_news', views.add_news, name='add_news'),
     path('add_disc', views.add_disc, name='add_discounts'),
     path('add_hall/<int:cinema_number>', views.add_hall, name='add_hall'),
+    path('delete_hall/<int:hall_id>', views.delete_hall, name='delete_hall'),
+    path('delete_user/<int:user_id>', views.delete_user, name='delete_user'),
     path('change_banners', views.change_banners, name='change_banners'),
     path('change_contacts', views.change_contacts, name='change_contacts'),
     path('change_changeNewsAndDiskInBanner', views.changeNewsAndDiskInBanner, name='change_changeNewsAndDiskInBanner'),
@@ -17,6 +22,7 @@ urlpatterns = [
     path('users', views.users, name='users'),
     path('create_sessions', views.create_sessions, name='create_sessions'),
     path('send_email', views.send_email, name='send_email'),
+    path('prepare_sending', views.prepare_sending, name='prepare_sending'),
     path('pages', views.pages, name='pages'),
     path('cinemas', views.cinemas, name='cinemas'),
     path('news', views.news, name='news'),

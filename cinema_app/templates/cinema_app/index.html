@@ -1,0 +1,86 @@
+{% extends 'pages_app/base.html' %}
+{% load static %}
+{% block title %}
+{{ movie.seo.title }}
+{% endblock %}
+{% block main %}
+
+
+<main>
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img  src="{{ top_first.main_photo.url }}" style="max-height: 720px;" class="d-block w-100">
+      </div>
+        {% for photo in top %}
+      <div class="carousel-item">
+        <img  src="{{ photo.main_photo.url }}" style="max-height: 720px;" class="d-block w-100">
+      </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Следующий</span>
+    </button>
+  </div>
+
+  <h2 style="margin-top: 20px; margin-bottom: 13px">Смотрите сегодня, 22 июня</h2>
+  <div class="container" >
+    <div class="row">
+        {% for session in today_movies %}
+      <div class="col today_film">
+        <img src="{{ session.movie.main_photo.url }}" class="film_image">
+        <p class="film_name">{{ session.movie.name }}</p>
+        <p class="next_text">{{ session.time }}</p>
+        <button type="button" class="btn btn-outline-dark">Купить билет</button>
+      </div>
+        {% endfor %}
+    </div>
+  </div>
+
+  <h3 style="margin-top: 14px; margin-bottom: 7px;">Смотрите скоро</h3>
+  <div class="container" >
+    <div class="row">
+        {% for movie in following_films %}
+      <div class="col next_film">
+        <img src="{{ movie.main_photo.url }}" class="film_image">
+        <p class="last_film_name">{{ movie.name }}</p>
+        <p class="next_text">Смотрите {{ movie.realise_date }}</p>
+      </div>
+        {% endfor %}
+    </div>
+  </div>
+
+
+  <div id="carouselExampleControl" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img  src="{{ bottom_first.main_photo.url }}" style="max-height: 720px;" class="d-block w-100">
+      </div>
+        {% for photo in bottom %}
+      <div class="carousel-item">
+        <img  src="{{ photo.main_photo.url }}" style="max-height: 720px;" class="d-block w-100">
+      </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControl"  data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControl"  data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Следующий</span>
+    </button>
+  </div>
+
+
+  <div style="text-align: center; padding: 7px" >
+    <img style="max-height: 200px;" src="{% static 'pages_app/img/promotion_gorizontal.img' %}">
+  </div>
+</main>
+
+{% endblock %}

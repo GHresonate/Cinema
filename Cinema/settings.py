@@ -125,7 +125,7 @@ LOGIN_URL = '/user/login'
 ASGI_APPLICATION = "Cinema.asgi.application"
 USE_L10N = True
 DATE_INPUT_FORMATS = ('%d/%m/%Y','%d-%m-%Y','%Y-%m-%d')
-
+DATE_FORMAT = '%d/%m/%Y'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',

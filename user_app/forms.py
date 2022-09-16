@@ -11,6 +11,8 @@ class CustomUserCreationForm(RegistrationForm):
     email = forms.EmailField()
     address = forms.CharField(max_length=256)
     card_number = forms.IntegerField()
+    birthday = forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),)
+    phone_number = forms.CharField(max_length=64)
     languishes = [
         ('UA', 'Ukrainian'),
         ('EN', 'English'),
@@ -27,7 +29,7 @@ class CustomUserCreationForm(RegistrationForm):
 
     class Meta(RegistrationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email', 'name', 'surname', 'address', 'card_number', 'language', 'gender')
+        fields = ('username', 'email', 'name', 'surname', 'birthday', 'phone_number', 'address', 'card_number', 'language', 'gender')
 
 
 class CustomUserChangeForm(forms.ModelForm):
@@ -35,6 +37,8 @@ class CustomUserChangeForm(forms.ModelForm):
     surname = forms.CharField(max_length=256)
     username = forms.CharField(max_length=256)
     address = forms.CharField(max_length=256)
+    birthday = forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),)
+    phone_number = forms.CharField(max_length=64)
     card_number = forms.IntegerField()
     languishes = [
         ('UA', 'Українська'),
@@ -52,5 +56,5 @@ class CustomUserChangeForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'name', 'surname', 'address', 'card_number', 'language', 'gender')
+        fields = ('username', 'name', 'surname', 'address','birthday','phone_number', 'card_number', 'language', 'gender')
 

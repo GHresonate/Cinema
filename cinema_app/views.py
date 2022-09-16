@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import Movie, Cinema, Hall, Session
-from pages_app.models import MainPage, Photo, Pages
+from pages_app.models import MainPage, Photo, Pages, BannersInTheTop, Background, NewsAndDiscInBanner
 from datetime import datetime
 from django.http import JsonResponse
 import json
@@ -55,6 +55,22 @@ def schedule(request):
                    'all_dates': all_dates, 'all_movies': all_movies, 'all_halls': all_halls})
 
 
+def main(request):
+    today = date.today()
+    top = BannersInTheTop.objects.all()
+    top_first = top[0]
+    top = top[1:]
+    bottom = NewsAndDiscInBanner.objects.all()
+    bottom_first = bottom[0]
+    bottom = bottom[1:]
+    about_cinema = MainPage.objects.get(pk=1)
+    today_movies = Session.objects.all().filter(date=today)
+    following_films = Movie.objects.all().filter(realise_date__gt=today).order_by('realise_date')[:8]
+    return render(request, 'cinema_app/index.html', {'about_cinema': about_cinema, 'top_first': top_first, 'top': top,
+                                                     'bottom_first': bottom_first, 'bottom': bottom,
+                                                     'today_movies': today_movies, 'following_films': following_films})
+
+
 def movies(request):
     movie = Movie.objects.all().filter(realise_date__lte=datetime.now().date()).order_by("-id")
     pagi = Paginator(movie, 15)
@@ -76,8 +92,9 @@ def cinemas(request):
 
 
 def next_movies(request):
-    movie = Movie.objects.all().filter(realise_date__gt=datetime.now().date()).order_by("-id").order_by('-realise_date')
-    pagi = Paginator(movie, 15)
+    movies_next = Movie.objects.all().filter(realise_date__gt=datetime.now().date()).order_by("-id").order_by(
+        '-realise_date')
+    pagi = Paginator(movies_next, 15)
     page_number = request.GET.get('page')
     page = pagi.get_page(page_number)
     about_cinema = MainPage.objects.get(pk=1)
@@ -85,13 +102,15 @@ def next_movies(request):
 
 
 def movie(request, url):
-    movie = get_object_or_404(Movie, seo__url=url)
+    the_movie = get_object_or_404(Movie, seo__url=url)
     about_cinema = MainPage.objects.get(pk=1)
-    photos = Photo.objects.all().filter(gallery=movie.photo_list)
+    photos = Photo.objects.all().filter(gallery=the_movie.photo_list)
+    sessions = Session.objects.all().filter(movie=the_movie).order_by('date', 'time')[:8]
     first_photo = photos[0]
     all_photos = photos[1:]
     return render(request, 'cinema_app/movie.html',
-                  {'movie': movie, "about_cinema": about_cinema, 'first_photo': first_photo, 'all_photos': all_photos})
+                  {'movie': the_movie, 'about_cinema': about_cinema, 'first_photo': first_photo,
+                   'all_photos': all_photos, 'sessions': sessions})
 
 
 def cinema(request, url):

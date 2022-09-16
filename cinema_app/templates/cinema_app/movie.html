@@ -60,16 +60,11 @@
 {{ movie.description }}
   </p>
   <div style="max-width: 49%; float: right">
-    <button type="button" style="margin: 3px;" class="btn btn-dark"> 18:00, 1 августа</button>
-    <button type="button" style="margin: 3px;" class="btn btn-dark">11:30, 2 августа</button>
-    <button type="button" style="margin: 3px;" class="btn btn-dark">15:30, 2 августа</button>
-    <button type="button" style="margin: 3px;" class="btn btn-dark">18:45, 2 августа</button>
-    <button type="button" style="margin: 3px;" class="btn btn-dark">22:00, 2 августа</button>
-    <button type="button" style="margin: 3px;" class="btn btn-dark">15:30, 3 августа</button>
-    <button type="button" style="margin: 3px;" class="btn btn-dark">18:45, 3 августа</button>
-    <button type="button" style="margin: 3px;" class="btn btn-dark">22:00, 3 августа</button>
+      {% for session in sessions %}
+              <a href="{% url 'front_booking' session.id %}" type="button" style="margin: 3px;" class="btn btn-dark"> {{ session.time }}, {{ session.date }}</a>
+      {% endfor %}
   </div>
-  <button type="button" style="margin: 7px;" class="btn btn-dark btn-lg">К списку сеансов</button>
+  <a href="{% url 'front_schedule' %}" type="button" style="margin: 7px;" class="btn btn-dark btn-lg">К списку сеансов</a>
 
 
   <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">

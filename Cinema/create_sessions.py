@@ -15,11 +15,11 @@ def main():
         hour = random.randint(8, 22)
         t = time(hour=hour, minute=minutes)
         price = random.randint(80, 300)
-        delta = timedelta(days=x)
+        delta = timedelta(days=random.randint(0,99))
         session_date = today+delta
         while True:
             movie = random.choice(movies)
-            if movie.realise_date < today:
+            if movie.realise_date < today+delta:
                 break
         cinema = random.choice(cinemas)
         hall = random.choice(Hall.objects.all().filter(cinema=cinema))

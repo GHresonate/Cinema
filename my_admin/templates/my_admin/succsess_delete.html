@@ -1,0 +1,13 @@
+{% extends 'my_admin/base.html' %}
+{% load static %}
+{% block title %}
+    Удаление успешно
+{% endblock %}
+{% block main %}
+
+<main style="width: 100%; min-height: 70vh;">
+  <div style="position: relative; top: 30vh;"> <h1>Удаление успешно</h1>
+  <a href="{% url 'news' %}" type="button" class="btn btn-dark btn-lg">Перейти на главную</a></div>
+</main>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from pages_app.models import Gallery, Photo, SEO, NewsAndDiscount, Pages, BannersInTheTop, Background, MainPage
-from cinema_app.models import Movie, Cinema, Hall
+from cinema_app.models import Movie, Cinema, Hall, Session
 from user_app.models import CustomUser
 from .forms import PhotosForm, HallForm, SEOForm, MovieForm, CinemaForm, NewsAndDiscountForm, PagesForm, \
     NewsAndDiscBannerForms, TopBannerForms, BackgroundForm, NewsAndDiscInBanner, MainPageForm, ContactForms, \
@@ -13,6 +13,9 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import permission_required
 from django.core.mail import send_mail
 from Cinema import create_sessions as cr
+import json
+from django.http import JsonResponse
+from datetime import date, timedelta
 
 
 class SEOException(Exception):
@@ -170,6 +173,7 @@ def change_banners(request):
 def change_movie(request, url):
     return change(request, url, Movie, MovieForm, "movie", "movies")
 
+
 @permission_required('hav_access_to_admin')
 def change_hall(request, url):
     return change(request, url, Hall, HallForm, "hall", "cinemas")
@@ -214,7 +218,7 @@ def change_cinema(request, url):
         photos = PhotosForm(queryset=quer)
         halls = Hall.objects.all().filter(cinema=the_cinema)
         return render(request, "my_admin/add_cinema.html",
-                      {"photos": photos, "seo": seo, "cinema": cinema, "the_cinema": the_cinema, "halls":halls})
+                      {"photos": photos, "seo": seo, "cinema": cinema, "the_cinema": the_cinema, "halls": halls})
 
 
 @permission_required('hav_access_to_admin')
@@ -467,4 +471,75 @@ def create_sessions(request):
 
 
 def send_email(request):
-    send_mail('test','<h1>testtt</h1>',from_email=None, recipient_list=["test.for.site.dja@gmail.com",])
+    send_mail('test', '<h1>testtt</h1>', from_email=None, recipient_list=["test.for.site.dja@gmail.com", ])
+
+
+def delete_hall(request, hall_id):
+    hall_for_delete = Hall.objects.get(id=hall_id)
+    hall_for_delete.delete()
+    return render(request, 'my_admin/succsess_delete.html')
+
+
+def prepare_sending(request):
+    return render(request, 'my_admin/email_sending.html')
+
+
+def delete_user(request, user_id):
+    the_user = CustomUser.objects.get(id=user_id)
+    username = the_user.username
+    the_user.delete()
+    return render(request, 'my_admin/succsess_user_delete.html', {'username': username})
+
+
+def statistic(request):
+    users = CustomUser.objects.all().count()
+    return render(request, 'my_admin/index.html', {'users': users})
+
+
+def get_movies(request):
+    all_sessions = Session.objects.count()
+    movies = Movie.objects.all()
+    label = []
+    data = []
+    colors = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de']
+    backgroundColor = []
+    for movie in movies:
+        label.append(movie.name)
+        percent = Session.objects.all().filter(movie=movie).count()
+        data.append(percent)
+        backgroundColor.append(colors[movie.id % len(colors)])
+    result = {'labels': label, 'datasets': [{'data': data, 'backgroundColor': backgroundColor}]}
+    return JsonResponse(json.dumps(result), status=200, safe=False)
+
+
+def get_sessions(request):
+    AMOUNT_DAYS = 40
+    data = []
+    labels = []
+    today = date.today()
+    for first in range(AMOUNT_DAYS):
+        day = today+timedelta(days=first)
+        in_day = Session.objects.all().filter(date=day).count()
+        labels.append(str(day.day)+'.'+str(day.month))
+        data.append(in_day)
+    result = {'data': data, 'labels': labels}
+    return JsonResponse(json.dumps(result), status=200, safe=False)
+
+
+
+def get_users_gender(request):
+    users = CustomUser.objects.all()
+    male = 0
+    female = 0
+    different = 0
+    label = ['Males', 'Females', 'Different']
+    for user in users:
+        if user.gender == 'Male':
+            male += 1
+        elif user.gender == 'Female':
+            female += 1
+        else:
+            different += 1
+    colors = ['#f56954', '#00a65a', '#f39c12']
+    result = {'labels': label, 'datasets': [{'data': [male, female, different], 'backgroundColor': colors}]}
+    return JsonResponse(json.dumps(result), status=200, safe=False)

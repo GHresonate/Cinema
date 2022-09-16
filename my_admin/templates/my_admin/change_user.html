@@ -65,6 +65,16 @@ Change user
             <div style="float: left; transform: scale(2); margin-left: 14px;">{{ another_user.is_staff }}</div>
             {{ another_user.is_staff.errors }}
         </div>
+        <div class="field">
+            <label for="{{ another_user.birthday.id_for_label }}">Дата рождения:</label>
+            {{ another_user.birthday }}
+            {{ another_user.birthday.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ another_user.phone_number.id_for_label }}">Телефон:</label>
+            {{ another_user.phone_number }}
+            {{ another_user.phone_number.errors }}
+        </div>
         {% endif %}
         <br>
           <input type="submit" id="main_res" class="btn btn-light" value="Сохранить">

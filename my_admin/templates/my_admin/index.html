@@ -1,0 +1,202 @@
+{% extends 'my_admin/base.html' %}
+{% load static %}
+{% block title %}
+Статистика
+{% endblock %}
+ {% block head %}
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="{% static 'my_admin/plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'my_admin/dist/css/adminlte.min.css' %}">
+{% endblock %}
+
+{% block main %}
+
+
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="col-md-6">
+
+
+            <!-- DONUT CHART -->
+            <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Сеансы по фильмам</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+              </div>
+              <!-- /.card-body -->
+            </div>
+          </div>
+
+          <!-- /.col (LEFT) -->
+          <div class="col-md-6">
+
+            <!-- BAR CHART -->
+                        <div class="small-box bg-warning col-md-6">
+              <div class="inner">
+                <h3>{{ users }}</h3>
+
+                <p>User Registrations</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-person-add"></i>
+              </div>
+              <a href="{% url 'users' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+
+            <!-- /.card -->
+
+            <!-- STACKED BAR CHART -->
+            <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Пользователи</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+              </div>
+              <!-- /.card-body -->
+            </div>
+          </div>
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Сеансы по дням</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+        </div>
+      </div>
+    </section>
+
+
+
+<script src="{% static 'my_admin/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'my_admin/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<script src="{% static 'my_admin/plugins/chart.js/Chart.min.js' %}"></script>
+
+<!-- AdminLTE App -->
+<script src="{% static 'my_admin/dist/js/adminlte.min.js' %}"></script>
+
+<script src="{% static 'my_admin/dist/js/demo.js' %}"></script>
+
+<script>
+    let pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+
+    $.get( "{% url 'get_users_gender' %}", function( data ) {
+          let pieData=JSON.parse(data);
+    let pieOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions
+    })
+});
+
+        let donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+    $.get( "{% url 'get_movies' %}", function( data ) {
+          let donutData=JSON.parse(data);
+          let donutOptions     = {
+              maintainAspectRatio : false,
+              responsive : true,
+          }
+           new Chart(donutChartCanvas, {
+      type: 'pie',
+      data: donutData,
+      options: donutOptions
+    })
+});
+
+let areaChartCanvas = $('#areaChart').get(0).getContext('2d')
+    $.get( "{% url 'get_sessions' %}", function( data ) {
+          let parsedData=JSON.parse(data);
+    let areaChartOptions = {
+      maintainAspectRatio : false,
+      responsive : true,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          gridLines : {
+            display : true,
+          }
+        }],
+        yAxes: [{
+          gridLines : {
+            display : false,
+          }
+        }]
+      }
+    }
+    let areaChartData = {
+      labels  : parsedData['labels'],
+      datasets: [
+        {
+          label               : 'Сеансы',
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          borderColor         : 'rgba(60,141,188,0.8)',
+          pointRadius          : 7,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : parsedData['data']
+        },
+      ]
+    }
+      new Chart(areaChartCanvas, {
+      type: 'line',
+      data: areaChartData,
+      options: areaChartOptions
+    })});
+  $(function () {
+
+
+
+
+
+  })
+</script>
+{% endblock %}

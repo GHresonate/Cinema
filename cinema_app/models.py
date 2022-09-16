@@ -49,7 +49,7 @@ class Kontact(models.Model):
 class Session(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     cinema = models.ForeignKey(Cinema, on_delete=models.CASCADE)
-    hall = models.ForeignKey(Hall, on_delete=models.CASCADE)
+    hall = models.ForeignKey(Hall, on_delete=models.PROTECT)
     date = models.DateField()
     time = models.TimeField()
     price = models.IntegerField()

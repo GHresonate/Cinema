@@ -27,7 +27,7 @@
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="id_address" class="form-label">Адрес</label>
-      <input class="form-control" name="address" id="id_address" value="{{ form.address.value }}" placeholder="Киев, улица Борщаговская 146, 309">
+      <input class="form-control" name="address" id="id_address" value="{{ form.address.value }}">
     </div>
   </div>
 
@@ -38,6 +38,14 @@
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="id_card_number" class="form-label">Номер карты</label>
       <input class="form-control" value="{{ form.card_number.value }}" name="card_number" id="id_card_number">
+    </div>
+    <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <label for="id_birthday" class="form-label">День рождения</label>
+      {{ form.birthday }}
+    </div>
+    <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
+      <label for="id_phone_number" class="form-label">Номер телефона</label>
+      <input class="form-control" value="{{ user.phone_number }}" name="phone_number" id="id_phone_number">
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">

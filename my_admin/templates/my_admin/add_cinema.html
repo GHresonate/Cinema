@@ -91,7 +91,7 @@ Add cinema
               <th scope="col"><img class="small_photo" src="{{ hall.main_photo.url }}"></th>
               <th scope="col">
                   <a href="{% url "change_hall" hall.seo.url %}" class="btn_change_hall btn btn-light">Изменить</a>
-                  <a><button class="btn_rem_hall btn btn-light">Удалить</button></a>
+                  <a href="{% url 'delete_hall' hall.id %}" class="btn_rem_hall btn btn-light">Удалить</a>
               </th>
           </tbody>
           {% endfor %}

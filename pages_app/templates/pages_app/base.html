@@ -19,7 +19,7 @@
   <div class="container" style="max-width: 1100px;">
     <div class="row align-items-center">
       <div class="col-3" style="text-align: center; display: block">
-        <img src="{% static 'pages_app/img/cinema-logo-design-template_92405-24.webp' %}" style="max-height: 110px">
+          <a href="{% url 'front_main' %}"><img src="{% static 'pages_app/img/cinema-logo-design-template_92405-24.webp' %}" style="max-height: 110px"></a>
       </div>
       <div class="col-6" style="text-align: center">
         <nav class="navbar navbar-expand-xl navbar-dark bg-dark" style="border-radius: 4px; font-size: 14px;">
@@ -85,7 +85,7 @@
           <a href="{% url "logout" %}"><button type="button" class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">{% trans "Выйти" %}</button></a>
         </div>
         <div style="display: inline-block;">
-            <a href="/user/profile/{{ user.username }}"><div class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">{{ user.username }}</div></a>
+            <a href="{% url "profile" %}"><div class="btn btn-dark btn-sm" style="min-width: 110px; color: #A9A9A9">{{ user.username }}</div></a>
         </div>
       </div>
 
