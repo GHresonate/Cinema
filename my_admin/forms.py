@@ -6,6 +6,7 @@ from user_app.models import CustomUser
 from cinema_app.models import Movie, Cinema, Hall
 from django.forms import modelformset_factory
 from Cinema import settings
+from .models import Template
 
 
 class UserChangeForm(forms.ModelForm):
@@ -27,16 +28,26 @@ class UserChangeForm(forms.ModelForm):
         ('Different', 'Different'),
     ]
     gender = forms.ChoiceField(choices=genders)
-    birthday = forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),)
+    birthday = forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}), )
     phone_number = forms.CharField(max_length=64)
     is_active = forms.BooleanField(required=False)
     is_superuser = forms.BooleanField(required=False)
     is_staff = forms.BooleanField(required=False)
+
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'name','birthday','phone_number', 'surname', 'address', 'card_number', 'language', 'gender', 'is_active',
-                  'is_superuser', 'is_staff')
+        fields = (
+            'username', 'email', 'name', 'birthday', 'phone_number', 'surname', 'address', 'card_number', 'language',
+            'gender', 'is_active',
+            'is_superuser', 'is_staff')
 
+
+class TemplateForm(forms.ModelForm):
+    file = forms.FileField()
+
+    class Meta:
+        model = Template
+        fields = ['file']
 
 class PhotoForm(forms.ModelForm):
     photo = forms.ImageField()
@@ -78,7 +89,7 @@ class MovieForm(forms.ModelForm):
     is_2D = forms.BooleanField(required=False)
     is_3D = forms.BooleanField(required=False)
     is_IMAX = forms.BooleanField(required=False)
-    realise_date =  forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),)
+    realise_date = forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}), )
 
     class Meta:
         model = Movie
@@ -102,7 +113,7 @@ class NewsAndDiscountForm(forms.ModelForm):
     main_photo = forms.ImageField()
     is_active = forms.BooleanField(required=False)
     trailer_url = forms.URLField()
-    date_published = forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),)
+    date_published = forms.DateField(localize=True, widget=forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}), )
 
     class Meta:
         model = NewsAndDiscount

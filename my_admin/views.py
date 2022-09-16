@@ -5,10 +5,11 @@ from cinema_app.models import Movie, Cinema, Hall, Session
 from user_app.models import CustomUser
 from .forms import PhotosForm, HallForm, SEOForm, MovieForm, CinemaForm, NewsAndDiscountForm, PagesForm, \
     NewsAndDiscBannerForms, TopBannerForms, BackgroundForm, NewsAndDiscInBanner, MainPageForm, ContactForms, \
-    UserChangeForm
+    UserChangeForm, TemplateForm
 from django.core.paginator import Paginator
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from .models import Template
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import permission_required
 from django.core.mail import send_mail
@@ -481,7 +482,8 @@ def delete_hall(request, hall_id):
 
 
 def prepare_sending(request):
-    return render(request, 'my_admin/email_sending.html')
+    template = TemplateForm()
+    return render(request, 'my_admin/email_sending.html', {'template': template})
 
 
 def delete_user(request, user_id):
@@ -494,6 +496,32 @@ def delete_user(request, user_id):
 def statistic(request):
     users = CustomUser.objects.all().count()
     return render(request, 'my_admin/index.html', {'users': users})
+
+
+def get_templates(request):
+    templates = Template.objects.all()
+    result = {}
+    names = []
+    id_for_delete = []
+    url = []
+    for template in templates:
+        names.append(template.file.name)
+        id_for_delete.append(template.id)
+        url.append(template.file.url)
+    result['names'] = names
+    result['id_for_delete'] = id_for_delete
+    result['url'] = url
+    return JsonResponse(json.dumps(result), status=200, safe=False)
+
+
+def add_template(request):
+    if request.method == 'POST':
+        for x in range(10):
+            print(request.FILES.get(request.FILES.values()))
+
+        template = TemplateForm(request.POST, request.FILES)
+        template.save()
+        return get_templates(request)
 
 
 def get_movies(request):
@@ -524,7 +552,6 @@ def get_sessions(request):
         data.append(in_day)
     result = {'data': data, 'labels': labels}
     return JsonResponse(json.dumps(result), status=200, safe=False)
-
 
 
 def get_users_gender(request):
