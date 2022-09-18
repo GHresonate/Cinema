@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import permission_required
 from django.core.mail import send_mail
 from Cinema import create_sessions as cr
 import json
+from django.core.mail import EmailMultiAlternatives, EmailMessage
 from django.http import JsonResponse
 from datetime import date, timedelta
 
@@ -471,21 +472,70 @@ def create_sessions(request):
     cr.main()
 
 
+@permission_required('hav_access_to_admin')
+def choose_users(request):
+    try:
+        sort_type = int(request.GET.get('type'))
+    except TypeError:
+        sort_type = -1
+    if request.user.is_superuser:
+        if sort_type == -1:
+            model_sum = CustomUser.objects.all().order_by("-id")
+        elif sort_type == 1:
+            model_sum = CustomUser.objects.all().order_by("id")
+        elif sort_type == 2:
+            model_sum = CustomUser.objects.all().order_by("email")
+        elif sort_type == -2:
+            model_sum = CustomUser.objects.all().order_by("-email")
+    else:
+        if sort_type == -1:
+            model_sum = CustomUser.objects.all().filter(is_staff=False).filter(is_superuser=False).order_by("-id")
+        elif sort_type == 1:
+            model_sum = CustomUser.objects.all().filter(is_staff=False).filter(is_superuser=False).order_by("id")
+        elif sort_type == 2:
+            model_sum = CustomUser.objects.all().filter(is_staff=False).filter(is_superuser=False).order_by("email")
+        elif sort_type == -2:
+            model_sum = CustomUser.objects.all().filter(is_staff=False).filter(is_superuser=False).order_by("-email")
+    paginator = Paginator(model_sum, 15)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
+    return render(request, 'my_admin/choose_users.html', {"page": page, "sort_type": sort_type})
+
+
+@permission_required('hav_access_to_admin')
 def send_email(request):
-    send_mail('test', '<h1>testtt</h1>', from_email=None, recipient_list=["test.for.site.dja@gmail.com", ])
+    information_about_sending = json.load(request)
+    template_id = information_about_sending['id']
+    template = Template.objects.get(id=template_id)
+    if information_about_sending['for_chosen']:
+        chosen_emails = information_about_sending['chosen']
+        users_for_send = []
+        for user_id in chosen_emails:
+            if user_id:
+                user = CustomUser.objects.get(id=int(user_id))
+                users_for_send.append(user)
+    else:
+        users_for_send = CustomUser.objects.all()
+    msg = EmailMessage(template.name, open(template.file.path, "r").read(), to=users_for_send)
+    msg.content_subtype = "html"
+    msg.send()
+    return JsonResponse(json.dumps({'value': 'Все письма отосланы'}), status=200, safe=False)
 
 
+@permission_required('hav_access_to_admin')
 def delete_hall(request, hall_id):
     hall_for_delete = Hall.objects.get(id=hall_id)
     hall_for_delete.delete()
     return render(request, 'my_admin/succsess_delete.html')
 
 
+@permission_required('hav_access_to_admin')
 def prepare_sending(request):
     template = TemplateForm()
     return render(request, 'my_admin/email_sending.html', {'template': template})
 
 
+@permission_required('hav_access_to_admin')
 def delete_user(request, user_id):
     the_user = CustomUser.objects.get(id=user_id)
     username = the_user.username
@@ -493,37 +543,49 @@ def delete_user(request, user_id):
     return render(request, 'my_admin/succsess_user_delete.html', {'username': username})
 
 
+@permission_required('hav_access_to_admin')
 def statistic(request):
     users = CustomUser.objects.all().count()
     return render(request, 'my_admin/index.html', {'users': users})
 
 
+@permission_required('hav_access_to_admin')
 def get_templates(request):
     templates = Template.objects.all()
     result = {}
     names = []
-    id_for_delete = []
+    id_for_result = []
     url = []
     for template in templates:
-        names.append(template.file.name)
-        id_for_delete.append(template.id)
+        names.append(template.name)
+        id_for_result.append(template.id)
         url.append(template.file.url)
     result['names'] = names
-    result['id_for_delete'] = id_for_delete
+    result['id'] = id_for_result
     result['url'] = url
     return JsonResponse(json.dumps(result), status=200, safe=False)
 
 
+@permission_required('hav_access_to_admin')
+def delete_template(request):
+    id_for_delete = json.load(request)['id']
+    template = Template.objects.get(id=id_for_delete)
+    template.delete()
+    return get_templates(request)
+
+
+@permission_required('hav_access_to_admin')
 def add_template(request):
     if request.method == 'POST':
-        for x in range(10):
-            print(request.FILES.get(request.FILES.values()))
-
         template = TemplateForm(request.POST, request.FILES)
         template.save()
+        templates = Template.objects.all()
+        if templates.count() >= 6:
+            templates[0].delete()
         return get_templates(request)
 
 
+@permission_required('hav_access_to_admin')
 def get_movies(request):
     all_sessions = Session.objects.count()
     movies = Movie.objects.all()
@@ -540,20 +602,22 @@ def get_movies(request):
     return JsonResponse(json.dumps(result), status=200, safe=False)
 
 
+@permission_required('hav_access_to_admin')
 def get_sessions(request):
     AMOUNT_DAYS = 40
     data = []
     labels = []
     today = date.today()
     for first in range(AMOUNT_DAYS):
-        day = today+timedelta(days=first)
+        day = today + timedelta(days=first)
         in_day = Session.objects.all().filter(date=day).count()
-        labels.append(str(day.day)+'.'+str(day.month))
+        labels.append(str(day.day) + '.' + str(day.month))
         data.append(in_day)
     result = {'data': data, 'labels': labels}
     return JsonResponse(json.dumps(result), status=200, safe=False)
 
 
+@permission_required('hav_access_to_admin')
 def get_users_gender(request):
     users = CustomUser.objects.all()
     male = 0

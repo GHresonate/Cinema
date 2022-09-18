@@ -47,7 +47,7 @@ class TemplateForm(forms.ModelForm):
 
     class Meta:
         model = Template
-        fields = ['file']
+        fields = ['file', 'name']
 
 class PhotoForm(forms.ModelForm):
     photo = forms.ImageField()

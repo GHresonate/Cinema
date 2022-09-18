@@ -9,7 +9,7 @@
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
         {{ template.non_field_errors }}
-    <div>
+    <div style="float: left">
     <p style="float: left; margin-right: 7px; ">Выбрать email кому слать</p>
     <div class="form-check form-check-inline">
   <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
@@ -17,9 +17,12 @@
     Все пользователи на почту
   </label>
 </div>
+<a href="{% url 'choose_users' %}" style="float: right" id="" class="btn btn-light">Выбрать пользователей</a>
+
+
 <div class="form-check form-check-inline">
-  <input class="form-check-input " type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-  <label class="form-check-label" for="exampleRadios2">
+  <input class="form-check-input " id="exampleRadios2" type="radio" name="exampleRadios"  value="option2">
+  <label class="form-check-label"  for="exampleRadios2">
     Выборочно
   </label>
 </div>
@@ -29,53 +32,24 @@
                 <label for="{{ template.file.id_for_label }}" style="margin-right: 7px">Загрузить HTML письмо:</label>
                  <div id = "box" style="float: left; margin: 0px;">
                      <button id="" class="btn btn-light bt_for_img">Добавить</button>
-                     <div id="main-ph" class="hidden_form"><input type="file" name="main_photo" accept=".html" required="" id="{{ template.file.id_for_label }}"></div>
+                     <div id="main-ph" class="hidden_form"><input type="file" name="file" accept=".html" required="" id="{{ template.file.id_for_label }}"></div>
                  </div>
                  {{ template.file.errors }}
              </div>
         </div>
         <br><br>
     <p style="float: left; margin-right: 7px;">Загруженный шаблон</p>
-    <p style="float: left; margin-right: 7px; color: blue">Не выбран</p>
+    <p style="float: left; margin-right: 7px; color: blue" id="place_for_downloaded">Не выбран</p>
             <div id="box_for_templates" style="width: 400px; height: 200px; float: right; border: 3px solid black; border-radius: 15px;">
-                <div class="form-check" style="float: left">
-  <input style="float: left; margin: 7px;" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-  <label class="form-check-label" for="flexRadioDefault1">
-    <p style="width: 200px; text-overflow: ellipsis; overflow: hidden; float: left; margin-right: 7px;">Радhhhhhhhhhhhhhhhjjjjjjjjjjjjjjjjjjjjjjjиоddd</p> <a style="color: red; float: left" href="#">Удалить</a>
-  </label>
-</div>
-                <div class="form-check" style="float: left">
-  <input style="float: left; margin: 7px;" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-  <label class="form-check-label" for="flexRadioDefault1">
-    <p style="width: 200px; text-overflow: ellipsis; overflow: hidden; float: left; margin-right: 7px;">Радhhhhhhhhhhhhhhhjjjjjjjjjjjjjjjjjjjjjjjиоddd</p> <a style="color: red; float: left" href="#">Удалить</a>
-  </label>
-</div>
-                <div class="form-check" style="float: left">
-  <input style="float: left; margin: 7px;" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-  <label class="form-check-label" for="flexRadioDefault1">
-    <p style="width: 200px; text-overflow: ellipsis; overflow: hidden; float: left; margin-right: 7px;">Радhhhhhhhhhhhhhhhjjjjjjjjjjjjjjjjjjjjjjjиоddd</p> <a style="color: red; float: left" href="#">Удалить</a>
-  </label>
-</div>
-                <div class="form-check" style="float: left">
-  <input style="float: left; margin: 7px;" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-  <label class="form-check-label" for="flexRadioDefault1">
-    <p style="width: 200px; text-overflow: ellipsis; overflow: hidden; float: left; margin-right: 7px;">Радhhhhhhhhhhhhhhhjjjjjjjjjjjjjjjjjjjjjjjиоddd</p> <a style="color: red; float: left" href="#">Удалить</a>
-  </label>
-</div>
-                <div class="form-check" style="float: left">
-  <input style="float: left; margin: 7px;" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-  <label class="form-check-label" for="flexRadioDefault1">
-    <p style="width: 200px; text-overflow: ellipsis; overflow: hidden; float: left; margin-right: 7px;">Радhhhhhhhhhhhhhhhjjjjjjjjjjjjjjjjjjjjjjjиоddd</p> <a style="color: red; float: left" href="#">Удалить</a>
-  </label>
-</div>
+
     </div>
 <br><br>
     <p style="float: left; margin-right: 7px;">Шаблон используемый в текущей разсылке</p>
-    <p style="float: left; margin-right: 7px; color: blue">Не выбран</p>
+    <p style="float: left; margin-right: 7px; color: blue" id="place_for_chosen">Не выбран</p>
 
 <br><br>
     <p style="float: left; margin-right: 7px;">Количество писем</p>
-    <p style="float: left; margin-right: 7px; color: blue">0</p>
+    <p id="sum" style="float: left; margin-right: 7px; color: blue">0</p>
 <br><br>
 
       <div style="text-align: center">
@@ -90,17 +64,21 @@
 let form = document.getElementById('big_form');
 let box = document.getElementById('box_for_templates');
 let fileUploader = document.getElementById('id_file');
-const csrftoken = get_cookie('csrftoken');
+let csrf_token = $('input[name="csrfmiddlewaretoken"]').val();
+let subButton = document.getElementById('submit')
+let placeForDownloaded = document.getElementById('place_for_downloaded')
+let placeForChosen = document.getElementById('place_for_chosen')
+let radios = document.getElementsByClassName('check_for_email');
+let placeForSum = document.getElementById('sum')
+
 
 fileUploader.addEventListener('change', (event) => {
    let formData = new FormData();
    formData.append('file',fileUploader.files[0]);
+   formData.append("csrfmiddlewaretoken", csrf_token);
+   formData.append('name',fileUploader.files[0].name);
+
     $.ajax({
-            beforeSend: function(xhr, settings) {
-                if (!this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                    xhr.setRequestHeader("content-type", "application/json");
-            }},
 			type: "POST",
             cache: false,
 			contentType: false,
@@ -108,30 +86,130 @@ fileUploader.addEventListener('change', (event) => {
 			url: '{% url "add_template" %}',
 			data: formData,
 			dataType : 'json',
-			success: printTemplate
+			success: successAdd,
 		});
 
 });
 
-function printTemplate(data, status, xhr){
-    alert(data)
+function delete_template(id){
+    let result = {}
+    result['csrfmiddlewaretoken'] = csrf_token
+    result['id'] = id
+
+        $.ajax({
+                    beforeSend: function(xhr, settings) {
+        if (!this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            xhr.setRequestHeader("content-type", "application/json");
+        }},
+			type: "DELETE",
+			url: '{% url "delete_template" %}',
+			data: JSON.stringify(result),
+			dataType : 'json',
+			success: printTemplate,
+		});
+
 }
 
+function successAdd(data, status, xhr) {
+    box.innerHTML = ''
+    let jsonData = JSON.parse(data)
+    for (let x=0; x < jsonData['id'].length; x++) {
+        let div_for_insert = document.createElement('div')
+        div_for_insert.classList.add('form-check')
+        div_for_insert.style.float = 'left'
+        div_for_insert.innerHTML = `
+            <input style="float: left; margin: 7px;" class="form-check-input check_for_email" type="radio" value="${jsonData['id'][x]}" name="flexRadioDefault" id="flexRadio${jsonData['id'][x]}">
+                  <label class="form-check-label" for="flexRadio${jsonData['id'][x]}">
+                      <p style="width: 200px; text-overflow: ellipsis; overflow: hidden; float: left; margin-right: 7px;">${jsonData['names'][x]}</p> <p id="${jsonData['id'][x]}" style="color: red; float: left; cursor: pointer">Удалить</p>
+              </label>`
+        box.appendChild(div_for_insert)
+    };
+    placeForDownloaded.innerText = jsonData['names'][jsonData['names'].length-1]
+    for (let x=0; x < jsonData['id'].length; x++) {
+        let for_delete = document.getElementById(jsonData['id'][x])
+        for_delete.addEventListener('click', function (){delete_template(jsonData['id'][x])})
+    };
+    for (let radio in radios){
+    radios[radio].addEventListener('click', function(){
+        placeForChosen.innerText = radios[radio].parentNode.childNodes[1].childNodes[1].innerText
+    });
+}
+
+}
+
+function printTemplate(data, status, xhr) {
+    box.innerHTML = ''
+    let jsonData = JSON.parse(data)
+    for (let x=0; x < jsonData['id'].length; x++) {
+        let div_for_insert = document.createElement('div')
+        div_for_insert.classList.add('form-check')
+        div_for_insert.style.float = 'left'
+        div_for_insert.innerHTML = `
+            <input style="float: left; margin: 7px;" class="form-check-input check_for_email" type="radio" value="${jsonData['id'][x]}" name="flexRadioDefault" id="flexRadio${jsonData['id'][x]}">
+                  <label class="form-check-label" for="flexRadio${jsonData['id'][x]}">
+                      <p style="width: 200px; text-overflow: ellipsis; overflow: hidden; float: left; margin-right: 7px;">${jsonData['names'][x]}</p> <p id="${jsonData['id'][x]}" style="color: red; float: left; cursor: pointer">Удалить</p>
+              </label>`
+        box.appendChild(div_for_insert)
+    };
+    for (let x=0; x < jsonData['id'].length; x++) {
+        let for_delete = document.getElementById(jsonData['id'][x])
+        for_delete.addEventListener('click', function (){delete_template(jsonData['id'][x])})
+    }
+    for (let radio=0; radio<radios.length; radio++){
+    radios[radio].addEventListener('click', function(){
+        placeForChosen.innerText = radios[radio].parentNode.children[1].children[0].innerText
+    });
+    }
+}
+
+function get_checked(){
+    for (let a_radio in radios){
+        if (radios[a_radio].checked){
+            return radios[a_radio].value
+        }
+    };
+}
+
+function submit_email(){
+    let isForChosen = document.getElementById('exampleRadios2').checked
+    let checked_id = get_checked()
+    let result = {}
+    result['csrfmiddlewaretoken'] = csrf_token
+    result['X-CSRFToken'] = csrf_token
+    result['id']  = checked_id
+    result['for_chosen'] = isForChosen
+    alert(result['for_chosen'])
+       if (isForChosen){
+           let chosenEmails = sessionStorage['chosen']
+           if (chosenEmails == ''){
+               alert('Выберите пользователей')
+               return 0;
+           }
+           let chosen = chosenEmails.split(' ');
+           result['chosen'] = chosen;
+       }
+            $.ajax({
+                        beforeSend: function(xhr, settings) {
+        if (!this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            xhr.setRequestHeader("content-type", "application/json");
+        }},
+			type: "POST",
+			url: '{% url "send_email" %}',
+			data: JSON.stringify(result),
+			dataType : 'json',
+			success: alert('Все письма отправлены'),
+		});
+}
+
+subButton.addEventListener('click', submit_email);
+if (sessionStorage['chosen']){
+    placeForSum.innerText = sessionStorage['chosen'].split(' ').length-1}
+else{placeForSum.innerText=0}
 $.ajax('{% url "get_templates" %}',
     {
         success: printTemplate
 });
-
-function get_cookie ( cookie_name )
-{
-  let results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
-
-  if ( results )
-    return ( unescape ( results[2] ) );
-  else
-    return null;
-}
-
-
 </script>
 {% endblock %}

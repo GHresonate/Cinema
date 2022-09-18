@@ -4,10 +4,12 @@ from django.conf.urls.i18n import i18n_patterns
 urlpatterns = [
     path('', views.statistic, name='statistic'),
     path('add_movie', views.add_movie, name='add_movie'),
+    path('choose_users', views.choose_users, name='choose_users'),
     path('get_movies', views.get_movies, name='get_movies'),
     path('get_sessions', views.get_sessions, name='get_sessions'),
     path('add_template', views.add_template, name='add_template'),
     path('get_templates', views.get_templates, name='get_templates'),
+    path('delete_template', views.delete_template, name='delete_template'),
     path('get_users_gender', views.get_users_gender, name='get_users_gender'),
     path('add_cinema', views.add_cinema, name='add_cinema'),
     path('add_page', views.add_page, name='add_page'),

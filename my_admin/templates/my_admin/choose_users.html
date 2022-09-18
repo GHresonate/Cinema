@@ -1,0 +1,98 @@
+{% extends 'my_admin/base.html' %}
+{% load static %}
+{% block title %}
+{{ type }}
+{% endblock %}
+{% block main %}
+    <h1>Выбрать пользователей</h1>
+    <div style="float: right; margin: 14px">
+        <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Сортировка
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="{% url "users" %}?type=1">По времени добавления</a></li>
+          <li><a class="dropdown-item" href="{% url "users" %}?type=-1">По времени добавления (реверс)</a></li>
+          <li><a class="dropdown-item" href="{% url "users" %}?type=2">По username</a></li>
+          <li><a class="dropdown-item" href="{% url "users" %}?type=-2">По username (реверс)</a></li>
+      </ul>
+    </div>
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">+</th>
+      <th scope="col">Id</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Телефон</th>
+      <th scope="col">Имя</th>
+    </tr>
+  </thead>
+    <tbody>
+      {% for model in page %}
+        <tr>
+        <td>
+            <div class="form-check">
+              <input class="form-check-input users_check" type="checkbox" value="{{ model.id }}" id="{{ model.id }}">
+            </div>
+        </td>
+        <td>{{ model.id }}</td>
+          <td><strong>{{ model.username }}</strong></td>
+        <td>{{ model.email }}</td>
+        <td>{{ model.phone_number }}</td>
+        <td>{{ model.name }} {{ model.surname }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>
+        <div style="text-align: center"><a href="{% url 'prepare_sending' %}" id="submit" class="btn btn-light" style="width: 200px;">К разсылке</a></div>
+
+  <div class="pagin_menu">
+    {% if page.has_previous %}
+      <a class="pagin_menu_minor" href="?page=1&type={{ sort_type }}">1</a>
+      <a href="?page={{ page.previous_page_number }}&type={{ sort_type }}"><<</a>
+    {% endif %}
+      <span class="pagin_menu_major">{{ page.number }}</span>
+    {% if page.has_next %}
+      <a href="?page={{ page.next_page_number }}&type={{ sort_type }}">>></a>
+      <a class="pagin_menu_minor" href="?page={{ page.paginator.num_pages }}&type={{ sort_type }}">{{ page.paginator.num_pages }}</a>
+    {% endif %}
+  </div>
+{% endblock %}
+
+
+{% block js %}
+<script>
+let usersChecks = document.getElementsByClassName('users_check');
+let chosenOnStart = sessionStorage['chosen']
+
+if (chosenOnStart){
+    let chosen = sessionStorage['chosen'].split(' ');
+    for (let x in chosen){
+        let input = document.getElementById(chosen[x])
+        if (input){
+            input.checked = true;
+        }
+    }
+}
+
+for (let checks in usersChecks){
+    function addToSending(){
+        if (sessionStorage['chosen'] != null) {
+               if (usersChecks[checks].checked){
+                   sessionStorage['chosen']+=(' '+usersChecks[checks].value)
+               }
+               else {
+                   let chosen = sessionStorage['chosen'].split(' ');
+                   chosen.splice(chosen.indexOf(usersChecks[checks].value), 1)
+                   sessionStorage['chosen'] = chosen.join(' ')
+               }
+            }
+        else {
+            sessionStorage.setItem('chosen', usersChecks[checks].value)
+            }
+    };
+    usersChecks[checks].addEventListener('click', addToSending )
+}
+
+</script>
+{% endblock %}
