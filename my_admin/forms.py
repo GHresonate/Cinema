@@ -108,8 +108,10 @@ class CinemaForm(forms.ModelForm):
 
 
 class NewsAndDiscountForm(forms.ModelForm):
-    description = forms.CharField(widget=forms.Textarea)
-    name = forms.CharField(max_length=256)
+    description_ru = forms.CharField(widget=forms.Textarea)
+    description_uk = forms.CharField(widget=forms.Textarea)
+    name_ru = forms.CharField(max_length=256)
+    name_uk = forms.CharField(max_length=256)
     main_photo = forms.ImageField()
     is_active = forms.BooleanField(required=False)
     trailer_url = forms.URLField()
@@ -117,7 +119,7 @@ class NewsAndDiscountForm(forms.ModelForm):
 
     class Meta:
         model = NewsAndDiscount
-        fields = ('description', 'date_published', 'name', 'main_photo', 'is_active', 'trailer_url')
+        fields = ('description_ru', 'description_uk', 'date_published', 'name_ru', 'name_uk', 'main_photo', 'is_active', 'trailer_url')
 
 
 class PagesForm(forms.ModelForm):

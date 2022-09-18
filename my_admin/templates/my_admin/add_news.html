@@ -4,15 +4,22 @@
 Add news
 {% endblock %}
 {% block main %}
+
+
         <div><h1>Новость</h1></div><hr>
 
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
         {{ form.non_field_errors }}
         <div class="field">
-            <label for="{{ news.name.id_for_label }}">Название:</label>
-            {{ news.name }}
-            {{ news.name.errors }}
+            <label for="{{ news.name_ru.id_for_label }}">Название ru:</label>
+            {{ news.name_ru }}
+            {{ news.name_ru.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ news.name_uk.id_for_label }}">Название:</label>
+            {{ news.name_uk }}
+            {{ news.name_uk.errors }}
         </div>
         <div class="field">
             <label for="{{ news.is_active.id_for_label }}">Показывать:</label>
@@ -25,9 +32,14 @@ Add news
             {{ news.date_published.errors }}
         </div>
         <div class="field">
-            <label for="{{ news.description.id_for_label }}">Описание:</label>
-            {{ news.description }}
-            {{ news.description.errors }}
+            <label for="{{ news.description_uk.id_for_label }}">Описание:</label>
+            {{ news.description_uk }}
+            {{ news.description_uk.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ news.description_ru.id_for_label }}">Описание ru:</label>
+            {{ news.description_ru }}
+            {{ news.description_ru.errors }}
         </div>
         <div class="photo_field">
              <div class="field" style="float: left">

@@ -53,7 +53,7 @@
 <br><br>
 
       <div style="text-align: center">
-          <div id="submit" class="btn btn-light" style="width: 200px;">Начать разсылку</div>
+          <div id="submit" class="btn btn-light" style="width: 200px;">Начать раcсылку</div>
       </div>
     </form>
 
@@ -130,11 +130,11 @@ function successAdd(data, status, xhr) {
         let for_delete = document.getElementById(jsonData['id'][x])
         for_delete.addEventListener('click', function (){delete_template(jsonData['id'][x])})
     };
-    for (let radio in radios){
+    for (let radio=0; radio<radios.length; radio++){
     radios[radio].addEventListener('click', function(){
-        placeForChosen.innerText = radios[radio].parentNode.childNodes[1].childNodes[1].innerText
+        placeForChosen.innerText = radios[radio].parentNode.children[1].children[0].innerText
     });
-}
+    }
 
 }
 
@@ -199,13 +199,13 @@ function submit_email(){
 			url: '{% url "send_email" %}',
 			data: JSON.stringify(result),
 			dataType : 'json',
-			success: alert('Все письма отправлены'),
+			success: alert('+'),
 		});
 }
 
 subButton.addEventListener('click', submit_email);
 if (sessionStorage['chosen']){
-    placeForSum.innerText = sessionStorage['chosen'].split(' ').length-1}
+    placeForSum.innerText = sessionStorage['chosen'].split(' ').length}
 else{placeForSum.innerText=0}
 $.ajax('{% url "get_templates" %}',
     {
