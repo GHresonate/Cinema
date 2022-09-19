@@ -1,5 +1,6 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
 {{ hall.seo.title }}
 {% endblock %}
@@ -39,18 +40,18 @@
 
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"  data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Предыдущий</span>
+        <span class="visually-hidden">{% trans "Предыдущий" %}</span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"  data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Следующий</span>
+        <span class="visually-hidden"> {% trans "Следующий" %}</span>
       </button>
     </div>
   </div>
 
 
   <aside style="max-width: 200px; height: 100%; float: left; position: sticky; top: 7px; text-align: center">
-    <p style="margin-top: 14px; margin-bottom: 0; font-size: 20px;">Смотрите сегодня:</p>
+    <p style="margin-top: 14px; margin-bottom: 0; font-size: 20px;"> {% trans "Смотрите сегодня:" %}</p>
     <div class="btn-group-vertical" role="group" aria-label="Basic example" style="margin-top: 0; min-width: 200px;">
       <button type="button"  class="btn btn-dark">12 разгневанных мужчин</button>
       <button type="button" class="btn btn-dark">Дюнкерк</button>

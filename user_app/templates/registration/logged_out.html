@@ -1,12 +1,13 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-Выход
+{% trans "Выход " %}
 {% endblock %}
 {% block main %}
     <main style="width: 100%; min-height: 70vh;">
-    <div style="position: relative; top: 30vh;"> <h1>Выход произведён</h1>
-    <button type="button" class="btn btn-dark btn-lg">Перейти на главную</button></div>
+    <div style="position: relative; top: 30vh;"> <h1>{% trans "Выход произведён " %}</h1>
+    <button type="button" class="btn btn-dark btn-lg"> {% trans "Перейти на главную " %}</button></div>
 
     </main>
 {% endblock %}

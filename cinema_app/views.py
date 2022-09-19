@@ -5,12 +5,15 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import Movie, Cinema, Hall, Session
 from pages_app.models import MainPage, Photo, Pages, BannersInTheTop, Background, NewsAndDiscInBanner
-from datetime import datetime
 from django.http import JsonResponse
 import json
 from datetime import date
 from user_app.models import Ticket
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from datetime import datetime
+from django.utils import dateformat
+
 
 
 def schedule(request):
@@ -63,12 +66,14 @@ def main(request):
     bottom = NewsAndDiscInBanner.objects.all()
     bottom_first = bottom[0]
     bottom = bottom[1:]
+    formatted_date = dateformat.format(datetime.now(), 'd E Y')
     about_cinema = MainPage.objects.get(pk=1)
     today_movies = Session.objects.all().filter(date=today)
     following_films = Movie.objects.all().filter(realise_date__gt=today).order_by('realise_date')[:8]
     return render(request, 'cinema_app/index.html', {'about_cinema': about_cinema, 'top_first': top_first, 'top': top,
                                                      'bottom_first': bottom_first, 'bottom': bottom,
-                                                     'today_movies': today_movies, 'following_films': following_films})
+                                                     'today_movies': today_movies, 'following_films': following_films,
+                                                     'formatted_date': formatted_date})
 
 
 def movies(request):

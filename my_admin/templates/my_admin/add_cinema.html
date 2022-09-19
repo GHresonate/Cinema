@@ -9,16 +9,72 @@ Add cinema
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
         {{ form.non_field_errors }}
+
+
+            <div class="container">
+<div class="accordion" id="accordionExample">
+<div class="steps">
+    <progress id="progress" value=0 max=100 ></progress>
+    <div class="step-item">
+        <button class="step-button text-center" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Uk
+        </button>
+    </div>
+    <div class="step-item">
+        <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Ru
+        </button>
+    </div>
+</div>
+
+<div class="card">
+    <div  id="headingOne">
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+        data-bs-parent="#accordionExample">
+        <div class="card-body">
+
         <div class="field">
-            <label for="{{ cinema.name.id_for_label }}">Название:</label>
-            {{ cinema.name }}
-            {{ cinema.name.errors }}
+            <label for="{{ cinema.name_uk.id_for_label }}">Название:</label>
+            {{ cinema.name_uk }}
+            {{ cinema.name_uk.errors }}
         </div>
         <div class="field">
-            <label for="{{ cinema.description.id_for_label }}">Название:</label>
-            {{ cinema.description }}
-            {{ cinema.description.errors }}
+            <label for="{{ cinema.description_uk.id_for_label }}">Описание:</label>
+            {{ cinema.description_uk }}
+            {{ cinema.description_uk.errors }}
         </div>
+
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div  id="headingTwo">
+
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="card-body">
+             <div class="field">
+                <label for="{{ cinema.name_ru.id_for_label }}">Название:</label>
+                {{ cinema.name_ru }}
+                {{ cinema.name_ru.errors }}
+            </div>
+            <div class="field">
+                <label for="{{ cinema.description_ru.id_for_label }}">Описание:</label>
+                {{ cinema.description_ru }}
+                {{ cinema.description_ru.errors }}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+
         <div class="photo_field">
              <div class="field" style="float: left">
                 <label for="{{ cinema.main_photo.id_for_label }}">Логотип:</label>

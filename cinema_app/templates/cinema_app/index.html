@@ -1,4 +1,5 @@
 {% extends 'pages_app/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block title %}
 {{ movie.seo.title }}
@@ -28,7 +29,7 @@
     </button>
   </div>
 
-  <h2 style="margin-top: 20px; margin-bottom: 13px">Смотрите сегодня, 22 июня</h2>
+  <h2 style="margin-top: 20px; margin-bottom: 13px">{% translate "Смотрите сегодня" %}, {{ formatted_date }}</h2>
   <div class="container" >
     <div class="row">
         {% for session in today_movies %}
@@ -36,13 +37,13 @@
         <img src="{{ session.movie.main_photo.url }}" class="film_image">
         <p class="film_name">{{ session.movie.name }}</p>
         <p class="next_text">{{ session.time }}</p>
-        <button type="button" class="btn btn-outline-dark">Купить билет</button>
+        <button type="button" class="btn btn-outline-dark"> {% translate "Купить билет" %}</button>
       </div>
         {% endfor %}
     </div>
   </div>
 
-  <h3 style="margin-top: 14px; margin-bottom: 7px;">Смотрите скоро</h3>
+  <h3 style="margin-top: 14px; margin-bottom: 7px;"> {% translate "Смотрите скоро" %}</h3>
   <div class="container" >
     <div class="row">
         {% for movie in following_films %}
@@ -69,11 +70,11 @@
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControl"  data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Предыдущий</span>
+      <span class="visually-hidden"> {% trans "Предыдущий" %}</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControl"  data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Следующий</span>
+      <span class="visually-hidden"> {% trans "Следующий" %}</span>
     </button>
   </div>
 

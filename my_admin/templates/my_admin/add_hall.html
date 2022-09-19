@@ -9,16 +9,71 @@ Add hall
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
         {{ form.non_field_errors }}
+
+
+                <div class="container">
+<div class="accordion" id="accordionExample">
+<div class="steps">
+    <progress id="progress" value=0 max=100 ></progress>
+    <div class="step-item">
+        <button class="step-button text-center" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Uk
+        </button>
+    </div>
+    <div class="step-item">
+        <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Ru
+        </button>
+    </div>
+</div>
+
+<div class="card">
+    <div  id="headingOne">
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+        data-bs-parent="#accordionExample">
+        <div class="card-body">
+
         <div class="field">
-            <label for="{{ hall.name.id_for_label }}">Название:</label>
-            {{ hall.name }}
-            {{ hall.name.errors }}
+            <label for="{{ hall.name_uk.id_for_label }}">Название:</label>
+            {{ hall.name_uk }}
+            {{ hall.name_uk.errors }}
         </div>
         <div class="field">
-            <label for="{{ hall.description.id_for_label }}">Описание:</label>
-            {{ hall.description }}
-            {{ hall.description.errors }}
+            <label for="{{ hall.description_uk.id_for_label }}">Описание:</label>
+            {{ hall.description_uk }}
+            {{ hall.description_uk.errors }}
         </div>
+
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div  id="headingTwo">
+
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="card-body">
+             <div class="field">
+                <label for="{{ hall.name_ru.id_for_label }}">Название:</label>
+                {{ hall.name_ru }}
+                {{ hall.name_ru.errors }}
+            </div>
+            <div class="field">
+                <label for="{{ hall.description_ru.id_for_label }}">Описание:</label>
+                {{ hall.description_ru }}
+                {{ hall.description_ru.errors }}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
 
         <div class="field">
             <label for="{{ hall.number.id_for_label }}">Номер:</label>

@@ -1,11 +1,12 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
 {% block title %}
-    Контакты
+    {% load i18n %}
+    {% trans "Контакты" %}
 {% endblock %}
 {% block main %}
 <main>
-<h1>Контакты</h1>
+<h1>{% trans "Контакты" %}</h1>
 
     {% for contact in contacts %}
   <div class="contacts">
@@ -17,8 +18,8 @@
     <div>
       {% autoescape off %}<div style="width: 48%; float: left; margin-left: -20%" >{{ contact.coordinate }}</div>{% endautoescape %}
       <div style="float: right; width: 50%; font-size: 20px;">
-        <p><b>Адрес:</b> {{ contact.address }}</p>
-        <p><b>Бронирование билетов:</b> +38(095)66 66 666, +38(095)55 55 555</p>
+        <p><b>{% trans "Адрес:" %}</b> {{ contact.address }}</p>
+        <p><b> {% trans "Бронирование билетов::" %}</b> +38(095)66 66 666, +38(095)55 55 555</p>
         <p><b>e-mail:</b> mysinema@i.ua</p>
         <p><a href="https://concert.ua/ru/prague"><b>Сайт</b></a></p>
         <img src="{{ contact.main_photo.url }}" style="max-width: 70%">

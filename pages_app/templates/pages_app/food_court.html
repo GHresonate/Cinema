@@ -1,11 +1,12 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-    Кафе
+    {% trans "Кафе" %}
 {% endblock %}
 {% block main %}
 <main>
-  <h1>Кафе-Бар</h1>
+  <h1>{% trans "Кафе-Бар" %}</h1>
   <img src="{{ food.main_photo.url }}" style="margin-bottom: 17px; max-width: 93%">
   <div>
       {% for photo in photos %}

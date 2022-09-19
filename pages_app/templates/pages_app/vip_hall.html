@@ -1,11 +1,12 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-    VIP зал
+    {% trans "VIP зал" %}
 {% endblock %}
 {% block main %}
 <main>
-  <h1>VIP зал</h1>
+  <h1>{% trans "VIP зал" %}</h1>
   <img src="{{ vip_hall.main_photo.url }}" style="margin-bottom: 17px; max-width: 93%">
   <div>
       {% for photo in photos %}

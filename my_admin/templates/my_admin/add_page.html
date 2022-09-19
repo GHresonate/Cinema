@@ -9,16 +9,71 @@ Add page
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
         {{ form.non_field_errors }}
+
+
+        <div class="container">
+<div class="accordion" id="accordionExample">
+<div class="steps">
+    <progress id="progress" value=0 max=100 ></progress>
+    <div class="step-item">
+        <button class="step-button text-center" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Uk
+        </button>
+    </div>
+    <div class="step-item">
+        <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Ru
+        </button>
+    </div>
+</div>
+
+<div class="card">
+    <div  id="headingOne">
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+        data-bs-parent="#accordionExample">
+        <div class="card-body">
+
         <div class="field">
-            <label for="{{ page.name.id_for_label }}">Название:</label>
-            {{ page.name }}
-            {{ page.name.errors }}
+            <label for="{{ page.name_uk.id_for_label }}">Название:</label>
+            {{ page.name_uk }}
+            {{ page.name_uk.errors }}
         </div>
         <div class="field">
-            <label for="{{ page.description.id_for_label }}">Описание:</label>
-            {{ page.description }}
-            {{ page.description.errors }}
+            <label for="{{ page.description_uk.id_for_label }}">Описание:</label>
+            {{ page.description_uk }}
+            {{ page.description_uk.errors }}
         </div>
+
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div  id="headingTwo">
+
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="card-body">
+             <div class="field">
+                <label for="{{ page.name_ru.id_for_label }}">Название:</label>
+                {{ page.name_ru }}
+                {{ page.name_ru.errors }}
+            </div>
+            <div class="field">
+                <label for="{{ page.description_ru.id_for_label }}">Описание:</label>
+                {{ page.description_ru }}
+                {{ page.description_ru.errors }}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
         <div class="photo_field">
              <div class="field" style="float: left">
                 <label for="{{ page.main_photo.id_for_label }}">Главный баннер:</label>

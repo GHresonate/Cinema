@@ -1,6 +1,7 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
 {% block title %}
+    {% load i18n %}
 Promotions
 {% endblock %}
 {% block main %}
@@ -10,7 +11,7 @@ Promotions
     <img style="max-width: 200px; bottom: 10%; position: relative; display: block; margin-left: 7px; margin-top: 7px; float: bottom;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
   </aside>
   <div style="float: right; max-width: 700px;">
-    <h2 style="margin-bottom: 14px">Новости</h2>
+    <h2 style="margin-bottom: 14px">{% trans "Новости" %}</h2>
     <div class="container">
     <div class="row">
         {% for news in page %}

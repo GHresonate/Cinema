@@ -1,11 +1,12 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
    Детская комната
 {% endblock %}
 {% block main %}
 <main>
-  <h1>Детская комната</h1>
+  <h1>{% trans "Детская комната" %}</h1>
   <img src="{{ children.main_photo.url }}" style="margin-bottom: 17px; max-width: 93%">
   <div>
       {% for photo in photos %}

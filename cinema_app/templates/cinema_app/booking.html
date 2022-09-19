@@ -1,7 +1,8 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-    Бронь билетов
+    {% trans "Бронь билетов" %}
 {% endblock %}
 {% block main %}
 
@@ -25,7 +26,7 @@
      </div>
        <br>
    </div>
-                          <button id="ready" type="button" class="btn btn-lg btn-outline-dark">Бронировать</button>
+                          <button id="ready" type="button" class="btn btn-lg btn-outline-dark"> {% trans "Бронировать" %}</button>
   </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

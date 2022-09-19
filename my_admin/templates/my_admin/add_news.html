@@ -4,23 +4,76 @@
 Add news
 {% endblock %}
 {% block main %}
-
-
         <div><h1>Новость</h1></div><hr>
 
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
         {{ form.non_field_errors }}
-        <div class="field">
-            <label for="{{ news.name_ru.id_for_label }}">Название ru:</label>
-            {{ news.name_ru }}
-            {{ news.name_ru.errors }}
-        </div>
+
+        <div class="container">
+<div class="accordion" id="accordionExample">
+<div class="steps">
+    <progress id="progress" value=0 max=100 ></progress>
+    <div class="step-item">
+        <button class="step-button text-center" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Uk
+        </button>
+    </div>
+    <div class="step-item">
+        <button class="step-button text-center collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Ru
+        </button>
+    </div>
+</div>
+
+<div class="card">
+    <div  id="headingOne">
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+        data-bs-parent="#accordionExample">
+        <div class="card-body">
+
         <div class="field">
             <label for="{{ news.name_uk.id_for_label }}">Название:</label>
             {{ news.name_uk }}
             {{ news.name_uk.errors }}
         </div>
+        <div class="field">
+            <label for="{{ news.description_uk.id_for_label }}">Описание:</label>
+            {{ news.description_uk }}
+            {{ news.description_uk.errors }}
+        </div>
+
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div  id="headingTwo">
+
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="card-body">
+             <div class="field">
+                <label for="{{ news.name_ru.id_for_label }}">Название:</label>
+                {{ news.name_ru }}
+                {{ news.name_ru.errors }}
+            </div>
+            <div class="field">
+                <label for="{{ news.description_ru.id_for_label }}">Описание:</label>
+                {{ news.description_ru }}
+                {{ news.description_ru.errors }}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+
         <div class="field">
             <label for="{{ news.is_active.id_for_label }}">Показывать:</label>
             <div style="float: left; transform: scale(2); margin-left: 14px;">{{ news.is_active }}</div>
@@ -30,16 +83,6 @@ Add news
             <label for="{{ news.date_published.id_for_label }}">Дата публикации:</label>
             {{ news.date_published }}
             {{ news.date_published.errors }}
-        </div>
-        <div class="field">
-            <label for="{{ news.description_uk.id_for_label }}">Описание:</label>
-            {{ news.description_uk }}
-            {{ news.description_uk.errors }}
-        </div>
-        <div class="field">
-            <label for="{{ news.description_ru.id_for_label }}">Описание ru:</label>
-            {{ news.description_ru }}
-            {{ news.description_ru.errors }}
         </div>
         <div class="photo_field">
              <div class="field" style="float: left">
@@ -116,5 +159,27 @@ Add news
 {% endblock %}
 
 {% block js %}
+    <!-- Bootstrap 5 JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+<!-- Stepper JavaScript -->
+<script>
+const stepButtons = document.querySelectorAll('.step-button');
+const progress = document.querySelector('#progress');
+
+Array.from(stepButtons).forEach((button,index) => {
+    button.addEventListener('click', () => {
+        progress.setAttribute('value', index * 100 /(stepButtons.length - 1) );//there are 3 buttons. 2 spaces.
+
+        stepButtons.forEach((item, secindex)=>{
+            if(index > secindex){
+                item.classList.add('done');
+            }
+            if(index < secindex){
+                item.classList.remove('done');
+            }
+        })
+    })
+})
+</script>
 <script src="{% static 'my_admin/js_for_cinema_app.js' %}"></script>
 {% endblock %}

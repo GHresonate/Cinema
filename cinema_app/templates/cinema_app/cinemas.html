@@ -1,13 +1,14 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-    Кинотеатры
+    {% trans "Кинотеатры" %}
 {% endblock %}
 {% block main %}
 <main>
 <img style="max-width: 93%" src="{{ the_cinema.main_photo.url }}">
   <div style="text-align: center; float: right; max-width: 800px; margin-top: 14px;">
-    <h2><b>Наши кинотеатры</b></h2>
+    <h2><b>{% trans "Наши кинотеатры " %}</b></h2>
       {% for cinema in page %}
     <div style="margin: 14px; display: inline-block;">
       <img src="{{ cinema.main_photo.url }}" style="max-width: 300px; margin: 7px;">

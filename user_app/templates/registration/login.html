@@ -1,7 +1,9 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-Логин
+
+{% trans "Логин" %}
 {% endblock %}
 {% block main %}
 <h1>Login</h1>
@@ -16,10 +18,10 @@
     </div>
 
     <div class="mb-3" style="margin: 7px;text-align: center; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
-      <label for="FormControlInput6" class="form-label">Пароль</label>
+      <label for="FormControlInput6" class="form-label"> {% trans "Пароль" %}</label>
       <input type="password" name="password" class="form-control" id="FormControlInput6">
     </div>
-      <button type="submit" class="btn btn-lg btn-outline-dark">Залогиниться</button>
+      <button type="submit" class="btn btn-lg btn-outline-dark"> {% trans "Залогиниться" %}</button>
   </div>
 
 

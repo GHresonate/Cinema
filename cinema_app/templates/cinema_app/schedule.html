@@ -1,14 +1,15 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-    Расписание
+    {% trans "Расписание" %}
 {% endblock %}
 {% block main %}
 <main>
   <div class="container">
     <div class="row">
       <select class="col form-select" aria-label="Cinema" style="margin: 7px">
-        <option selected>Кинотеатр</option>
+        <option selected> {% trans "Кинотеатр" %}</option>
           {% for cinema in all_cinemas %}
         <option value="{{ cinema }}"><a href="{% url "front_schedule" %}?cinema={{ cinema.id }}">{{ cinema.name }}</a></option>
           {% endfor %}
@@ -36,7 +37,7 @@
   </div>
 
   <div style="display: table; margin: 7px; text-align: left; font-size: 16px; font-weight: bolder;">
-    <div style="display: table-cell; padding: 7px; ">Показывать только: </div>
+    <div style="display: table-cell; padding: 7px; ">{% trans "Показывать только: " %}</div>
     <div class="form-check form-check-inline" style="display: table-cell; padding-right: 20px">
       <input class="form-check-input bg-dark" type="checkbox" id="inlineCheckbox1" value="2D">
       <label class="form-check-label" for="inlineCheckbox1">2D</label>
@@ -57,11 +58,11 @@
 
   <div class="container" style="text-align: center; width: 870px;">
     <div class="row" style="font-size: 18px; font-weight: bolder;border: 2px solid black; border-radius: 3px;background-color: #c4d0d9; vertical-align: center">
-      <div class="col-2" style="border-right: 2px solid black;">Время</div>
-      <div class="col-4" style="border-right: 2px solid black;">Фильм</div>
-      <div class="col-1" style="border-right: 2px solid black;">Зал</div>
-      <div class="col-2" style="border-right: 2px solid black;">Цена</div>
-      <div class="col-3">Бронировать</div>
+      <div class="col-2" style="border-right: 2px solid black;"> {% trans "Время" %}</div>
+      <div class="col-4" style="border-right: 2px solid black;"> {% trans "Фильм" %}</div>
+      <div class="col-1" style="border-right: 2px solid black;"> {% trans "Зал" %}</div>
+      <div class="col-2" style="border-right: 2px solid black;"> {% trans "Цена" %}</div>
+      <div class="col-3"> {% trans "Бронировать" %}</div>
     </div>
 
     {% for date in dates %}

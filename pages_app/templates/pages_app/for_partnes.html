@@ -1,11 +1,12 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
 {% block title %}
-    Реклама
+    {% load i18n %}
+    {% trans "Реклама" %}
 {% endblock %}
 {% block main %}
 <main>
-  <h1>Реклама</h1>
+  <h1>{% trans "Реклама" %}</h1>
   <img src="{{ for_par.main_photo.url }}" style="margin-bottom: 17px; max-width: 93%">
   <div>
       {% for photo in photos %}

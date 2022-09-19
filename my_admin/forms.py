@@ -82,8 +82,10 @@ class SEOForm(forms.ModelForm):
 
 
 class MovieForm(forms.ModelForm):
-    name = forms.CharField(max_length=256)
-    description = forms.CharField(widget=forms.Textarea)
+    name_ru = forms.CharField(max_length=256)
+    description_uk = forms.CharField(widget=forms.Textarea)
+    name_uk = forms.CharField(max_length=256)
+    description_ru = forms.CharField(widget=forms.Textarea)
     main_photo = forms.ImageField()
     trailer_url = forms.CharField(max_length=256)
     is_2D = forms.BooleanField(required=False)
@@ -93,18 +95,20 @@ class MovieForm(forms.ModelForm):
 
     class Meta:
         model = Movie
-        fields = ('name', 'description', 'main_photo', 'trailer_url', 'is_2D', 'is_3D', 'is_IMAX', 'realise_date')
+        fields = ('name_ru','name_uk', 'description_ru','description_uk', 'main_photo', 'trailer_url', 'is_2D', 'is_3D', 'is_IMAX', 'realise_date')
 
 
 class CinemaForm(forms.ModelForm):
-    name = forms.CharField(max_length=256)
-    description = forms.CharField(widget=forms.Textarea)
+    name_ru = forms.CharField(max_length=256)
+    name_uk = forms.CharField(max_length=256)
+    description_uk = forms.CharField(widget=forms.Textarea)
+    description_ru = forms.CharField(widget=forms.Textarea)
     main_photo = forms.ImageField()
     banner_photo = forms.ImageField()
 
     class Meta:
         model = Cinema
-        fields = ('name', 'description', 'main_photo', 'banner_photo')
+        fields = ('name_ru' ,'name_uk', 'description_ru','description_uk', 'main_photo', 'banner_photo')
 
 
 class NewsAndDiscountForm(forms.ModelForm):
@@ -123,13 +127,15 @@ class NewsAndDiscountForm(forms.ModelForm):
 
 
 class PagesForm(forms.ModelForm):
-    name = forms.CharField(max_length=256)
-    description = forms.CharField(widget=forms.Textarea)
+    name_uk = forms.CharField(max_length=256)
+    name_ru = forms.CharField(max_length=256)
+    description_ru = forms.CharField(widget=forms.Textarea)
+    description_uk = forms.CharField(widget=forms.Textarea)
     main_photo = forms.ImageField()
 
     class Meta:
         model = Pages
-        fields = ('name', 'description', 'main_photo')
+        fields = ('name_uk', 'name_ru', 'description_ru', 'description_uk', 'main_photo')
 
 
 class BannersInTheTopForm(forms.ModelForm):
@@ -194,11 +200,13 @@ class MainPageForm(forms.ModelForm):
 
 class HallForm(forms.ModelForm):
     number = forms.IntegerField()
-    name = forms.CharField(max_length=128)
-    description = forms.CharField(widget=forms.Textarea)
+    name_ru = forms.CharField(max_length=128)
+    name_uk = forms.CharField(max_length=128)
+    description_ru = forms.CharField(widget=forms.Textarea)
+    description_uk = forms.CharField(widget=forms.Textarea)
     scheme = forms.JSONField()
     main_photo = forms.ImageField()
 
     class Meta:
         model = Hall
-        fields = ('number', 'name', 'description', 'scheme', 'main_photo')
+        fields = ('number', 'name_ru', 'description_ru', 'name_uk', 'description_uk', 'scheme', 'main_photo')

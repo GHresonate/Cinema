@@ -1,5 +1,6 @@
 {% extends 'pages_app/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
 {{ cinema.seo.title }}
 {% endblock %}
@@ -12,13 +13,13 @@
     <div>
 {{ cinema.description }}
     </div>
-  <h3>Залы</h3>
+  <h3> {% trans "Залы" %}</h3>
     <table class="table">
   <thead>
     <tr>
-      <th scope="col">Номер</th>
-        <th scope="col">Назване</th>
-      <th scope="col">Лого</th>
+      <th scope="col"> {% trans "Номер" %}</th>
+        <th scope="col"> {% trans "Назване" %}</th>
+      <th scope="col"> {% trans "Лого" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -45,11 +46,11 @@
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Предыдущий</span>
+      <span class="visually-hidden"> {% trans "Предыдущий" %}</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"  data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Следующий</span>
+      <span class="visually-hidden"> {% trans "Следующий" %}</span>
     </button>
   </div>
 
