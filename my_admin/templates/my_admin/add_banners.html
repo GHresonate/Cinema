@@ -8,9 +8,9 @@ Add banners
       {% csrf_token %}
         {{ form.non_field_errors }}
             <div class="field">
-            <label for="{{ background.type.id_for_label }}">Ставить фото на фон:</label>
-            <div style="float: left; transform: scale(2)">{{ background.type }}</div>
-            {{ background.type.errors }}
+            <label for="{{ background.is_photo.id_for_label }}">Ставить фото на фон:</label>
+            <div style="float: left; transform: scale(2)">{{ background.is_photo }}</div>
+            {{ background.is_photo.errors }}
         </div>
     <br>
         <div class="field">

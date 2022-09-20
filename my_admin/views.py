@@ -37,7 +37,7 @@ def changeNewsAndDiskInBanner(request):
                 if banner.main_photo:
                     banner.save()
         top_banners.save()
-        return HttpResponseRedirect(reverse('news'))
+        return HttpResponseRedirect(reverse('statistic'))
     else:
         top_banners = NewsAndDiscBannerForms()
         return render(request, 'my_admin/add_newsintop.html',
@@ -54,7 +54,7 @@ def change_contacts(request):
                 if contact.main_photo:
                     contact.save()
         contacts.save()
-        return HttpResponseRedirect(reverse('news'))
+        return HttpResponseRedirect(reverse('statistic'))
     else:
         contacts = ContactForms()
         return render(request, 'my_admin/add_contacts.html',
@@ -136,7 +136,7 @@ def change_main(request):
             the_object.seo.save()
             seo.save()
             object.save()
-            return HttpResponseRedirect(reverse("news"))
+            return HttpResponseRedirect(reverse("statistic"))
         else:
             print(object.errors)
             raise ValueError
@@ -161,7 +161,7 @@ def change_banners(request):
                         banner.save()
             top_banners.save()
             background.save()
-            return HttpResponseRedirect(reverse('news'))
+            return HttpResponseRedirect(reverse('statistic'))
         else:
             raise ValueError
     else:
@@ -384,7 +384,7 @@ def add_hall(request, cinema_number):
             return render(e.request, e.way, e.value_dict)
         final_hall.cinema = cinema
         final_hall.save()
-        return HttpResponseRedirect(reverse('news'))
+        return HttpResponseRedirect(reverse('statistic'))
     else:
         hall = HallForm()
         return main_add(request, hall, "hall", "halls")
@@ -605,11 +605,12 @@ def get_movies(request):
 @permission_required('hav_access_to_admin')
 def get_sessions(request):
     AMOUNT_DAYS = 40
+    START_DAY = 20
     data = []
     labels = []
-    today = date.today()
+    first_day = date.today()-timedelta(days=START_DAY)
     for first in range(AMOUNT_DAYS):
-        day = today + timedelta(days=first)
+        day = first_day + timedelta(days=first)
         in_day = Session.objects.all().filter(date=day).count()
         labels.append(str(day.day) + '.' + str(day.month))
         data.append(in_day)

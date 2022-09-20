@@ -6,7 +6,9 @@
 <head>
 {% block head %}
 {% endblock %}
-<!-- Bootstrap 5.1 CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="{% static 'my_admin/plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'my_admin/dist/css/adminlte.min.css' %}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,65 +16,161 @@
   <title>{% block title %}Admin{% endblock %}</title>
   <link rel="stylesheet" type="text/css" href="{% static 'my_admin/style.css' %}">
 </head>
-<body>
+<body class="hold-transition sidebar-mini" style="background-color: silver">
+<div class="wrapper" style="background-color: silver">
+  <!-- Navbar -->
+  <nav  class="main-header navbar navbar-expand navbar-white navbar-light ">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/my_admin" class="nav-link">Home</a>
+      </li>
+    </ul>
 
-<main>
-<nav class="navbar navbar-expand-xl navbar-light bg-light" style="border-radius: 4px; font-size: 14px; text-align: center">
-          <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <div>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link" href="/my_admin">Главная</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "change_banners" %}">Баннера</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "change_changeNewsAndDiskInBanner" %}">Новости на главной</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "change_main" %}">Информация на главной</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "change_contacts" %}">Контакты</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "movies" %}">Фильмы</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "cinemas" %}">Кинотеатры</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "news" %}">Новости</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "discounts" %}">Акции</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "pages" %}">Страницы</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "users" %}">Пользователи</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url "prepare_sending" %}">Рассылка</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </nav>
-    {% block main %}
-    {% endblock %}
-</main>
-</body>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user (optional) -->
+
+      <!-- SidebarSearch Form -->
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+
+
+          <li class="nav-item">
+            <a href="/my_admin" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Главная</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url "change_banners" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Баннера</p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
+            <a href="{% url "change_changeNewsAndDiskInBanner" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Новости на главной</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url "change_main" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Информация на главной</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url "change_contacts" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Контакты</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url "movies" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Фильмы</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url "cinemas" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Кинотеатры</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url "news" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Новости</p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
+            <a href="{% url "discounts" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Акции</p>
+            </a>
+          </li>
+
+
+          <li class="nav-item">
+            <a href="{% url "pages" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Страницы</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url "users" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Пользователи</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{% url "prepare_sending" %}" class="nav-link">
+              <i class="fas fa-circle nav-icon"></i>
+              <p>Рассылка</p>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div style="background-color: silver" class="content-wrapper">
+
+    <section style="background-color: silver" class="content">
+            {% block main %}
+            {% endblock %}
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+</div>
+<!-- ./wrapper -->
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.js"></script>
+<script src="{% static 'my_admin/plugins/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'my_admin/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<script src="{% static 'my_admin/plugins/chart.js/Chart.min.js' %}"></script>
+
+<!-- AdminLTE App -->
+<script src="{% static 'my_admin/dist/js/adminlte.min.js' %}"></script>
+
+<script src="{% static 'my_admin/dist/js/demo.js' %}"></script>
 {% block js %}
 {% endblock %}
+</body>
 </html>

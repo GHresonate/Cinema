@@ -53,12 +53,9 @@
   <aside style="max-width: 200px; height: 100%; float: left; position: sticky; top: 7px; text-align: center">
     <p style="margin-top: 14px; margin-bottom: 0; font-size: 20px;"> {% trans "Смотрите сегодня:" %}</p>
     <div class="btn-group-vertical" role="group" aria-label="Basic example" style="margin-top: 0; min-width: 200px;">
-      <button type="button"  class="btn btn-dark">12 разгневанных мужчин</button>
-      <button type="button" class="btn btn-dark">Дюнкерк</button>
-      <button type="button" class="btn btn-dark">Дюнкерк</button>
-      <button type="button"  class="btn btn-dark">Дюнкерк</button>
-      <button type="button" class="btn btn-dark">Дюнкерк</button>
-      <button type="button" class="btn btn-dark">Дюнкерк</button>
+        {% for session in sesssions_in_this_hall %}
+             <a href="{% url "front_booking" session.id %}" type="button"  class="btn btn-dark">{{ session.movie.name }}</a>
+        {% endfor %}
     </div>
   </aside>
 </main>

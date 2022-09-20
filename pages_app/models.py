@@ -40,11 +40,7 @@ class BannersInTheTop(models.Model):
 
 class Background(models.Model):
     main_photo = models.ImageField(null=True, blank=True)
-    types = [
-        ('Photo', 'Photo'),
-        ('Color', 'Color')
-    ]
-    type = models.CharField(max_length=16, choices=types, default='Color')
+    is_photo = models.BooleanField(default=True)
     color = models.CharField(max_length=32, null=True, blank=True)
 
 

@@ -153,12 +153,12 @@ TopBannerForms = modelformset_factory(BannersInTheTop, form=BannersInTheTopForm,
 
 class BackgroundForm(forms.ModelForm):
     main_photo = forms.ImageField(required=False)
-    type = forms.BooleanField(required=False)
+    is_photo = forms.BooleanField(required=False)
     color = forms.CharField(max_length=32, required=False, widget=forms.TextInput(attrs={'type': 'color'}))
 
     class Meta:
         model = Background
-        fields = ('main_photo', 'color')
+        fields = ('main_photo', 'color', 'is_photo')
 
 
 class NewsAndDiscInBannerForm(forms.ModelForm):

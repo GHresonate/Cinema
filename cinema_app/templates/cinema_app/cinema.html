@@ -26,8 +26,8 @@
 
     {% for hall in halls %}
     <tr>
-      <th scope="row">{{ hall.number }}</th>
-        <td><a href="{% url 'front_hall' hall.seo.url %}">{{ hall.name }}</a></td>
+        <th scope="row"><a style="color: black" href="{% url 'front_hall' hall.seo.url %}">{{ hall.number }}</a></th>
+        <td><a style="color: black;" href="{% url 'front_hall' hall.seo.url %}">{{ hall.name }}</a></td>
       <td><img style="width: 100px" src="{{ hall.main_photo.url }}"></td>
     </tr>
     {% endfor %}

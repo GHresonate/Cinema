@@ -133,12 +133,14 @@ def cinema(request, url):
 def hall(request, url):
     the_hall = get_object_or_404(Hall, seo__url=url)
     about_cinema = MainPage.objects.get(pk=1)
+    today = date.today()
     photos = Photo.objects.all().filter(gallery=the_hall.photo_list)
+    sesssions_in_this_hall = Session.objects.all().filter(hall=the_hall).filter(date=today).order_by('date','time')
     first_photo = photos[0]
     all_photos = photos[1:]
     return render(request, 'cinema_app/hall.html',
                   {'hall': the_hall, "about_cinema": about_cinema, 'first_photo': first_photo,
-                   'all_photos': all_photos})
+                   'all_photos': all_photos,'sesssions_in_this_hall': sesssions_in_this_hall})
 
 
 def get_hall(request, url):

@@ -105,16 +105,11 @@
 
 
 
-<script src="{% static 'my_admin/plugins/jquery/jquery.min.js' %}"></script>
-<!-- Bootstrap 4 -->
-<script src="{% static 'my_admin/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-<script src="{% static 'my_admin/plugins/chart.js/Chart.min.js' %}"></script>
+{% endblock %}
 
-<!-- AdminLTE App -->
-<script src="{% static 'my_admin/dist/js/adminlte.min.js' %}"></script>
+{% block js %}
 
-<script src="{% static 'my_admin/dist/js/demo.js' %}"></script>
 
 <script>
     let pieChartCanvas = $('#pieChart').get(0).getContext('2d')

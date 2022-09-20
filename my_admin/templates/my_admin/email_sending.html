@@ -146,7 +146,7 @@ function printTemplate(data, status, xhr) {
         div_for_insert.classList.add('form-check')
         div_for_insert.style.float = 'left'
         div_for_insert.innerHTML = `
-            <input style="float: left; margin: 7px;" class="form-check-input check_for_email" type="radio" value="${jsonData['id'][x]}" name="flexRadioDefault" id="flexRadio${jsonData['id'][x]}">
+            <input style="float: left; margin-left: -140px;" class="form-check-input check_for_email" type="radio" value="${jsonData['id'][x]}" name="flexRadioDefault" id="flexRadio${jsonData['id'][x]}">
                   <label class="form-check-label" for="flexRadio${jsonData['id'][x]}">
                       <p style="width: 200px; text-overflow: ellipsis; overflow: hidden; float: left; margin-right: 7px;">${jsonData['names'][x]}</p> <p id="${jsonData['id'][x]}" style="color: red; float: left; cursor: pointer">Удалить</p>
               </label>`
