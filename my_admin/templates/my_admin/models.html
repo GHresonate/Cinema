@@ -47,10 +47,11 @@
         {% if type == "movies" %}
       <th scope="col">Форматы</th>
         {% endif %}
-        {% if type == "news" or type == "discounts" %}
-      <th scope="col">Отображаеться:</th>
+        {% if type == "news" or type == "discounts" or type == "pages" %}
+      <th scope="col">Отображается:</th>
         {% endif %}
       <th scope="col">Постер</th>
+      <th scope="col"></th>
     </tr>
   </thead>
     <tbody>
@@ -63,7 +64,7 @@
               {% if model.is_IMAX %}IMAX {% endif %}
           </td>
         {% endif %}
-        {% if type == "news" or type == "discounts" %}
+        {% if type == "news" or type == "discounts" or type == "pages" %}
             {% if  model.is_active %}
                 <td scope="col">Да</td>
             {% else %}
@@ -71,6 +72,7 @@
             {% endif %}
         {% endif %}
         <td><img class="small_photo" src="{{ model.main_photo.url }}"></td>
+        <td><a href="/my_admin/delete_{{ type }}/{{ model.id }}" class="btn_rem_hall btn btn-light">Удалить</a></td>
         </tr>
       {% endfor %}
     </tbody>

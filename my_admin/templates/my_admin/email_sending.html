@@ -171,18 +171,26 @@ function get_checked(){
     };
 }
 
+function result_func(data, status, xhr) {
+    alert(JSON.parse(data)['value'])
+}
+
 function submit_email(){
     let isForChosen = document.getElementById('exampleRadios2').checked
     let checked_id = get_checked()
+    if (!checked_id){
+        alert('Выберите файл');
+        return 0;
+
+    }
     let result = {}
     result['csrfmiddlewaretoken'] = csrf_token
     result['X-CSRFToken'] = csrf_token
     result['id']  = checked_id
     result['for_chosen'] = isForChosen
-    alert(result['for_chosen'])
        if (isForChosen){
            let chosenEmails = sessionStorage['chosen']
-           if (chosenEmails == ''){
+           if (!chosenEmails){
                alert('Выберите пользователей')
                return 0;
            }
@@ -199,7 +207,8 @@ function submit_email(){
 			url: '{% url "send_email" %}',
 			data: JSON.stringify(result),
 			dataType : 'json',
-			success: alert('+'),
+			success: result_func,
+            error: result_func
 		});
 }
 

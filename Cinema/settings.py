@@ -33,7 +33,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',  #
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -96,7 +96,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'uk'
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uk'
 LANGUAGES = (
     ('uk', 'Ukrainian'),
     ('ru', 'Russian'),
@@ -108,7 +108,8 @@ LOCALE_PATHS = (
 TIME_ZONE = 'EET'
 
 USE_I18N = True
-
+USE_L18N = True
+USE_L10N = True
 USE_TZ = True
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -123,7 +124,6 @@ AUTH_USER_MODEL = 'user_app.CustomUser'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/user/login'
 ASGI_APPLICATION = "Cinema.asgi.application"
-USE_L10N = True
 DATE_INPUT_FORMATS = ('%d/%m/%Y','%d-%m-%Y','%Y-%m-%d')
 DATE_FORMAT = '%d/%m/%Y'
 CHANNEL_LAYERS = {

@@ -6,7 +6,7 @@ Add contacts
 {% block main %}
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-        {{ form.non_field_errors }}
+        {{ contacts.non_field_errors }}
         <div style="margin: 7px;float: left">Контакты</div>
     <br><br>
         <div id="photo_parent">
@@ -25,7 +25,7 @@ Add contacts
                         <button class="small_down_butt small_bt_for_img btn btn-light">Загрузить</button>
                         <div class="small_hidden_form" style="margin-bottom: -110px;">{{ contact}}</div>
                     </div>
-                    <div class="rem_small" style="position: relative; top: -150px"><p class="rem_small_text" >+</p></div>
+                    <div class="rem_small" style="top: -150px"><p class="rem_small_text">+</p></div>
                </div>
                 {% endfor %}
 

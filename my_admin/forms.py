@@ -132,10 +132,11 @@ class PagesForm(forms.ModelForm):
     description_ru = forms.CharField(widget=forms.Textarea)
     description_uk = forms.CharField(widget=forms.Textarea)
     main_photo = forms.ImageField()
+    is_active = forms.BooleanField(required=False)
 
     class Meta:
         model = Pages
-        fields = ('name_uk', 'name_ru', 'description_ru', 'description_uk', 'main_photo')
+        fields = ('name_uk', 'name_ru', 'description_ru', 'description_uk', 'main_photo', 'is_active')
 
 
 class BannersInTheTopForm(forms.ModelForm):

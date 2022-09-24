@@ -64,8 +64,6 @@ msgid "Кинотеатры"
 msgstr "Кінотеатри"
 
 #: cinema_app/templates/cinema_app/cinemas.html:11
-#, fuzzy
-#| msgid "Кинотеатры"
 msgid "Наши кинотеатры "
 msgstr "Кінотеатри"
 
@@ -74,7 +72,6 @@ msgid "Смотрите сегодня:"
 msgstr "Дивіться сьогодні"
 
 #: cinema_app/templates/cinema_app/index.html:32
-#, fuzzy
 msgid "Смотрите сегодня"
 msgstr "Дивіться сьогодні"
 
@@ -84,7 +81,6 @@ msgid "Купить билет"
 msgstr "Придбати квиток"
 
 #: cinema_app/templates/cinema_app/index.html:46
-#, fuzzy
 msgid "Смотрите скоро"
 msgstr "Дивіться скоро"
 
@@ -98,7 +94,6 @@ msgstr "Афіша"
 
 #: cinema_app/templates/cinema_app/movies.html:12
 #: cinema_app/templates/cinema_app/next_movies.html:12
-#, fuzzy
 #| msgid "Скоро в прокате"
 msgid "Скоро выйдет"
 msgstr "Скоро в кінотеатрах"
@@ -116,7 +111,6 @@ msgstr "Розклад"
 #: cinema_app/templates/cinema_app/schedule.html:12
 #: pages_app/templates/pages_app/the_cinema.html:5
 #: pages_app/templates/pages_app/the_cinema.html:9
-#, fuzzy
 #| msgid "Кинотеатры"
 msgid "Кинотеатр"
 msgstr "Кінотеатри"
@@ -228,13 +222,11 @@ msgid "Адрес:"
 msgstr "Адреса"
 
 #: pages_app/templates/pages_app/contacts.html:22
-#, fuzzy
 #| msgid "Бронирование билетов:"
 msgid "Бронирование билетов::"
 msgstr "Бронювання квитків:"
 
 #: pages_app/templates/pages_app/food_court.html:9
-#, fuzzy
 #| msgid "Кафе"
 msgid "Кафе-Бар"
 msgstr "Кафе"
@@ -362,7 +354,6 @@ msgid "Номер карты"
 msgstr "Номер карти"
 
 #: user_app/templates/user_app/profile.html:44
-#, fuzzy
 #| msgid "Мобильные приложения"
 msgid "День рождения"
 msgstr "Дата народження"

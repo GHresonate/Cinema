@@ -6,7 +6,7 @@ Add banners
 {% block main %}
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-        {{ form.non_field_errors }}
+        {{ background.non_field_errors }}
             <div class="field">
             <label for="{{ background.is_photo.id_for_label }}">Ставить фото на фон:</label>
             <div style="float: left; transform: scale(2)">{{ background.is_photo }}</div>

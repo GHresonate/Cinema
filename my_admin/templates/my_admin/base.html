@@ -43,7 +43,7 @@
       <!-- SidebarSearch Form -->
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+      <nav class="mt-2" style="text-align: left">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -75,7 +75,7 @@
           <li class="nav-item">
             <a href="{% url "change_main" %}" class="nav-link">
               <i class="fas fa-circle nav-icon"></i>
-              <p>Информация на главной</p>
+              <p>Информация</p>
             </a>
           </li>
 
@@ -168,8 +168,6 @@
 
 <!-- AdminLTE App -->
 <script src="{% static 'my_admin/dist/js/adminlte.min.js' %}"></script>
-
-<script src="{% static 'my_admin/dist/js/demo.js' %}"></script>
 {% block js %}
 {% endblock %}
 </body>

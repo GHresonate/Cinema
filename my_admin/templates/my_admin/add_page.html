@@ -8,7 +8,7 @@ Add page
 
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-        {{ form.non_field_errors }}
+        {{ page.non_field_errors }}
 
 
         <div class="container">
@@ -74,6 +74,11 @@ Add page
 </div>
 
 
+            <div class="field">
+            <label for="{{ page.is_active.id_for_label }}">Показывать:</label>
+            <div style="float: left; transform: scale(2); margin-left: 14px;">{{ page.is_active }}</div>
+            {{ page.is_active.errors }}
+        </div>
         <div class="photo_field">
              <div class="field" style="float: left">
                 <label for="{{ page.main_photo.id_for_label }}">Главный баннер:</label>

@@ -61,6 +61,12 @@ def change_contacts(request):
                       {'contacts': contacts})
 
 
+@permission_required('hav_access_to_admin')
+def delete_by_seo(request, url):
+    seo = SEO.objects.get(url=url)
+
+
+
 def change(request, url, model, model_form, model_name, plural_name):
     the_object = get_object_or_404(model, seo__url=url)
     gall = the_object.photo_list
@@ -464,7 +470,7 @@ def add_page(request):
         final_page.save()
         return HttpResponseRedirect(reverse('pages'))
     else:
-        page = CinemaForm()
+        page = PagesForm()
         return main_add(request, page, "page", "pages")
 
 
@@ -504,21 +510,24 @@ def choose_users(request):
 
 @permission_required('hav_access_to_admin')
 def send_email(request):
-    information_about_sending = json.load(request)
-    template_id = information_about_sending['id']
-    template = Template.objects.get(id=template_id)
-    if information_about_sending['for_chosen']:
-        chosen_emails = information_about_sending['chosen']
-        users_for_send = []
-        for user_id in chosen_emails:
-            if user_id:
-                user = CustomUser.objects.get(id=int(user_id))
-                users_for_send.append(user)
-    else:
-        users_for_send = CustomUser.objects.all()
-    msg = EmailMessage(template.name, open(template.file.path, "r").read(), to=users_for_send)
-    msg.content_subtype = "html"
-    msg.send()
+    try:
+        information_about_sending = json.load(request)
+        template_id = information_about_sending['id']
+        template = Template.objects.get(id=template_id)
+        if information_about_sending['for_chosen']:
+            chosen_emails = information_about_sending['chosen']
+            users_for_send = []
+            for user_id in chosen_emails:
+                if user_id:
+                    user = CustomUser.objects.get(id=int(user_id))
+                    users_for_send.append(user)
+        else:
+            users_for_send = CustomUser.objects.all()
+        msg = EmailMessage(template.name, open(template.file.path, "r").read(), to=users_for_send)
+        msg.content_subtype = "html"
+        msg.send()
+    except Exception as e:
+        return JsonResponse(json.dumps({'value': e}), status=500, safe=False)
     return JsonResponse(json.dumps({'value': 'Все письма отосланы'}), status=200, safe=False)
 
 
@@ -527,6 +536,48 @@ def delete_hall(request, hall_id):
     hall_for_delete = Hall.objects.get(id=hall_id)
     hall_for_delete.delete()
     return render(request, 'my_admin/succsess_delete.html')
+
+
+@permission_required('hav_access_to_admin')
+def delete_cinema(request, cinema_id):
+    cinema_for_delete = Cinema.objects.get(id=cinema_id)
+    cinema_for_delete.delete()
+    return render(request, 'my_admin/succsess_delete.html')
+
+
+@permission_required('hav_access_to_admin')
+def delete_movie(request, movie_id):
+    movie_for_delete = Movie.objects.get(id=movie_id)
+    movie_for_delete.delete()
+    return render(request, 'my_admin/succsess_delete.html')
+
+@permission_required('hav_access_to_admin')
+def delete_page(request, page_id):
+    pages_for_delete = Pages.objects.get(id=page_id)
+    if not pages_for_delete.is_active:
+        pages_for_delete.delete()
+        return render(request, 'my_admin/succsess_delete.html')
+    return render(request, 'my_admin/cant_delete.html')
+
+
+
+@permission_required('hav_access_to_admin')
+def delete_discounts(request, disc_id):
+    disc_for_delete = NewsAndDiscount.objects.get(id=disc_id)
+    if not disc_for_delete.is_active:
+        disc_for_delete.delete()
+        return render(request, 'my_admin/succsess_delete.html')
+    return render(request, 'my_admin/cant_delete.html')
+
+
+@permission_required('hav_access_to_admin')
+def delete_news(request, news_id):
+    news_for_delete = NewsAndDiscount.objects.get(id=news_id)
+    if not news_for_delete.is_active:
+        news_for_delete.delete()
+        return render(request, 'my_admin/succsess_delete.html')
+    return render(request, 'my_admin/cant_delete.html')
+
 
 
 @permission_required('hav_access_to_admin')

@@ -8,7 +8,7 @@ Change user
 
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-        {{ form.non_field_errors }}
+        {{ another_user.non_field_errors }}
         <div class="field">
             <label for="{{ another_user.name.id_for_label }}">Имя:</label>
             {{ another_user.name }}

@@ -29,7 +29,9 @@
     </button>
   </div>
 
-  <h2 style="margin-top: 20px; margin-bottom: 13px">{% translate "Смотрите сегодня" %}, {{ formatted_date }}</h2>
+  <h2 style="margin-top: 20px; margin-bottom: 13px">{% translate "Смотрите сегодня" %},{{ request.LANGUAGE_CODE }}{% language 'ru-RU' %}
+ {{ formatted_date|date:'E'}} {% endlanguage %}</h2>
+
   <div class="container" >
     <div class="row">
         {% for session in today_movies %}
@@ -37,7 +39,7 @@
         <img src="{{ session.movie.main_photo.url }}" class="film_image">
         <p class="film_name">{{ session.movie.name }}</p>
         <p class="next_text">{{ session.time }}</p>
-        <button type="button" class="btn btn-outline-dark"> {% translate "Купить билет" %}</button>
+        <a href="{% url 'front_booking' session.id %}" type="button" class="btn btn-outline-dark"> {% translate "Купить билет" %}</a>
       </div>
         {% endfor %}
     </div>

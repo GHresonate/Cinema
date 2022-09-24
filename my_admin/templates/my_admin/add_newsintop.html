@@ -6,8 +6,8 @@ Add news and promotions
 {% block main %}
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-        {{ form.non_field_errors }}
-        <div style="margin: 7px;float: left">Новости и акции на главной</div>
+        {{ top_banners.non_field_errors }}
+        <div style="margin: 7px;float: left">Новости на главной</div>
     <br><br>
         <div id="photo_parent">
             <div class="big_gal_button">

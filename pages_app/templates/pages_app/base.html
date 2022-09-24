@@ -52,13 +52,12 @@
                     </a>
                     <ul class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown" style="color: aliceblue">
                       <li><a class="dropdown-item" style="color: gray" href="{% url "front_news" %}">{% trans "Новости" %}</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_the_cinema" %}">{% trans "О кинотеатре" %}</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_for_partners" %}">{% trans "Реклама" %}</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_vip_hall" %}">{% trans "VIP-зал" %}</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_children" %}">{% trans "Детская комната" %}</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_food_court" %}">{% trans "Кафе" %}</a></li>
                       <li><a class="dropdown-item" style="color: gray" href="{% url "front_app_prom" %}">{% trans "Мобильные приложения" %}</a></li>
-                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_contacts" %}">{% trans "Афиша" %}</a></li>
+                      <li><a class="dropdown-item" style="color: gray" href="{% url "front_contacts" %}">{% trans "Контакт" %}</a></li>
+
+                        {% autoescape off %}
+                        {% pages_list request.LANGUAGE_CODE %}
+                        {% endautoescape %}
                     </ul>
                   </li>
                 </ul>

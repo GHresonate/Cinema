@@ -15,7 +15,6 @@ from datetime import datetime
 from django.utils import dateformat
 
 
-
 def schedule(request):
     today = date.today()
     sessions = Session.objects.all().filter(date__gte=today).order_by('date', 'time')
@@ -66,7 +65,7 @@ def main(request):
     bottom = NewsAndDiscInBanner.objects.all()
     bottom_first = bottom[0]
     bottom = bottom[1:]
-    formatted_date = dateformat.format(datetime.now(), 'd E Y')
+    formatted_date = today
     about_cinema = MainPage.objects.get(pk=1)
     today_movies = Session.objects.all().filter(date=today)
     following_films = Movie.objects.all().filter(realise_date__gt=today).order_by('realise_date')[:8]
@@ -135,12 +134,12 @@ def hall(request, url):
     about_cinema = MainPage.objects.get(pk=1)
     today = date.today()
     photos = Photo.objects.all().filter(gallery=the_hall.photo_list)
-    sesssions_in_this_hall = Session.objects.all().filter(hall=the_hall).filter(date=today).order_by('date','time')
+    sesssions_in_this_hall = Session.objects.all().filter(hall=the_hall).filter(date=today).order_by('date', 'time')
     first_photo = photos[0]
     all_photos = photos[1:]
     return render(request, 'cinema_app/hall.html',
                   {'hall': the_hall, "about_cinema": about_cinema, 'first_photo': first_photo,
-                   'all_photos': all_photos,'sesssions_in_this_hall': sesssions_in_this_hall})
+                   'all_photos': all_photos, 'sesssions_in_this_hall': sesssions_in_this_hall})
 
 
 def get_hall(request, url):

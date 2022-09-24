@@ -30,6 +30,28 @@ let order = [];
 
 function validate(){
     let is_good = 1;
+            let forms_for_check = document.getElementsByClassName('small_hidden_form')
+    let photos_form = document.getElementsByClassName('small_ph')
+        for (let photo=0; photo< photos_form.length; photo++){
+        if (photos_form[photo].innerHTML.length == 0){
+                    is_good = 0;
+                    photos_form[photo].parentNode.classList.add("error");
+        } else {
+            photos_form[photo].parentNode.classList.remove("error");
+        }
+    }
+    for (let x=0; x<forms_for_check.length; x++){
+        let error = 0;
+        if (forms_for_check[x].children[1].value==''){
+            is_good = 0;
+            error = 1;
+        }
+        if (!error){
+            forms_for_check[x].classList.remove("error");
+        } else {
+            forms_for_check[x].classList.add("error");
+        }
+    }
     let firstForm = getFirstClear();
     if (firstForm==0){
         buttAddForm.parentNode.classList.add("error");

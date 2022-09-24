@@ -7,14 +7,14 @@
 {% block main %}
 <main>
   <h1>{% trans "Кафе-Бар" %}</h1>
-  <img src="{{ food.main_photo.url }}" style="margin-bottom: 17px; max-width: 93%">
+  <img src="{{ page.main_photo.url }}" style="margin-bottom: 17px; max-width: 93%">
   <div>
       {% for photo in photos %}
     <img src="{{ photo.photo.url }}" style="margin: 17px; max-width: 250px;">
       {% endfor %}
   </div>
   <div style="max-width: 800px; float: right">
-    <div>{{ food.description }}
+    <div>{{ page.description }}
 
       <h3>Меню</h3>
       <div class="accordion bg-dark text-light" id="accordionExample" style="margin: 7px;">

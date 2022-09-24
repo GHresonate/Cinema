@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
+
 class Gallery(models.Model):
     pass
 
@@ -23,6 +24,7 @@ class Pages(models.Model):
     main_photo = models.ImageField()
     photo_list = models.OneToOneField(Gallery, null=True, on_delete=models.SET_NULL)
     seo = models.OneToOneField(SEO, null=True, on_delete=models.SET_NULL)
+    is_active = models.BooleanField(default=True)
 
 
 class MainPage(models.Model):

@@ -22,42 +22,42 @@ msgstr ""
 
 #: cinema_app/templates/cinema_app/booking.html:5
 msgid "Бронь билетов"
-msgstr ""
+msgstr "Бронь билетов"
 
 #: cinema_app/templates/cinema_app/booking.html:29
 #: cinema_app/templates/cinema_app/schedule.html:65
 msgid "Бронировать"
-msgstr ""
+msgstr "Бронировать"
 
 #: cinema_app/templates/cinema_app/cinema.html:16
 msgid "Залы"
-msgstr ""
+msgstr "Залы"
 
 #: cinema_app/templates/cinema_app/cinema.html:20
 msgid "Номер"
-msgstr ""
+msgstr "Номер"
 
 #: cinema_app/templates/cinema_app/cinema.html:21
 msgid "Назване"
-msgstr ""
+msgstr "Назване"
 
 #: cinema_app/templates/cinema_app/cinema.html:22
 msgid "Лого"
-msgstr ""
+msgstr "Лого"
 
 #: cinema_app/templates/cinema_app/cinema.html:49
 #: cinema_app/templates/cinema_app/hall.html:43
 #: cinema_app/templates/cinema_app/index.html:73
 #: cinema_app/templates/cinema_app/movie.html:84
 msgid "Предыдущий"
-msgstr ""
+msgstr "Предыдущий"
 
 #: cinema_app/templates/cinema_app/cinema.html:53
 #: cinema_app/templates/cinema_app/hall.html:47
 #: cinema_app/templates/cinema_app/index.html:77
 #: cinema_app/templates/cinema_app/movie.html:88
 msgid "Следующий"
-msgstr ""
+msgstr "Следующий"
 
 #: cinema_app/templates/cinema_app/cinemas.html:5
 #: pages_app/templates/pages_app/base.html:43
@@ -73,20 +73,20 @@ msgstr "Кинотеатры"
 
 #: cinema_app/templates/cinema_app/hall.html:54
 msgid "Смотрите сегодня:"
-msgstr ""
+msgstr "Смотрите сегодня:"
 
 #: cinema_app/templates/cinema_app/index.html:32
 msgid "Смотрите сегодня"
-msgstr ""
+msgstr "Смотрите сегодня"
 
 #: cinema_app/templates/cinema_app/index.html:40
 #: cinema_app/templates/cinema_app/movies.html:24
 msgid "Купить билет"
-msgstr ""
+msgstr "Купить билет"
 
 #: cinema_app/templates/cinema_app/index.html:46
 msgid "Смотрите скоро"
-msgstr ""
+msgstr "Смотрите скоро"
 
 #: cinema_app/templates/cinema_app/movies.html:11
 #: cinema_app/templates/cinema_app/next_movies.html:11
@@ -105,7 +105,7 @@ msgstr "Скоро в прокате"
 
 #: cinema_app/templates/cinema_app/movies.html:17
 msgid "Афиша фильмов"
-msgstr ""
+msgstr "Афиша фильмов"
 
 #: cinema_app/templates/cinema_app/schedule.html:5
 #: pages_app/templates/pages_app/base.html:37
@@ -123,15 +123,15 @@ msgstr "Кинотеатры"
 
 #: cinema_app/templates/cinema_app/schedule.html:40
 msgid "Показывать только: "
-msgstr ""
+msgstr "Показывать только: "
 
 #: cinema_app/templates/cinema_app/schedule.html:61
 msgid "Время"
-msgstr ""
+msgstr "Время"
 
 #: cinema_app/templates/cinema_app/schedule.html:62
 msgid "Фильм"
-msgstr ""
+msgstr "Фильм"
 
 #: cinema_app/templates/cinema_app/schedule.html:63
 #, fuzzy
@@ -141,7 +141,7 @@ msgstr "VIP-зал"
 
 #: cinema_app/templates/cinema_app/schedule.html:64
 msgid "Цена"
-msgstr ""
+msgstr "Цена"
 
 #: pages_app/templates/pages_app/app_prom.html:5
 #: pages_app/templates/pages_app/app_prom.html:9

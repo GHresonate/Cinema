@@ -8,7 +8,7 @@ Add movie
 
     <form id="big_form" method="post" enctype="multipart/form-data">
       {% csrf_token %}
-        {{ form.non_field_errors }}
+        {{ movie.non_field_errors }}
         <div class="field">
             <label for="{{ movie.name.id_for_label }}">Название:</label>
             {{ movie.name }}

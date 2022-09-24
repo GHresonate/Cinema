@@ -31,7 +31,6 @@ let lastForm = -1;
 let form_state = [];
 let forms = [];
 let order = [];
-
 if (imageGrid) {
     if (imageGrid.childNodes.length > 1) {
         imageGrid.removeChild(imageGrid.firstChild);
@@ -78,8 +77,8 @@ function validate(){
 
     if (!regexpForOneWord.test(seoUrl.value) && !(seoUrl.classList.contains("error"))){
         is_good = 0;
-        bigForm.url.parentNode.classList.add("length_error");
-        bigForm.url.parentNode.appendChild(messageTextOneWord);
+        seoUrl.parentNode.classList.add("length_error");
+        seoUrl.parentNode.appendChild(messageTextOneWord);
     } else {
       seoUrl.classList.remove("length_error");
       if (seoUrl.parentNode.contains(messageTextOneWord)){
@@ -305,6 +304,7 @@ if (smallBatt[0]) {
     ;
 }
 if (buttRemForm) {
+
     buttRemForm.addEventListener('click', (event) => {
         let first = getFirstClear();
         let place = getPlace(first - 1);
