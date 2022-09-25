@@ -30,7 +30,7 @@
       <select class="col form-select" aria-label="Hall" style="margin: 7px">
         <option selected>Зал</option>
           {% for hall in all_halls %}
-              <option value="{{ hall }}"><a href="{% url "front_schedule" %}?cinema={{ cinema.id }}">{{ cinema.name }}</a></option>
+              <option value="{{ hall }}"><a href="{% url "front_schedule" %}?hall={{ hall.id }}">{{ hall.name }}</a></option>
           {% endfor %}
       </select>
     </div>

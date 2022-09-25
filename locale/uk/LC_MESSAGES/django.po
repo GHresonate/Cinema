@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-20 01:00+0300\n"
+"POT-Creation-Date: 2022-09-25 11:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,21 +45,21 @@ msgstr "Лого"
 
 #: cinema_app/templates/cinema_app/cinema.html:49
 #: cinema_app/templates/cinema_app/hall.html:43
-#: cinema_app/templates/cinema_app/index.html:73
+#: cinema_app/templates/cinema_app/index.html:75
 #: cinema_app/templates/cinema_app/movie.html:84
 msgid "Предыдущий"
 msgstr "Попередній"
 
 #: cinema_app/templates/cinema_app/cinema.html:53
 #: cinema_app/templates/cinema_app/hall.html:47
-#: cinema_app/templates/cinema_app/index.html:77
+#: cinema_app/templates/cinema_app/index.html:79
 #: cinema_app/templates/cinema_app/movie.html:88
 msgid "Следующий"
 msgstr "Наступний"
 
 #: cinema_app/templates/cinema_app/cinemas.html:5
-#: pages_app/templates/pages_app/base.html:43
-#: pages_app/templates/pages_app/base.html:173
+#: pages_app/templates/pages_app/base.html:44
+#: pages_app/templates/pages_app/base.html:174
 msgid "Кинотеатры"
 msgstr "Кінотеатри"
 
@@ -75,26 +75,24 @@ msgstr "Дивіться сьогодні"
 msgid "Смотрите сегодня"
 msgstr "Дивіться сьогодні"
 
-#: cinema_app/templates/cinema_app/index.html:40
+#: cinema_app/templates/cinema_app/index.html:42
 #: cinema_app/templates/cinema_app/movies.html:24
 msgid "Купить билет"
 msgstr "Придбати квиток"
 
-#: cinema_app/templates/cinema_app/index.html:46
+#: cinema_app/templates/cinema_app/index.html:48
 msgid "Смотрите скоро"
 msgstr "Дивіться скоро"
 
 #: cinema_app/templates/cinema_app/movies.html:11
 #: cinema_app/templates/cinema_app/next_movies.html:11
-#: pages_app/templates/pages_app/base.html:34
-#: pages_app/templates/pages_app/base.html:60
-#: pages_app/templates/pages_app/base.html:170
+#: pages_app/templates/pages_app/base.html:35
+#: pages_app/templates/pages_app/base.html:171
 msgid "Афиша"
 msgstr "Афіша"
 
 #: cinema_app/templates/cinema_app/movies.html:12
 #: cinema_app/templates/cinema_app/next_movies.html:12
-#| msgid "Скоро в прокате"
 msgid "Скоро выйдет"
 msgstr "Скоро в кінотеатрах"
 
@@ -103,15 +101,12 @@ msgid "Афиша фильмов"
 msgstr "Афіша фільмів"
 
 #: cinema_app/templates/cinema_app/schedule.html:5
-#: pages_app/templates/pages_app/base.html:37
-#: pages_app/templates/pages_app/base.html:171
+#: pages_app/templates/pages_app/base.html:38
+#: pages_app/templates/pages_app/base.html:172
 msgid "Расписание"
 msgstr "Розклад"
 
 #: cinema_app/templates/cinema_app/schedule.html:12
-#: pages_app/templates/pages_app/the_cinema.html:5
-#: pages_app/templates/pages_app/the_cinema.html:9
-#| msgid "Кинотеатры"
 msgid "Кинотеатр"
 msgstr "Кінотеатри"
 
@@ -135,58 +130,52 @@ msgstr "Зал"
 msgid "Цена"
 msgstr "Ціна"
 
+#: pages_app/templates/pages_app/Not_found.html:5
+msgid "Не найдено"
+msgstr ""
+
+#: pages_app/templates/pages_app/Not_found.html:9
+msgid "Фильм с таким названием не найден"
+msgstr "Фільм з такою назвою не знайдено"
+
+#: pages_app/templates/pages_app/Not_found.html:10
+#: user_app/templates/registration/logged_out.html:10
+msgid "Перейти на главную "
+msgstr "На головну"
+
 #: pages_app/templates/pages_app/app_prom.html:5
 #: pages_app/templates/pages_app/app_prom.html:9
-#: pages_app/templates/pages_app/base.html:59
-#: pages_app/templates/pages_app/base.html:161
+#: pages_app/templates/pages_app/base.html:55
+#: pages_app/templates/pages_app/base.html:162
 msgid "Мобильные приложения"
 msgstr "Мобільні застосунки"
 
-#: pages_app/templates/pages_app/base.html:40
+#: pages_app/templates/pages_app/base.html:41
 msgid "Скоро"
 msgstr "Скоро"
 
-#: pages_app/templates/pages_app/base.html:46
-#: pages_app/templates/pages_app/base.html:174
+#: pages_app/templates/pages_app/base.html:47
+#: pages_app/templates/pages_app/base.html:175
 #: pages_app/templates/pages_app/promotions.html:14
 msgid "Акции"
 msgstr "Акції"
 
-#: pages_app/templates/pages_app/base.html:50
-#: pages_app/templates/pages_app/base.html:54
-#: pages_app/templates/pages_app/base.html:177
+#: pages_app/templates/pages_app/base.html:51
+#: pages_app/templates/pages_app/base.html:178
 msgid "О кинотеатре"
 msgstr "Про кінотеатр"
 
-#: pages_app/templates/pages_app/base.html:53
-#: pages_app/templates/pages_app/base.html:179
+#: pages_app/templates/pages_app/base.html:54
+#: pages_app/templates/pages_app/base.html:180
 #: pages_app/templates/pages_app/news.html:14
 msgid "Новости"
 msgstr "Новини"
 
-#: pages_app/templates/pages_app/base.html:55
-#: pages_app/templates/pages_app/base.html:182
-#: pages_app/templates/pages_app/for_partnes.html:5
-#: pages_app/templates/pages_app/for_partnes.html:9
-msgid "Реклама"
-msgstr ""
-
 #: pages_app/templates/pages_app/base.html:56
-#: pages_app/templates/pages_app/base.html:183
-msgid "VIP-зал"
-msgstr ""
-
-#: pages_app/templates/pages_app/base.html:57
-#: pages_app/templates/pages_app/base.html:181
-#: pages_app/templates/pages_app/children.html:9
-msgid "Детская комната"
-msgstr "Дитяча кімната"
-
-#: pages_app/templates/pages_app/base.html:58
-#: pages_app/templates/pages_app/base.html:178
-#: pages_app/templates/pages_app/food_court.html:5
-msgid "Кафе"
-msgstr "Кафе"
+#, fuzzy
+#| msgid "Контакты"
+msgid "Контакт"
+msgstr "Контакти"
 
 #: pages_app/templates/pages_app/base.html:85
 msgid "Выйти"
@@ -203,38 +192,52 @@ msgstr "Логін"
 msgid "Регистрация"
 msgstr "Реєстрація"
 
+#: pages_app/templates/pages_app/base.html:107
+msgid "Поиск"
+msgstr "Пошук"
+
 #: pages_app/templates/pages_app/base.html:108
 msgid "Искать"
 msgstr "Пошук"
 
-#: pages_app/templates/pages_app/base.html:172
+#: pages_app/templates/pages_app/base.html:173
 msgid "Скоро в прокате"
 msgstr "Скоро в кінотеатрах"
 
-#: pages_app/templates/pages_app/base.html:180
+#: pages_app/templates/pages_app/base.html:179
+#: pages_app/templates/pages_app/food_court.html:5
+msgid "Кафе"
+msgstr "Кафе"
+
+#: pages_app/templates/pages_app/base.html:181
 #: pages_app/templates/pages_app/contacts.html:5
 #: pages_app/templates/pages_app/contacts.html:9
 msgid "Контакты"
 msgstr "Контакти"
+
+#: pages_app/templates/pages_app/base.html:182
+msgid "Детская комната"
+msgstr "Дитяча кімната"
+
+#: pages_app/templates/pages_app/base.html:183
+msgid "Реклама"
+msgstr ""
+
+#: pages_app/templates/pages_app/base.html:184
+msgid "VIP-зал"
+msgstr ""
 
 #: pages_app/templates/pages_app/contacts.html:21
 msgid "Адрес:"
 msgstr "Адреса"
 
 #: pages_app/templates/pages_app/contacts.html:22
-#| msgid "Бронирование билетов:"
 msgid "Бронирование билетов::"
 msgstr "Бронювання квитків:"
 
 #: pages_app/templates/pages_app/food_court.html:9
-#| msgid "Кафе"
 msgid "Кафе-Бар"
 msgstr "Кафе"
-
-#: pages_app/templates/pages_app/vip_hall.html:5
-#: pages_app/templates/pages_app/vip_hall.html:9
-msgid "VIP зал"
-msgstr ""
 
 #: user_app/templates/django_registration/registration_form.html:16
 #: user_app/templates/user_app/profile.html:15
@@ -313,10 +316,6 @@ msgstr "Вихід"
 msgid "Выход произведён "
 msgstr "Вихід вдало виконано"
 
-#: user_app/templates/registration/logged_out.html:10
-msgid "Перейти на главную "
-msgstr "На головну"
-
 #: user_app/templates/registration/login.html:24
 msgid "Залогиниться"
 msgstr "Логін"
@@ -354,7 +353,6 @@ msgid "Номер карты"
 msgstr "Номер карти"
 
 #: user_app/templates/user_app/profile.html:44
-#| msgid "Мобильные приложения"
 msgid "День рождения"
 msgstr "Дата народження"
 
@@ -816,11 +814,11 @@ msgstr ""
 
 #: venv/lib/python3.10/site-packages/django/forms/fields.py:91
 msgid "This field is required."
-msgstr ""
+msgstr "Це поле обов'язкове до заповнення"
 
 #: venv/lib/python3.10/site-packages/django/forms/fields.py:298
 msgid "Enter a whole number."
-msgstr ""
+msgstr "Введіть корректний номер"
 
 #: venv/lib/python3.10/site-packages/django/forms/fields.py:467
 #: venv/lib/python3.10/site-packages/django/forms/fields.py:1240
@@ -880,7 +878,7 @@ msgstr ""
 #: venv/lib/python3.10/site-packages/django/forms/models.py:1572
 #, python-format
 msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr ""
+msgstr "Обрано некроектне значення %(value)s. Виберіть корректне"
 
 #: venv/lib/python3.10/site-packages/django/forms/fields.py:950
 #: venv/lib/python3.10/site-packages/django/forms/fields.py:1069

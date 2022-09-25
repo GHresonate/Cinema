@@ -103,15 +103,13 @@
 
       <div class="col-3" style="float: left; text-align: left">
         <div class="container-fluid" style="float: left; width: 100%; text-align: left">
-          <form class="d-flex" style="float: left; width: 100%; text-align: left">
-           <!-- <input class="form-control me-2" type="search"placeholder="Поиск" aria-label="Search" style="float: left"> -->
-               <span> <script async src="https://cse.google.com/cse.js?cx=2462bb3a52c32483e">
-                </script>
-                   </span>
-                <div class="gcse-search"></div>
+          <form action="{% url "search" %}" class="d-flex" style="float: left; width: 100%; text-align: left">
+            <input class="form-control me-2" type="search"placeholder="{% translate 'Поиск' %}" name="search" aria-label="Search" style="float: left">
+            <button class="btn btn-dark" type="submit" style="color: #A9A9A9">{% translate 'Искать' %}</button>
           </form>
         </div>
       </div>
+
       <div class="col-3" style="text-align: right">
         <img src="{% static 'pages_app/img/facebook.png' %}" style="width: 30px">
         <img src="{% static 'pages_app/img/twitter.png' %}" style="width: 30px">

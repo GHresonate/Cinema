@@ -11,7 +11,7 @@ from datetime import date
 from user_app.models import Ticket
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.utils import dateformat
 
 
@@ -35,19 +35,14 @@ def schedule(request):
     page = pagin.get_page(page_number)
     about_cinema = MainPage.objects.get(pk=1)
     dates = []
-    all_cinemas = []
+    all_cinemas = Cinema.objects.all()
     all_dates = []
-    all_movies = []
-    all_halls = []
-    for session in sessions:
-        if session.hall not in all_halls:
-            all_halls.append(session.hall)
-        if session.movie not in all_movies:
-            all_movies.append(session.movie)
-        if session.date not in all_dates:
-            all_dates.append(session.date)
-        if session.cinema not in all_cinemas:
-            all_cinemas.append(session.cinema)
+    all_movies = Movie.objects.all()
+    all_halls = Hall.objects.all()
+    today = date.today()
+    for x in range(20):
+        delta = timedelta(days=x)
+        all_dates.append(today+delta)
 
     for session in page:
         if session.date not in dates:

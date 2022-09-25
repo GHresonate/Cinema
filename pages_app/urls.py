@@ -5,6 +5,7 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('promotions', views.promotions, name='promotions'),
+    path('search', views.search, name='search'),
     path('page/<slug:url>', views.get_page, name='page'),
     path('promotion/<slug:url>', views.promotion, name='promotion'),
     path('news', views.news, name='front_news'),

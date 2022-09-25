@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import NewsAndDiscount, MainPage, Pages, Photo, Contact
 from django.utils import translation
-
+from cinema_app.models import Movie, Session
 
 
 
@@ -50,6 +50,24 @@ def a_news(request, url):
     anews = get_object_or_404(NewsAndDiscount, seo__url=url)
     about_cinema = MainPage.objects.get(pk=1)
     return render(request, 'pages_app/promotion.html', {'a_news': anews, "about_cinema": about_cinema})
+
+
+def search(request):
+    value = request.GET['search']
+    movies = Movie.objects.all()
+    about_cinema = MainPage.objects.get(pk=1)
+    for movie in movies:
+        if value in movie.name:
+            photos = Photo.objects.all().filter(gallery=movie.photo_list)
+            sessions = Session.objects.all().filter(movie=movie).order_by('date', 'time')[:8]
+            first_photo = photos[0]
+            all_photos = photos[1:]
+            return render(request, 'cinema_app/movie.html',
+                          {'movie': movie, 'about_cinema': about_cinema, 'first_photo': first_photo,
+                           'all_photos': all_photos, 'sessions': sessions})
+    return render(request, 'pages_app/Not_found.html',
+                          {'movie': movie, 'about_cinema': about_cinema})
+
 
 
 def get_page(request, url):

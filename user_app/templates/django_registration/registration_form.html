@@ -10,41 +10,53 @@
     <main>
         <form method="post">
     {% csrf_token %}
-        {{ form.errors }}
   <div style="float: left; width: 49%; padding: 7px; min-width: 400px;">
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="FormControlInput1" class="form-label">{% trans "Имя" %}</label>
       <input class="form-control" name="name" id="FormControlInput1">
+        <div style="color: red; text-align: left">{{ form.name.errors }}</div>
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="FormControlInput2" class="form-label">{% trans "Фамилия" %}</label>
       <input class="form-control" name="surname" id="FormControlInput2">
+                <div style="color: red; text-align: left">{{ form.surname.errors }}</div>
+
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="FormControlInput3" class="form-label"> {% trans "Псевдоним" %}</label>
       <input class="form-control" name="username" id="FormControlInput3">
+                        <div style="color: red; text-align: left">{{ form.username.errors }}</div>
+
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="FormControlInput4" class="form-label">Email address</label>
       <input type="email" name="email" class="form-control" id="FormControlInput4" placeholder="name@example.com">
+                        <div style="color: red; text-align: left">{{ form.email.errors }}</div>
+
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="FormControlInput5" class="form-label"> {% trans "Адрес" %}</label>
       <input class="form-control" name="address" id="FormControlInput5">
+                        <div style="color: red; text-align: left">{{ form.address.errors }}</div>
+
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="FormControlInput6" class="form-label"> {% trans "Пароль" %}</label>
       <input type="password" name="password1" class="form-control" id="FormControlInput6">
+                        <div style="color: red; text-align: left">{{ form.password1.errors }}</div>
+
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="FormControlInput7" class="form-label"> {% trans "Повторите пароль" %}</label>
       <input type="password" name="password2" class="form-control" id="FormControlInput7">
+                        <div style="color: red; text-align: left">{{ form.password2.errors }}</div>
+
     </div>
   </div>
 
@@ -55,6 +67,8 @@
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="FormControlInput9" class="form-label">{% trans "Номер карты " %}</label>
       <input class="form-control" name="card_number" id="FormControlInput9">
+                        <div style="color: red; text-align: left">{{ form.card_number.errors }}</div>
+
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
@@ -65,6 +79,8 @@
              <option value="Female"> {% trans "Женский" %}</option>
              <option value="Different"> {% trans "Другой" %}</option>
         </select>
+                        <div style="color: red; text-align: left">{{ form.gender.errors }}</div>
+
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
@@ -75,15 +91,23 @@
              <option value="EN">English</option>
              <option value="RU">русский</option>
         </select>
+                        <div style="color: red; text-align: left">{{ form.language.errors }}</div>
+
+
     </div>
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="FormControlInput1" class="form-label"> {% trans "Дата рождения" %}</label>
       <input class="form-control" type="date" name="birthday" id="FormControlInput1">
+                        <div style="color: red; text-align: left">{{ form.birthday.errors }}</div>
+
+
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="FormControlInput2" class="form-label"> {% trans "Телефон" %}</label>
       <input class="form-control" name="phone_number" id="FormControlInput2">
+                        <div style="color: red; text-align: left">{{ form.phone_number.errors }}</div>
+
     </div>
   </div>
 <button type="submit" class="btn btn-lg btn-outline-dark"> {% trans "Сохранить" %}</button>

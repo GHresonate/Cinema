@@ -2,11 +2,11 @@
 {% load static %}
 {% load i18n %}
 {% block title %}
-{% trans "Выход " %}
+{% trans "Не найдено" %}
 {% endblock %}
 {% block main %}
     <main style="width: 100%; min-height: 70vh;">
-    <div style="position: relative; top: 30vh;"> <h1>{% trans "Выход произведён " %}</h1>
+    <div style="position: relative; top: 30vh;"> <h1>{% trans "Фильм с таким названием не найден" %}</h1>
     <a href="{% url "front_main" %}" type="button" class="btn btn-dark btn-lg"> {% trans "Перейти на главную " %}</a></div>
 
     </main>
