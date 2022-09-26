@@ -8,29 +8,29 @@
 <main>
   <div class="container">
     <div class="row">
-      <select class="col form-select" aria-label="Cinema" style="margin: 7px">
+      <select id="Cinema" class="col form-select" aria-label="Cinema" style="margin: 7px">
         <option selected> {% trans "Кинотеатр" %}</option>
           {% for cinema in all_cinemas %}
-        <option value="{{ cinema }}"><a href="{% url "front_schedule" %}?cinema={{ cinema.id }}">{{ cinema.name }}</a></option>
+        <option value="{{ cinema.id }}"><a href="{% url "front_schedule" %}?cinema={{ cinema.id }}">{{ cinema.name }}</a></option>
           {% endfor %}
 
       </select>
-      <select class="col form-select" aria-label="Date" style="margin: 7px">
+      <select id="Date" class="col form-select" aria-label="Date" style="margin: 7px">
         <option selected>Дата</option>
           {% for date in all_dates %}
-                <option value="{{ date }}"><a href="{% url "front_schedule" %}?date={{ date }}">{{ date }}</a></option>
+                <option value="{{ date|date:"Y-m-j" }}"><a href="{% url "front_schedule" %}?date={{ date }}">{{ date }}</a></option>
           {% endfor %}
       </select>
-      <select class="col form-select" aria-label="Film" style="margin: 7px">
+      <select id="Film" class="col form-select" aria-label="Film" style="margin: 7px">
         <option selected>Фильм</option>
           {% for movie in all_movies %}
-              <option value="{{ movie }}"><a href="{% url "front_schedule" %}?movie={{ movie.id }}">{{ movie.name }}</a></option>
+              <option value="{{ movie.id }}"><a href="{% url "front_schedule" %}?movie={{ movie.id }}">{{ movie.name }}</a></option>
           {% endfor %}
       </select>
-      <select class="col form-select" aria-label="Hall" style="margin: 7px">
+      <select id="Hall" class="col form-select" aria-label="Hall" style="margin: 7px">
         <option selected>Зал</option>
           {% for hall in all_halls %}
-              <option value="{{ hall }}"><a href="{% url "front_schedule" %}?hall={{ hall.id }}">{{ hall.name }}</a></option>
+              <option value="{{ hall.id }}"><a href="{% url "front_schedule" %}?hall={{ hall.id }}">{{ hall.name }}</a></option>
           {% endfor %}
       </select>
     </div>
@@ -43,20 +43,22 @@
       <label class="form-check-label" for="inlineCheckbox1">2D</label>
     </div>
     <div class="form-check form-check-inline" style="display: table-cell; padding-right: 20px">
-      <input class="form-check-input bg-dark" id="inlineCheckbox2" type="checkbox" value="VIP">
-      <label class="form-check-label" for="inlineCheckbox2">VIP</label>
+      <input class="form-check-input bg-dark" id="inlineCheckbox2" type="checkbox" value="3D">
+      <label class="form-check-label" for="inlineCheckbox2">3D</label>
     </div>
     <div class="form-check form-check-inline" style="display: table-cell; padding-right: 20px">
-      <input class="form-check-input bg-dark" id="inlineCheckbox3" type="checkbox" value="DBOX">
-      <label class="form-check-label" for="inlineCheckbox3">DBOX</label>
+      <input class="form-check-input bg-dark" id="inlineCheckbox3" type="checkbox" value="IMAX">
+      <label class="form-check-label" for="inlineCheckbox3">IMAX</label>
     </div>
+      <button class="btn btn-light" id="search">{% translate 'Поиск' %}</button>
+
   </div>
   <aside style="max-width: 400px; height: 100%; float: left; top: 7px; margin-right: 14px;">
     <img style="max-width: 200px; position: relative; display: block; margin-left: 7px; margin-top: 7px;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
     <img style="max-width: 200px; bottom: 10%; position: relative; display: block; margin-left: 7px; margin-top: 7px; float: bottom;" src="{% static 'pages_app/img/vertical-promotion.png' %}">
   </aside>
 
-  <div class="container" style="text-align: center; width: 870px;">
+  <div class="container" id="main" style="text-align: center; width: 870px;">
     <div class="row" style="font-size: 18px; font-weight: bolder;border: 2px solid black; border-radius: 3px;background-color: #c4d0d9; vertical-align: center">
       <div class="col-2" style="border-right: 2px solid black;"> {% trans "Время" %}</div>
       <div class="col-4" style="border-right: 2px solid black;"> {% trans "Фильм" %}</div>
@@ -99,4 +101,72 @@
 
   </div>
 </main>
+
+<script src="{% static 'my_admin/plugins/jquery/jquery.min.js' %}"></script>
+<script>
+let button = document.getElementById('search')
+let cinema = document.getElementById('Cinema')
+let date = document.getElementById('Date')
+let film = document.getElementById('Film')
+let hall = document.getElementById('Hall')
+let is_2D = document.getElementById('inlineCheckbox1')
+let is_3D = document.getElementById('inlineCheckbox2')
+let is_IMAX = document.getElementById('inlineCheckbox3')
+let csrf_token = $('input[name="csrfmiddlewaretoken"]').val();
+
+
+button.addEventListener('click', sendSearch)
+
+function sendSearch() {
+    let data = {}
+    if (is_2D.checked){
+        data['is_2D'] = is_2D.value;
+    }
+    if (is_3D.checked){
+        data['is_3D'] = is_3D.value;
+    }
+    if (is_IMAX.checked){
+        data['is_IMAX'] = is_IMAX.value;
+    }
+    if (cinema.value.toString().indexOf('К')<0){
+        data['cinema'] = cinema.value;
+    }
+    if (film.value.toString().indexOf('Ф')<0){
+        data['film']=film.value;
+    }
+    if (hall.value.toString().indexOf('З')<0){
+        data['hall']=hall.value;
+    }
+    if (date.value.toString().indexOf('Дата')<0){
+        data['date'] = date.value;
+    }
+    $.ajax({
+        beforeSend: function(xhr, settings) {
+        if (!this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            xhr.setRequestHeader("content-type", "application/json");
+        }},
+			type: "POST",
+            cache: false,
+			contentType: false,
+			processData: false,
+			url: '{% url "front_schedule" %}',
+			data: JSON.stringify(data),
+			dataType : 'html',
+			success: successAdd,
+		});
+
+}
+
+function successAdd(data, status, xhr) {
+    let main = document.getElementById('main')
+    let parser = new DOMParser()
+    let main_2 = parser.parseFromString( data , "text/html" ).getElementById('main')
+    main.innerHTML = main_2.innerHTML
+
+}
+
+
+</script>
+
 {% endblock %}

@@ -16,40 +16,74 @@ from django.utils import dateformat
 
 
 def schedule(request):
-    today = date.today()
-    sessions = Session.objects.all().filter(date__gte=today).order_by('date', 'time')
-    pagin = Paginator(sessions, 40)
-    page_number = request.GET.get('page')
-    fil_cinema = request.GET.get('cinema')
-    if fil_cinema:
-        sessions.filter(cinema=fil_cinema)
-    fil_date = request.GET.get('date')
-    if fil_date:
-        sessions.filter(date=fil_date)
-    fil_movie = request.GET.get('fil_movie')
-    if fil_movie:
-        sessions.filter(movie=fil_movie)
-    fil_hall = request.GET.get('fil_hall')
-    if fil_hall:
-        sessions.filter(hall=fil_hall)
-    page = pagin.get_page(page_number)
-    about_cinema = MainPage.objects.get(pk=1)
-    dates = []
-    all_cinemas = Cinema.objects.all()
-    all_dates = []
-    all_movies = Movie.objects.all()
-    all_halls = Hall.objects.all()
-    today = date.today()
-    for x in range(20):
-        delta = timedelta(days=x)
-        all_dates.append(today+delta)
+    if request.method == 'GET':
+        today = date.today()
+        sessions = Session.objects.all().filter(date__gte=today).order_by('date', 'time')
+        pagin = Paginator(sessions, 40)
+        page_number = request.GET.get('page')
+        page = pagin.get_page(page_number)
+        about_cinema = MainPage.objects.get(pk=1)
+        dates = []
+        all_cinemas = Cinema.objects.all()
+        all_dates = []
+        all_movies = Movie.objects.all()
+        all_halls = Hall.objects.all()
+        today = date.today()
+        for x in range(20):
+            delta = timedelta(days=x)
+            all_dates.append(today+delta)
 
-    for session in page:
-        if session.date not in dates:
-            dates.append(session.date)
-    return render(request, 'cinema_app/schedule.html',
-                  {'page': page, 'dates': dates, "about_cinema": about_cinema, 'all_cinemas': all_cinemas,
-                   'all_dates': all_dates, 'all_movies': all_movies, 'all_halls': all_halls})
+        for session in page:
+            if session.date not in dates:
+                dates.append(session.date)
+        return render(request, 'cinema_app/schedule.html',
+                      {'page': page, 'dates': dates, "about_cinema": about_cinema, 'all_cinemas': all_cinemas,
+                       'all_dates': all_dates, 'all_movies': all_movies, 'all_halls': all_halls})
+    else:
+        filters = json.load(request)
+        print(filters)
+        today = date.today()
+        sessions = Session.objects.all().filter(date__gte=today).order_by('date', 'time')
+        if 'is_2D' in filters:
+            sessions = sessions.filter(movie__is_2D=True)
+        if 'is_3D' in filters:
+            sessions = sessions.filter(movie__is_3D=True)
+        if 'is_IMAX' in filters:
+            sessions = sessions.filter(movie__is_IMAX=True)
+        if 'date' in filters:
+            sessions = sessions.filter(date=filters['date'])
+        if 'film' in filters:
+            movie = Movie.objects.get(id=int(filters['film']))
+            sessions = sessions.filter(movie=movie)
+        if 'hall' in filters:
+            hall = Hall.objects.get(id=int(filters['hall']))
+            sessions = sessions.filter(hall=hall)
+        if 'cinema' in filters:
+            cinema = Cinema.objects.get(id=int(filters['cinema']))
+            sessions = sessions.filter(cinema=cinema)
+
+
+        pagin = Paginator(sessions, 40)
+        page_number = request.GET.get('page')
+        page = pagin.get_page(page_number)
+
+        about_cinema = MainPage.objects.get(pk=1)
+        dates = []
+        all_cinemas = Cinema.objects.all()
+        all_dates = []
+        all_movies = Movie.objects.all()
+        all_halls = Hall.objects.all()
+        today = date.today()
+        for x in range(20):
+            delta = timedelta(days=x)
+            all_dates.append(today+delta)
+
+        for session in page:
+            if session.date not in dates:
+                dates.append(session.date)
+        return render(request, 'cinema_app/schedule.html',
+                      {'page': page, 'dates': dates, "about_cinema": about_cinema, 'all_cinemas': all_cinemas,
+                       'all_dates': all_dates, 'all_movies': all_movies, 'all_halls': all_halls})
 
 
 def main(request):
