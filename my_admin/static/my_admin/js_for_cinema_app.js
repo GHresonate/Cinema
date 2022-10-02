@@ -67,12 +67,14 @@ function validate(){
         };
     }}
     for (let x=0; x<inputs.length; x++){
+     if (inputs[x].children[1]){
       if (inputs[x].children[1].value==''){
           inputs[x].classList.add("error");
           is_good = 0;
       } else {
           inputs[x].classList.remove("error");
       }
+     }
     };
 
     if (!regexpForOneWord.test(seoUrl.value) && !(seoUrl.classList.contains("error"))){

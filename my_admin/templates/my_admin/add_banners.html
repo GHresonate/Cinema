@@ -29,7 +29,7 @@ Add banners
                  {{ background.main_photo.errors }}
              </div>
             <div id = 'image_grid' style="background-image: url('{% static "my_admin/img/camera.jpg" %}');">
-                {% if the_background %}
+                {% if the_background.main_photo %}
                     <img src="{{ the_background.main_photo.url }}" style="width: 194px; height: 144px;">
                 {% endif %}
             </div>

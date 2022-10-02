@@ -12,5 +12,4 @@ urlpatterns = [
     path('contacts', views.contacts, name='front_contacts'),
     path('app_prom', views.app_prom, name='front_app_prom'),
     path('a_news/<slug:url>', views.a_news, name='front_a_news'),
- #   path('change_lang/<slug:code>', views.select_lang, name='front_change_lang'),
 ]

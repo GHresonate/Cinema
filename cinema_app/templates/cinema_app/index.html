@@ -29,8 +29,7 @@
     </button>
   </div>
 
-  <h2 style="margin-top: 20px; margin-bottom: 13px">{% translate "Смотрите сегодня" %},{{ request.LANGUAGE_CODE }}{% language 'ru-RU' %}
- {{ formatted_date|date:'E'}} {% endlanguage %}</h2>
+  <h2 style="margin-top: 20px; margin-bottom: 13px">{% translate "Смотрите сегодня" %},{{ formatted_date|date:'j E'}}</h2>
 
   <div class="container" >
     <div class="row">

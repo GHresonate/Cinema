@@ -183,7 +183,7 @@ msgstr "Новости"
 
 #: pages_app/templates/pages_app/base.html:56
 #, fuzzy
-#| msgid "Контакты"
+#| msgid "Контакт"
 msgid "Контакт"
 msgstr "Контакты"
 

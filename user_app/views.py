@@ -19,7 +19,9 @@ def profile(request):
         if user.is_valid():
             user.save()
         else:
-            raise ValueError
+            print(user.errors)
+            return render(request, 'user_app/profile.html',
+                          {'form': user})
         return HttpResponseRedirect('/')
     else:
         form = CustomUserChangeForm(instance=old_user)

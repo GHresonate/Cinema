@@ -22,7 +22,7 @@ def schedule(request):
         pagin = Paginator(sessions, 40)
         page_number = request.GET.get('page')
         page = pagin.get_page(page_number)
-        about_cinema = MainPage.objects.get(pk=1)
+        about_cinema = MainPage.objects.all()[0]
         dates = []
         all_cinemas = Cinema.objects.all()
         all_dates = []
@@ -67,7 +67,7 @@ def schedule(request):
         page_number = request.GET.get('page')
         page = pagin.get_page(page_number)
 
-        about_cinema = MainPage.objects.get(pk=1)
+        about_cinema = MainPage.objects.all()[0]
         dates = []
         all_cinemas = Cinema.objects.all()
         all_dates = []
@@ -95,7 +95,7 @@ def main(request):
     bottom_first = bottom[0]
     bottom = bottom[1:]
     formatted_date = today
-    about_cinema = MainPage.objects.get(pk=1)
+    about_cinema = MainPage.objects.all()[0]
     today_movies = Session.objects.all().filter(date=today)
     following_films = Movie.objects.all().filter(realise_date__gt=today).order_by('realise_date')[:8]
     return render(request, 'cinema_app/index.html', {'about_cinema': about_cinema, 'top_first': top_first, 'top': top,
@@ -109,7 +109,7 @@ def movies(request):
     pagi = Paginator(movie, 15)
     page_number = request.GET.get('page')
     page = pagi.get_page(page_number)
-    about_cinema = MainPage.objects.get(pk=1)
+    about_cinema = MainPage.objects.all()[0]
     return render(request, 'cinema_app/movies.html', {'page': page, "about_cinema": about_cinema})
 
 
@@ -118,8 +118,8 @@ def cinemas(request):
     pagin = Paginator(cinemas, 15)
     page_number = request.GET.get('page')
     page = pagin.get_page(page_number)
-    the_cinema = Pages.objects.get(name="Main page")
-    about_cinema = MainPage.objects.get(pk=1)
+    the_cinema = Pages.objects.all().filter(name_ru="Главная страница")[0]
+    about_cinema = MainPage.objects.all()[0]
     return render(request, 'cinema_app/cinemas.html',
                   {'page': page, "about_cinema": about_cinema, "the_cinema": the_cinema})
 
@@ -130,7 +130,7 @@ def next_movies(request):
     pagi = Paginator(movies_next, 15)
     page_number = request.GET.get('page')
     page = pagi.get_page(page_number)
-    about_cinema = MainPage.objects.get(pk=1)
+    about_cinema = MainPage.objects.all()[0]
     return render(request, 'cinema_app/next_movies.html', {'page': page, "about_cinema": about_cinema})
 
 

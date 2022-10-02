@@ -127,13 +127,15 @@ def change_user(request, username):
 def change_main(request):
     the_object = MainPage.objects.get(pk=1)
     if request.method == 'POST':
-        object = MainPageForm(request.POST, request.FILES, instance=the_object)
+        print(request.POST)
+        object = MainPageForm(request.POST, instance=the_object)
         if object.is_valid():
             seo = SEOForm(request.POST, instance=the_object.seo)
             url = the_object.seo.url
             the_object.seo.url = None
             the_object.seo.save()
             if not seo.is_valid():
+                print(seo.errors)
                 the_object.seo.url = url
                 the_object.seo.save()
                 return render(request, 'my_admin/change_main.html', {"seo": seo, "main": object})
@@ -142,6 +144,7 @@ def change_main(request):
             the_object.seo.save()
             seo.save()
             object.save()
+            print(object)
             return HttpResponseRedirect(reverse("statistic"))
         else:
             print(object.errors)
@@ -154,7 +157,7 @@ def change_main(request):
 
 @permission_required('hav_access_to_admin')
 def change_banners(request):
-    the_background = Background.objects.get(pk=1)
+    the_background = Background.objects.all()[0]
     if request.method == 'POST':
         background = BackgroundForm(request.POST, request.FILES, instance=the_background)
         top_banners = TopBannerForms(request.POST, request.FILES)

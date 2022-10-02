@@ -14,7 +14,7 @@ from cinema_app.models import Movie, Session
 
 def contacts(request):
     conts = Contact.objects.all()
-    about_cinema = MainPage.objects.get(pk=1)
+    about_cinema = MainPage.objects.all()[0]
     return render(request, 'pages_app/contacts.html', {'contacts': conts, 'about_cinema': about_cinema})
 
 
@@ -27,13 +27,13 @@ def promotions(request):
     pagi = Paginator(proms, 15)
     page_number = request.GET.get('page')
     page = pagi.get_page(page_number)
-    about_cinema = MainPage.objects.get(pk=1)
+    about_cinema = MainPage.objects.all()[0]
     return render(request, 'pages_app/promotions.html', {'page': page, "about_cinema": about_cinema})
 
 
 def promotion(request, url):
     prom = get_object_or_404(NewsAndDiscount, seo__url=url)
-    about_cinema = MainPage.objects.get(pk=1)
+    about_cinema = MainPage.objects.all()[0]
     return render(request, 'pages_app/promotion.html', {'prom': prom, "about_cinema": about_cinema})
 
 
@@ -42,20 +42,20 @@ def news(request):
     pagi = Paginator(news, 15)
     page_number = request.GET.get('page')
     page = pagi.get_page(page_number)
-    about_cinema = MainPage.objects.get(pk=1)
+    about_cinema = MainPage.objects.all()[0]
     return render(request, 'pages_app/news.html', {'page': page, "about_cinema": about_cinema})
 
 
 def a_news(request, url):
     anews = get_object_or_404(NewsAndDiscount, seo__url=url)
-    about_cinema = MainPage.objects.get(pk=1)
+    about_cinema = MainPage.objects.all()[0]
     return render(request, 'pages_app/promotion.html', {'a_news': anews, "about_cinema": about_cinema})
 
 
 def search(request):
     value = request.GET['search']
     movies = Movie.objects.all()
-    about_cinema = MainPage.objects.get(pk=1)
+    about_cinema = MainPage.objects.all()[0]
     for movie in movies:
         if value in movie.name:
             photos = Photo.objects.all().filter(gallery=movie.photo_list)
@@ -73,7 +73,7 @@ def search(request):
 def get_page(request, url):
     page = Pages.objects.get(seo__url=url)
     photos = Photo.objects.all().filter(gallery=page.photo_list)
-    about_cinema = MainPage.objects.get(pk=1)
+    about_cinema = MainPage.objects.all()[0]
     if url == 'Food_court':
         return render(request, 'pages_app/food_court.html',
                       {'page': page, "photos": photos, "about_cinema": about_cinema})

@@ -9,26 +9,29 @@
     <main>
         <form method="post">
     {% csrf_token %}
-        {{ form.errors }}
   <div style="float: left; width: 49%; padding: 7px; min-width: 400px;">
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="id_name" class="form-label"> {% trans "Имя" %}</label>
       <input class="form-control" name="name" value="{{ form.name.value }}" id="id_name">
+        {{ form.name.errors }}
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="id_surname" class="form-label"> {% trans "Фамилия" %}</label>
       <input class="form-control" value="{{ form.surname.value }}" name="surname" id="id_surname">
+                {{ form.surname.errors }}
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="id_username" class="form-label"> {% trans "Псевдоним" %}</label>
       <input class="form-control" name="username" value="{{ form.username.value }}" id="id_username">
+                {{ form.username.errors }}
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="id_address" class="form-label"> {% trans "Адрес" %}</label>
       <input class="form-control" name="address" id="id_address" value="{{ form.address.value }}">
+                {{ form.address.errors }}
     </div>
   </div>
 
@@ -39,25 +42,31 @@
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="id_card_number" class="form-label"> {% trans "Номер карты" %}</label>
       <input class="form-control" value="{{ form.card_number.value }}" name="card_number" id="id_card_number">
+                {{ form.card_number.errors }}
     </div>
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="id_birthday" class="form-label"> {% trans "День рождения" %}</label>
       {{ form.birthday }}
+                {{ form.birthday.errors }}
+
     </div>
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <label for="id_phone_number" class="form-label">{% trans "Номер телефона" %}</label>
       <input class="form-control" value="{{ user.phone_number }}" name="phone_number" id="id_phone_number">
+                {{ form.phone_number.errors }}
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <p>Пол</p>
              {{ form.gender }}
         </select>
+                {{ form.gender.errors }}
     </div>
 
     <div class="mb-3" style="margin: 7px; border: gray solid 3px; border-radius: 7px; padding: 7px; min-width: 400px;">
       <p>Язык</p>
         {{ form.language }}
+                {{ form.language.errors }}
     </div>
       <a href="{% url "password_change" %}" type="submit" class="btn btn-lg btn-outline-dark"> {% trans "Сменить пароль" %}</a>
   </div>
