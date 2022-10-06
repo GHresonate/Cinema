@@ -12,6 +12,7 @@ DEBUG = env('DEBUG')
 SECRET_KEY = env('KEY')
 
 ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:1337"]
 
 INSTALLED_APPS = [
     'phonenumber_field',
@@ -32,6 +33,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
