@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from user_app.models import CustomUser
-from pages_app.models import Background, MainPage, SEO, Pages, Gallery
+from pages_app.models import Background, MainPage, SEO, Pages, Gallery, BannersInTheTop, NewsAndDiscInBanner
 import environ
 
 env = environ.Env(
@@ -12,6 +12,7 @@ class Command(BaseCommand):
     help = 'Creating a supruser if doesn`t exist'
 
     def handle(self, *args, **options):
+
         if not CustomUser.objects.filter(is_superuser=True).exists():
             CustomUser.objects.create_superuser(name='first_admin', surname='first_admin', username=env('username'),
                                       email=env('user_email'), password=env('user_password'), address='add_argument',
@@ -20,11 +21,13 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS('User created successfully'))
         else:
             self.stdout.write(self.style.NOTICE('User already exist'))
+
         if not Background.objects.all().exists():
             Background.objects.create(is_photo=False, color='#00FFFF')
             self.stdout.write(self.style.SUCCESS('Background created successfully'))
         else:
             self.stdout.write(self.style.NOTICE('Background already exist'))
+
         if not MainPage.objects.all().exists():
             seo=SEO.objects.create(title='Main page', url='main_page',definition='sdfgsfgs',keywords='main')
             MainPage.objects.create(seo_text='rgfkbspb',seo=seo,phone_number='+380966666666', phone_number2='+380977777777')
@@ -39,3 +42,15 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS('Main page created successfully'))
         else:
             self.stdout.write(self.style.NOTICE('Main page already exist'))
+
+        if not BannersInTheTop.objects.all().exists():
+            BannersInTheTop.objects.create(main_photo='-', text='-', url='-')
+            self.stdout.write(self.style.SUCCESS('Banner in the top created successfully'))
+        else:
+            self.stdout.write(self.style.NOTICE('Banner in the top already exist'))
+
+        if not NewsAndDiscInBanner.objects.all().exists():
+            NewsAndDiscInBanner.objects.create(main_photo='-', trailer_url='-')
+            self.stdout.write(self.style.SUCCESS('News and disc in banner created successfully'))
+        else:
+            self.stdout.write(self.style.NOTICE('News and disc in banner already exist'))
