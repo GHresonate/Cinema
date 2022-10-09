@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.conf.urls.static import static
+from Cinema.Cinema import settings
 from . import settings
 from django.urls import include, path
 from django.conf.urls.i18n import i18n_patterns
@@ -11,4 +12,6 @@ urlpatterns += i18n_patterns(
     path('pages/', include('pages_app.urls')),
     path('', include('cinema_app.urls')),
     path('user/', include('user_app.urls')),
-) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -11,8 +11,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 DEBUG = env('DEBUG')
 SECRET_KEY = env('KEY')
 
-ALLOWED_HOSTS = ["127.0.0.1"]
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1:1337", "127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:1337", "http://127.0.0.1"]
 
 INSTALLED_APPS = [
     'phonenumber_field',
@@ -121,7 +121,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('email')
 EMAIL_HOST_PASSWORD = env('email_password')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 MEDIA_URL = 'media/'
 AUTH_USER_MODEL = 'user_app.CustomUser'
 LOGIN_REDIRECT_URL = '/'

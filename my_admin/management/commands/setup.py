@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from user_app.models import CustomUser
+from cinema_app.models import Cinema, Hall
 from pages_app.models import Background, MainPage, SEO, Pages, Gallery, BannersInTheTop, NewsAndDiscInBanner
 import environ
 
@@ -54,3 +55,13 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS('News and disc in banner created successfully'))
         else:
             self.stdout.write(self.style.NOTICE('News and disc in banner already exist'))
+        if not Cinema.objects.all().exists():
+            seo = SEO.objects.create(title='Cinema', url='Cinema_', definition='Cinema',keywords='Cinema')
+            gallery = Gallery.objects.create()
+            Cinema.objects.create(name="Cinema",description ="Cinema",main_photo = '-',banner_photo='-',photo_list=gallery,seo=seo)
+            seo = SEO.objects.create(title='Hall', url='Hall_', definition='Hall',keywords='Hall')
+            gallery = Gallery.objects.create()
+            Hall.objects.create(number =0,name='Hall',description='Hall',scheme='{"1":"11111"}',main_photo='-',photo_list=gallery,seo=seo,cinema=Cinema.objects.all()[0])
+            self.stdout.write(self.style.SUCCESS('Cinema created successfully'))
+        else:
+            self.stdout.write(self.style.NOTICE('Cinema already exist'))
