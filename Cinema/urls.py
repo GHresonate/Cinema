@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.conf.urls.static import static
-from Cinema.Cinema import settings
+from django.conf import settings
 from . import settings
 from django.urls import include, path
 from django.conf.urls.i18n import i18n_patterns

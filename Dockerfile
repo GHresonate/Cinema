@@ -37,6 +37,7 @@ RUN addgroup -S Cinema && adduser -S Cinema -G Cinema
 ENV HOME=/home/Cinema
 ENV APP_HOME=/home/Cinema/web
 RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/mediafiles
 WORKDIR $APP_HOME
 # install dependencies
 RUN apk update && apk add libpq

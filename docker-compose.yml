@@ -9,7 +9,7 @@ services:
              python manage.py collectstatic &&
              gunicorn Cinema.wsgi:application --bind 0.0.0.0:8000"
     volumes:
-      - .:/usr/src/Cinema/
+      - media_volume:/home/Cinema/web/mediafiles
     expose:
       - 8000
     env_file:
@@ -30,10 +30,13 @@ services:
       - 1337:80
     depends_on:
       - web
+    volumes:
+      - media_volume:/home/Cinema/web/mediafiles
   redis:
     image: 'redis:alpine'
     ports:
       - '6379:6379'
 volumes:
   postgres_data:
+  media_volume:
 
