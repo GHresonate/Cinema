@@ -32,10 +32,7 @@ services:
       - web
     volumes:
       - media_volume:/home/Cinema/web/mediafiles
-  redis:
-    image: 'redis:alpine'
-    ports:
-      - '6379:6379'
+
 volumes:
   postgres_data:
   media_volume:
