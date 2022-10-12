@@ -17,7 +17,6 @@ services:
       - .env
     depends_on:
       - db
-      - redis
   db:
     image: postgres:12.0-alpine
     volumes:
@@ -35,8 +34,7 @@ services:
     volumes:
       - media_volume:/home/Cinema/web/mediafiles
       - static_volume:/home/Cinema/web/staticfiles
-  redis:
-    image: redis:alpine
+
 
 volumes:
   postgres_data:
