@@ -6,6 +6,7 @@ services:
       sh -c "python3 manage.py migrate user_app 0018_customuser_birthday_customuser_phone_number &&
              python3 manage.py migrate &&
              python3 manage.py setup &&
+             python manage.py collectstatic &&
              gunicorn Cinema.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - media_volume:/home/Cinema/web/mediafiles

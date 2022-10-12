@@ -38,7 +38,6 @@ ENV HOME=/home/Cinema
 ENV APP_HOME=/home/Cinema/web
 RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/mediafiles
-RUN mkdir $APP_HOME/staticfiles
 WORKDIR $APP_HOME
 # install dependencies
 RUN apk update && apk add libpq
