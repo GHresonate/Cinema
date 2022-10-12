@@ -6,10 +6,11 @@ services:
       sh -c "python3 manage.py migrate user_app 0018_customuser_birthday_customuser_phone_number &&
              python3 manage.py migrate &&
              python3 manage.py setup &&
-             python manage.py collectstatic &&
+             
              gunicorn Cinema.wsgi:application --bind 0.0.0.0:8000"
     volumes:
       - media_volume:/home/Cinema/web/mediafiles
+      - static_volume:/home/Cinema/web/staticfiles
     expose:
       - 8000
     env_file:
@@ -32,8 +33,10 @@ services:
       - web
     volumes:
       - media_volume:/home/Cinema/web/mediafiles
+      - static_volume:/home/Cinema/web/staticfiles
 
 volumes:
   postgres_data:
   media_volume:
+  static_volume:
 
