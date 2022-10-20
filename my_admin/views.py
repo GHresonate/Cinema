@@ -593,6 +593,8 @@ def prepare_sending(request):
 def delete_user(request, user_id):
     the_user = CustomUser.objects.get(id=user_id)
     username = the_user.username
+    if the_user.is_superuser:
+        raise ValueError
     the_user.delete()
     return render(request, 'my_admin/succsess_user_delete.html', {'username': username})
 
