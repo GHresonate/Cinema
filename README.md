@@ -1,7 +1,7 @@
 # Cinema
 Written on Django cinema site.
 ## What needs to be done?
-1) 
+1) Change app to work with Redis - I coudn`t do this about a year ago, but should make it now.
 
 ## How to setup this site?
 1) ```git clone git@github.com:GHresonate/Cinema.git```
