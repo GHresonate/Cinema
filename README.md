@@ -1,5 +1,5 @@
 # Cinema
-Site of a cinema written in Django.
+Site for a cinema written in Django.
 ## What needs to be done?
 1) Change app to work with Redis - I coudn`t do this about a year ago, but should make it now.
 
