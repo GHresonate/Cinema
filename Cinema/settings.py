@@ -11,8 +11,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 DEBUG = env('DEBUG')
 SECRET_KEY = env('KEY')
 
-ALLOWED_HOSTS = ["127.0.0.1:1337", "127.0.0.1", "165.227.230.67:1337", "165.227.230.67","172.24.0.1"]
-CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:1337", "http://127.0.0.1", "http://165.227.230.67:1337", "http://165.227.230.67","http://172.24.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1:1337", "127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:1337", "http://127.0.0.1"]
 
 INSTALLED_APPS = [
     'phonenumber_field',
