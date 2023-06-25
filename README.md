@@ -1,5 +1,5 @@
 # Cinema
-Writted on Django cinema site.
+Written on Django cinema site.
 ## What needs to be done?
 1) 
 
